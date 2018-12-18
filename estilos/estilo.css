@@ -1,0 +1,271 @@
+
+h1,h2,h3,h4,h5,h6 {
+    text-align: center;
+}
+
+body {
+    background: #F7BE81;
+    //background-image: url("../imagens/logo2.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom right;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: darkgreen;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#pagina {
+    text-align: justify;
+    width: 950px;
+    height: 100%;
+    background: #F7BE81;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+#banner {
+    width: 100%;
+    height: 115px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+#logotipo {
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    float: left;
+}
+
+#busca {
+    width: 320px;
+    height: 60px;
+    padding-top: 35px;
+    padding-left: 40px;
+    text-align: center;
+    float: left;
+    vertical-align: middle;
+}
+
+#barra_menus {
+    width: 100%;
+    height: 60px;
+    background: #CC0000;
+    border-top-right-radius: 10px; 
+    border-top-left-radius: 10px;
+    padding-top: 15px;
+}
+
+#barra_menus ul {	
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+#barra_menus li {
+    display: inline;
+    float: left;
+    height: 100%;
+}
+
+#barra_menus a:hover {
+    color: yellow;
+    text-decoration: underline;
+}
+
+#barra_menus a {
+    display: block;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: Arial,"Times New Roman";
+    font-size: 16pt;
+    text-decoration: italic;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    width: 160px;
+}
+
+#erro {
+    color: red;
+    font-weight: bold;
+}
+
+#conteudo {
+    width: 98%;
+    height: 500px;
+    display: inline-block;
+    background: white;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#rodape {
+    height: 35px;
+    width: 900px;
+    font-size: 9pt;
+    padding-top: 8px;
+    margin-left: 25px;
+	display: block;
+}
+
+#rodape a {
+    text-decoration: none;
+}
+
+#rodape a:hover {
+    text-decoration: underline;
+}
+
+#barra_lateral {
+    width: 180px;
+    height: 100%;
+    padding: 16px;
+    float: left;
+    display: inline-block;
+    text-align: left;
+    font-family: "Century Gothic",Verdana, serif;
+    font-size: 14px;
+}
+
+
+#conteudo_pagina {
+    width: 680px;
+    float: left;
+    display: block;
+}
+
+#conteudo_pagina form {
+    font-family: "Century Gothic", "Segoe UI Light", Verdana, serif;
+}
+
+#conteudo  small {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    line-height: 1.5em;
+}
+
+h1 {
+    text-align: center;
+    font-family: "Century Gothic","Segoe UI Light","Times",serif;
+}
+
+/******************************************
+Implementação dos menus
+******************************************/
+
+#menus {
+    float:left;
+    padding:0;
+    margin:0;
+    color: white;    
+    background: darkred;
+    width: 100%;
+    height: 30px;
+    border:solid 1px darkred;
+    clear:both;
+    vertical-align:middle;
+    text-align: justify;
+} 
+
+#menus a, #menus a:visited {
+    font-family: Georgia;
+    font-weight:bold;
+    font-size:12pt;
+    color: white;
+    background: darkred;
+    text-decoration: none;
+}
+
+#menus ul {
+    list-style-type:none;
+    padding:0;
+    margin:0;
+}
+
+#menus ul li {
+    float:left;
+    position:relative;
+    border-right:solid 1px darkred;
+    border-left:solid 1px darkred;
+}
+
+#menus ul li:hover {color: yellow;}
+
+#menus ul li a {
+    color: white;
+    background: darkred;
+    float:none;
+    float:left ;
+    display:block;
+    height:30px;
+    line-height:30px;
+    padding:0 10px 0 10px;
+    text-decoration:none;
+}
+
+#menus ul li ul {
+    display:none;
+    border:none;
+    background: lightcoral;
+    width:1px;
+}
+
+#menus ul li ul li a {
+    font-size: 10pt;
+}
+
+#menus ul li:hover a {
+    background-color:#CC0000;
+    text-decoration:none;
+    color: white;
+} /*Cor do menu enquanto navegamos nos submenus */
+
+#menus ul li:hover ul {
+    display:block;
+}
+
+#menus ul li:hover ul li a {
+    display:block; 
+    width:14em;
+    height:auto; 
+    line-height:1.3em; 
+    margin-left:-1px; 
+    padding:5px 10px 5px 10px; 
+    border-left:solid 1px lightcoral; 
+    border-bottom: solid 1px lightcoral; 
+    background-color: lightcoral;  
+}
+
+#menus ul li:hover ul li a {
+    color: black;
+    font-family: Arial;
+} 
+
+#menus ul li:hover ul li a:hover {
+    background-color: white; 
+    text-decoration:none;
+    color: black;
+} /* Cores do submenu ao passar o mouse */
+
+
+#menus ul li a:hover ul li a {
+    display:block; 
+    width:12em;
+    height:1px; 
+    line-height:1.3em; 
+    padding:4px 16px 4px 16px; 
+    border-left:solid 1px lightcoral; 
+    border-bottom: solid 1px lightcoral;
+} 

@@ -1,0 +1,14 @@
+body {
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  background-color: #3337a3;
+  
+}
+
+.pricing-header {
+    background-color: #2b87d0;
+    background-image: url("imagens/imbel-logo2.jpg");
+}
