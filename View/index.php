@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    include("../includes/verificaSessao.php");
+    $usuario = $_SESSION['usuario'];
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,61 +29,97 @@
       <img src="../imagens/logo2.png" class="my-0 mr-md-auto font-weight-normal" />
       
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Funcionários</a>
-        <a class="p-2 text-dark" href="#">Sanções</a>
-        <a class="p-2 text-dark" href="#">Desempenho</a>
-        <a class="p-2 text-dark" href="#">Absenteísmo</a>
-        <a class="p-2 text-dark" href="#">Relatórios</a>
+          <?php
+            include('../includes/MenuIndex.php');
+          ?>
       </nav>
-      <a class="btn btn-outline-primary" href="#">Sair</a>
+      <a class="btn btn-outline-primary" href="../Controler/logout.php">Sair</a>
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Bem vindo [USUARIO]</h1>
+        <h1 class="display-4">Bem vindo(a)</h1><br /><h3> 
+      <?php
+        echo $usuario->nome;
+      ?>
+      </h3>
       <p class="lead">
-          Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.
+          Seu último acesso foi em: 
+      <?php        
+            echo date('d/m/Y H:i:s', strtotime($usuario->ultimoAcesso));
+      ?>
       </p>
     </div>
 
     <div class="container">
-      <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Funcionários</h4>
-          </div>
-          <div class="card-body">
-            <img src="../imagens/func.png" />
-            
-            <a class="btn btn-lg btn-block btn-outline-primary">Acessar</a>
-          </div>
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Funcionarios</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="../Controler/controlerFuncionario.php?opcao=1">
+                        <img src="../imagens/func1.png" width="120px" height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Absenteísmo</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <img src="../imagens/horas.png" height="120px" /> 
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Desempenho</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <img src="../imagens/desemp.png" height="120px" /> 
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Disciplina</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <img src="../imagens/disc.png"  height="120px" /> 
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Relatórios</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <img src="../imagens/relat.png" width="120px" height="120px" /> 
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Normas</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <img src="../imagens/normas.png" width="120px" height="120px" /> 
+                    <br /><br /><br /><br />
+                </div>
+            </div>
         </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Absenteísmo</h4>
-          </div>
-          <div class="card-body">
-              <img src="../imagens/hr_abs.jpg" />
-            
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Desempenho</h4>
-          </div>
-          <div class="card-body">
-              <img src="../imagens/desemp.png" />
-            
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
-          </div>
-        </div>
-      </div>
 
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
+          <div class="row">
             <div class="col-12 col-md">
                 <img class="mb-2" src="../imagens/imbel.ico" alt="">
-                <small class="d-block mb-3 text-muted">&copy; 2018</small>
             </div>
           <div class="col-6 col-md">
             <h5>Lançamentos</h5>
@@ -100,7 +142,7 @@
           <div class="col-6 col-md">
             <h5>Normas</h5>
             <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">2.A.12.N-001-Rev.00</a></li>
+                <li><a class="text-muted" href="../arquivos/2.A.12.N-001 - Rev.00 - Critérios para Aproveitamento Funcional.pdf" download>2.A.12.N-001-Rev.00</a></li>
             </ul>
           </div>
         </div>

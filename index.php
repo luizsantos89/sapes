@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(isset($_SESSION["usuario"])) {
+        Header("Location: View/index.php");
+    }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -17,20 +23,29 @@
   </head>
 
   <body class="text-center">
-    <form class="form-signin">
-        <img class="mb-4" src="imagens/logo1.png" alt="" height="106">
-      <h1 class="h3 mb-3 font-weight-normal">Acessar</h1>
-      <label class="sr-only">Login</label>
-      <input type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
-      <label for="inputPassword" class="sr-only">Senha</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-      <p class="mt-5 mb-3 text-muted">
-          Divisão de Recursos Humanos <br />
-          Seção de Administração de Pessoal<br /> 
-          Indústria de Material Bélico do Brasil<br />
-          Fábrica Juiz de Fora<br />
-      </p> 
-    </form>
+        <form class="form-signin" action="Controler/controlerLogin.php" method="post">
+            
+            <img class="mb-4" src="imagens/logo1.png" alt="" height="106">
+            <h1 class="h3 mb-3 font-weight-normal">Acessar</h1>
+            <label class="sr-only">Login</label>
+            <input type="text" name="login" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
+            <label for="inputPassword" class="sr-only">Senha</label>
+            <input type="password" name="senha" id="inputPassword" class="form-control" placeholder="Password" required>
+            
+            <?php
+                if(isset($_GET['erro'])) {
+                    echo '<div class="erro">Usuário e/ou senha incorretos</div><br />';
+                }            
+            ?>
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+
+            <p class="mt-5 mb-3 text-muted">
+                Seção de Administração de Pessoal<br />
+                Divisão de Recursos Humanos <br /> 
+                Fábrica Juiz de Fora<br />
+                IMBEL&reg;<br />
+            </p> 
+        </form>
   </body>
 </html>

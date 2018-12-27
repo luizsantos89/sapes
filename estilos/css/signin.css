@@ -47,3 +47,9 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.erro {
+    color: red;
+    font-weight: bold;
+    font-size: small;
+}
