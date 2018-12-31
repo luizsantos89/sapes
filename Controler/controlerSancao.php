@@ -1,6 +1,9 @@
 <?php
-    require_once('../Model/FuncionarioDAO.php');  
-    require_once('../Model/UsuarioDAO.php');   
+    require('../includes/conexao.inc');
+    require_once('../Model/SancaoDAO.php'); 
+    require('../Model/FuncionarioDAO.php'); 
+    require('../Model/UsuarioDAO.php'); 
+    require('../Model/TipoSancaoDAO.php'); 
     
     session_start();
     
@@ -9,18 +12,25 @@
     }
     
     $opcao = (int)$_REQUEST['opcao'];
-    //Lista todos os funcionarios
+    
+    //Lista todas sanções ordenadas por data
     if($opcao == 1){
-        $funcionarioDAO = new FuncionarioDAO();
+        $sancaoDAO = new SancaoDAO();
         $usuarioDAO = new UsuarioDAO();
+        $funcionarioDAO = new FuncionarioDAO();
+        $tipoSancaoDAO = new TipoSancaoDAO();
         $listaFuncionarios = $funcionarioDAO->getFuncionarios();
         $listaUsuarios = $usuarioDAO->getUsuarios();
+        $listaSancoes = $sancaoDAO->getSancoes();
+        $tiposSancao = $tipoSancaoDAO->getTipoSancoes();
         $_SESSION['funcionarios'] = $listaFuncionarios;
         $_SESSION['usuarios'] = $listaUsuarios;
-        header("Location:../View/Funcionario/ListaFuncionario.php");
+        $_SESSION['sancoes'] = $listaSancoes;
+        $_SESSION['tipoSancoes'] = $tiposSancao;
+        header("Location:../View/Sancao/ListaSancoes.php");
     }    
     
-    //Lista funcionario por ID
+    //Lista sanc
     if($opcao == 2){
         $idFuncionario = $_REQUEST["idFuncionario"];                
         $funcionarioDAO = new FuncionarioDAO();

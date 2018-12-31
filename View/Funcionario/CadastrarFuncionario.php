@@ -1,6 +1,7 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
+    $secoes = $_SESSION['secoes'];
 ?>
 
 <!doctype html>
@@ -53,16 +54,37 @@
       <div class="col-md-12 order-md-1">
             <h4 class="mb-3">Dados do funcionário:</h4>
             <form class="needs-validation" action="../../Controler/controlerFuncionario.php?opcao=4" method="post" novalidate>
+                
+            <h4 class="mb-3">Dados do funcionário:</h4>
+            <form class="needs-validation" action="../../Controler/controlerFuncionario.php?opcao=3" method="post" novalidate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Nome:</label>
-                        <input type="text" class="form-control" name="nome"   onkeypress='return filtroLetras(event)' required>
+                        <input type="text" class="form-control" name="nome" value="" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Crachá:</label>
-                        <input type="text" class="form-control" name="cracha"  onkeypress='return filtroTeclas(event)' required>
+                        <label>Matrícula/Crachá:</label>
+                        <input type="text" class="form-control" name="cracha" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Situação:</label>
+                        <input type="text" class="form-control" name="situacao" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Cargo:</label>
+                        <input type="text" class="form-control" name="cargo"value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Data de Admissão:</label>
+                        <input type="text" class="form-control" name="dataAdmissao" value="" required>
                     </div>
                 </div>
                 <div class="row">
@@ -71,6 +93,18 @@
                         <select name="funcAtivo" class="form-control" >
                             <option value="1">Ativo</option>
                             <option value="0">Inativo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Seção:</label>
+                        <select name="idSecao" class="form-control" >
+                            <?php
+                                foreach($secoes as $secao) {
+                                    echo "<option value=$secao->idSecao>$secao->descricao</option>";
+                                }
+                            ?>
                         </select>
                     </div>
                 </div>

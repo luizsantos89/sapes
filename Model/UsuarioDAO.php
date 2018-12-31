@@ -1,5 +1,4 @@
 <?php
-    //require('../includes/conexao.inc');
     require('Usuario.php');
     
     class UsuarioDAO{   

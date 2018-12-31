@@ -1,12 +1,23 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
+    require '../../Model/Funcionario.php';
+    require '../../Model/Usuario.php';
+    require '../../Model/Secao.php';
+    require '../../Model/Divisao.php';
+    require '../../Model/Gerencia.php';
+
+    $funcionarios = $_SESSION['funcionarios'];
+    $usuarios = $_SESSION['usuarios'];
+    $secoes = $_SESSION['secoes'];
+    $divisoes = $_SESSION['divisoes'];
+    $gerencias = $_SESSION['gerencias'];
 ?>
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="iso-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -36,44 +47,61 @@
         <p class="lead">
             Funcionários cadastrados:
         </p>
-        <p>
-            <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
-        </p>
+        <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
     </div>
 
     <div class="container">
-      <div class="col-md-12 order-md-1">
             <div>
 
             <?php
-            require '../../Model/Funcionario.php';
-            require '../../Model/Usuario.php';
             
-            $funcionarios = $_SESSION['funcionarios'];
-            $usuarios = $_SESSION['usuarios'];
             if($funcionarios == null) {
                 
             } else {
             ?>
-            <table border="1" class="table">
-                <tr>
-                    <th>Nome:</th>
-                    <th>Crachá:</th>
-                    <th>Situação:</th>
-                    <th>Data de Cadastro:</th>
-                    <th>Cadastrado por:</th>
-                    <th>Data de Inativação:</th>
-                </tr>
+            <table class="table table-striped">
+                <thead class='thead-dark text-center'>
+                    <tr>
+                        <th>Crachá:</th>
+                        <th>Nome:</th>
+                        <th>Cargo:</th>
+                        <th>Tipo:</th>
+                        <th>Situação:</th>
+                        <th>Data de Admissão:</th>
+                        <th>Seção:</th>
+                        <th>Divisão:</th>
+                        <th>Gerência:</th>
+                        <th>Data de Cadastro:</th>
+                        <th>Cadastrado por:</th>
+                    </tr>
+                </thead>
+                <tbody>
                 <?php
                     foreach ($funcionarios as $funcionario) {
                 ?>
                     <tr>
-                        <td> 
-                            <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario; ?>"><?=$funcionario->nome; ?></a>  
-                        </td>
+                        
+                        <!--CRACHÁ -->
                         <td>
                             <?=$funcionario->cracha; ?>  
                         </td>
+                        
+                        <!--NOME -->
+                        <td> 
+                            <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario;?>"><?=$funcionario->nome; ?></a>  
+                        </td>
+                        
+                        <!--CARGO-->
+                        <td>
+                            <a href="../../Controler/controlerFuncionario.php?opcao=5&filtroCargo='<?=$funcionario->cargo;?>'"><?=$funcionario->cargo;?></a> 
+                        </td>
+                        
+                        <!--TIPO/CARGO-->
+                        <td>
+                            <?=$funcionario->situacao; ?>  
+                        </td>
+                        
+                        <!--ATIVO/INATIVO-->
                         <td>
                             <?php
                                 if ($funcionario->funcAtivo == 1) {
@@ -85,9 +113,65 @@
                             
                             ?>
                         </td>
+                        
+                        <!--DATA DE ADMISSAO-->
+                        <td>
+                            <?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?> 
+                        </td>
+                        
+                        <!--SEÇÃO -->
+                        <td>
+                            <?php                            
+                                foreach($secoes as $secao) {
+                                    if($secao->idSecao == $funcionario->idSecao) {
+                                        echo $secao->descricao;
+                                    }
+                                }                            
+                            ?>  
+                        </td>    
+                        
+                        <!-- DIVISAO -->
+                        <td>
+                            <?php
+                            foreach($secoes as $secao) {
+                                    if($secao->idSecao == $funcionario->idSecao) {
+                                        foreach($divisoes as $divisao) {
+                                            if($secao->idDivisao == $divisao->idDivisao) {
+                                                echo $divisao->descricao;
+                                            }
+                                        }
+                                    }
+                                }
+                            
+                            ?>  
+                        </td>
+                        
+                        <!-- GERENCIA -->
+                        <td>
+                            <?php
+                            foreach($secoes as $secao) {
+                                    if($secao->idSecao == $funcionario->idSecao) {
+                                        foreach($divisoes as $divisao) {
+                                            if($secao->idDivisao == $divisao->idDivisao) {
+                                                foreach($gerencias as $gerencia) {
+                                                    if($gerencia->idGerencia == $divisao->idGerencia) {
+                                                        echo $gerencia->descricao;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            
+                            ?>  
+                        </td>
+                        
+                        <!--DATA DE CADASTRO -->
                         <td>
                             <?= date('d/m/Y',strtotime($funcionario->dataCadastro)); ?>  
                         </td>
+                        
+                        <!-- CADASTRADO POR: -->
                         <td>
                             <?php
                             
@@ -99,24 +183,16 @@
                             
                             ?>  
                         </td>
-                        <td>
-                            <?php                            
-                                if ($funcionario->funcAtivo == 1) {
-                                    echo 'Func. ativo';
-                                } else {
-                                    echo $funcionario->dataInativacao;
-                                }
-                            ?>
-                        </td>
+                        
                     </tr>
                     <?php } ?>
+                </tbody>
             </table>
             <?php
             
                                 }
                                 ?>
             </div>
-        </div>
 
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <?php

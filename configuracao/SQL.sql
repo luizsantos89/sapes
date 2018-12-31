@@ -22,16 +22,38 @@ CREATE TABLE sancao(
     dataLancamento TIMESTAMP
 );
 
+CREATE TABLE gerencia(
+    idGerencia INT PRIMARY KEY AUTO_INCREMENT,
+    descricao VARCHAR(50)
+);
+
+CREATE TABLE divisao(
+    idDivisao INT PRIMARY KEY AUTO_INCREMENT,
+    idGerencia INT,
+    descricao VARCHAR(50)
+);
+
+CREATE TABLE secao(
+    idSecao INT PRIMARY KEY AUTO_INCREMENT,
+    idDivisao INT,
+    descricao VARCHAR(50)
+);
+
 CREATE TABLE funcionario(
     idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
     idUsuario INT,
+    idSecao INT,
     nome VARCHAR(1000),
+    cargo VARCHAR(1000),
+    situacao VARCHAR(500),
+    dataAdmissao TIMESTAMP,
     cracha INT,
     dataCadastro TIMESTAMP,
-    funcAtivo BOOLEAN
+    funcAtivo BOOLEAN,
+    dataInativacao TIMESTAMP
 );
 
-CREATE TABLE nota_desempenho(
+CREATE TABLE desempenho(
     idDesempenho INT PRIMARY KEY AUTO_INCREMENT,
     idFuncionario INT,
     idUsuario INT,
@@ -58,15 +80,96 @@ CREATE TABLE usuario(
     ultimoAcesso TIMESTAMP
 );
 
+INSERT INTO gerencia(descricao) VALUES ('GEAF');
+INSERT INTO gerencia(descricao) VALUES ('GIND');
+
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVADM',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVRH',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVAP',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('SCONF',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('AGI',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('APGCI',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVENG',2);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVPCP',2);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVQN',2);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVAPRO',2);
+INSERT INTO divisao(descricao, idGerencia) VALUES('DVPRO',2);
+INSERT INTO divisao(descricao, idGerencia) VALUES('SEMER',2);
+INSERT INTO divisao(descricao, idGerencia) VALUES('AUXCHFJF',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('OD',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('AUXGEAF',1);
+
+INSERT INTO divisao(descricao, idGerencia) VALUES('GEAF',1);
+INSERT INTO divisao(descricao, idGerencia) VALUES('GIND',2);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SALC',1);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEALMOX',1);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPAT/CONT', 1);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEFIN',1);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SAPES',2);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPP',2);
+INSERT INTO secao(descricao, idDivisao) VALUES('SESMT',2);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEMA',2);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SETRNP/MNT',3);
+INSERT INTO secao(descricao, idDivisao) VALUES('SESEG',3);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPAL',3);
+INSERT INTO secao(descricao, idDivisao) VALUES('SETI',3);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('O Lig',6);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPD',7);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPRC',7);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEFER',7);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SECP',8);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPLJ',8);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEMAT',8);
+INSERT INTO secao(descricao, idDivisao) VALUES('SECCI',8);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPRAD',9);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEQN',9);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEGQ',9);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SEME', 10);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEMM', 10);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SETC',11);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEPM',11);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEMG',11);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('SCONF',4);
+INSERT INTO secao(descricao, idDivisao) VALUES('AGI',5);
+INSERT INTO secao(descricao, idDivisao) VALUES('APGCI',6);
+INSERT INTO secao(descricao, idDivisao) VALUES('SEMER',12);
+INSERT INTO secao(descricao, idDivisao) VALUES('AUXCHFJF',13);
+INSERT INTO secao(descricao, idDivisao) VALUES('OD',14);
+INSERT INTO secao(descricao, idDivisao) VALUES('AUXGEAF',15);
+
+
+INSERT INTO secao(descricao, idDivisao) VALUES('DVADM',1);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVRH',2);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVAP',3);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVENG',7);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVPCP',8);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVQN',9);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVPRO',11);
+INSERT INTO secao(descricao, idDivisao) VALUES('DVAPRO',10);
+
+INSERT INTO secao(descricao, idDivisao) VALUES('GIND',17);
+INSERT INTO secao(descricao, idDivisao) VALUES('GEAF',16);
+
+
 INSERT INTO tipo_sancao(descricao, peso) VALUES ('Advertência verbal',1);
 INSERT INTO tipo_sancao(descricao, peso) VALUES ('Notificação por escrito',1);
 INSERT INTO tipo_sancao(descricao, peso) VALUES ('Advertência por escrito',2);
 INSERT INTO tipo_sancao(descricao, peso) VALUES ('Suspensão',3);
 
-INSERT INTO funcionario(nome,cracha,dataCadastro,funcAtivo, idUsuario) VALUES('Luiz Cláudio Afonso dos Santos',739,CURRENT_TIME,true,1);
+INSERT INTO funcionario(nome,cracha,dataCadastro,dataAdmissao, cargo,funcAtivo, idUsuario, idSecao, situacao) VALUES('Luiz Claudio Afonso dos Santos',739,CURRENT_TIME,'2018-02-19','Tec Adm Especializado',true,1,12,'EC');
 
-INSERT INTO usuario(nome,login,senha, ultimoAcesso) VALUES ('Rosana','rosana',md5('123456'),CURRENT_TIME);
+INSERT INTO usuario(nome,login,senha, ultimoAcesso) VALUES ('Rosana Davila Manso de Oliveira','rosana',md5('123456'),CURRENT_TIME);
 
 INSERT INTO sancao(idFuncionario,idUsuario,idTipo,numDoc,qtdDias,motivo,dataSancao,dataLancamento) VALUES(1,1,1,'A-001',0,'Teste','2018-12-01',CURRENT_TIME);
 
-INSERT INTO nota_desempenho(idFuncionario,idUsuario,nota,semestre,ano,dataLancamento) VALUES(1,1,10,1,2018,CURRENT_TIME);
+INSERT INTO desempenho(idFuncionario,idUsuario,nota,semestre,ano,dataLancamento) VALUES(1,1,10,1,2018,CURRENT_TIME);

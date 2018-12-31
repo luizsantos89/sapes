@@ -32,12 +32,12 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Funcionários</h1>
+        <h1 class="display-4">Sanções</h1>
         <p class="lead">
-            Funcionários cadastrados:
+            Sanções lançadas:
         </p>
         <p>
-            <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
+            <a class="btn btn-outline-primary" href="LancarSancao.php">Nova sanção</a>
         </p>
     </div>
 
@@ -48,51 +48,79 @@
             <?php
             require '../../Model/Funcionario.php';
             require '../../Model/Usuario.php';
+            require '../../Model/Sancao.php';
+            require '../../Model/TipoSancao.php';
             
             $funcionarios = $_SESSION['funcionarios'];
             $usuarios = $_SESSION['usuarios'];
-            if($funcionarios == null) {
+            $sancoes = $_SESSION['sancoes'];
+            $tiposSancoes = $_SESSION['tipoSancoes'];
+            if($sancoes == null) {
                 
             } else {
             ?>
             <table border="1" class="table">
                 <tr>
-                    <th>Nome:</th>
-                    <th>Crachá:</th>
-                    <th>Situação:</th>
-                    <th>Data de Cadastro:</th>
-                    <th>Cadastrado por:</th>
-                    <th>Data de Inativação:</th>
+                    <th>Funcionário:</th>
+                    <th>Tipo de Sanção:</th>
+                    <th>Peso:</th>
+                    <th>Data da Sanção:</th>
+                    <th>Motivo:</th>
+                    <th>Documento:</th>
+                    <th>Dias de suspensão:</th>
+                    <th>Lançamento:</th>
+                    <th>Data de Lançamento:</th>
                 </tr>
                 <?php
-                    foreach ($funcionarios as $funcionario) {
+                    foreach ($sancoes as $sancao) {
                 ?>
                     <tr>
-                        <td> 
-                            <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario; ?>"><?=$funcionario->nome; ?></a>  
-                        </td>
                         <td>
-                            <?=$funcionario->cracha; ?>  
+                            <?php
+                            
+                                foreach($funcionarios as $funcionario) {
+                                    if($funcionario->idFuncionario == $sancao->idFuncionario) {
+                                        echo $funcionario->nome;
+                                    }
+                                }
+                            
+                            ?>  
                         </td>
                         <td>
                             <?php
-                                if ($funcionario->funcAtivo == 1) {
-                                    echo 'Ativo';
-                                } else {
-                                    echo 'Inativo';
+                                foreach($tiposSancoes as $tipoSancao) {
+                                    if($tipoSancao->idTipo == $sancao->idTipo) {
+                                        echo $tipoSancao->descricao;
+                                    }
                                 }
-                            
-                            
                             ?>
                         </td>
                         <td>
-                            <?= date('d/m/Y',strtotime($funcionario->dataCadastro)); ?>  
+                            <?php
+                                foreach($tiposSancoes as $tipoSancao) {
+                                    if($tipoSancao->idTipo == $sancao->idTipo) {
+                                        echo $tipoSancao->peso;
+                                    }
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?= date('d/m/Y',strtotime($sancao->dataSancao)); ?>  
+                        </td>
+                        <td>
+                            <?= $sancao->motivo;?>
+                        </td>
+                        <td>
+                            <?= $sancao->numDoc;?>
+                        </td>
+                        <td>
+                            <?= $sancao->qtdDias;?>
                         </td>
                         <td>
                             <?php
                             
                                 foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $funcionario->idUsuario) {
+                                    if($usuario->idUsuario == $sancao->idUsuario) {
                                         echo $usuario->nome;
                                     }
                                 }
@@ -100,13 +128,7 @@
                             ?>  
                         </td>
                         <td>
-                            <?php                            
-                                if ($funcionario->funcAtivo == 1) {
-                                    echo 'Func. ativo';
-                                } else {
-                                    echo $funcionario->dataInativacao;
-                                }
-                            ?>
+                            <?= date('d/m/Y',strtotime($sancao->dataLancamento)); ?>  
                         </td>
                     </tr>
                     <?php } ?>

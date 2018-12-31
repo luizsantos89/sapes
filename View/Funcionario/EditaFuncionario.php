@@ -3,6 +3,8 @@
     include("../../includes/verificaSessao.php");
     require('../../Model/Funcionario.php');
     $funcionario = $_SESSION['funcionario'];
+    $secoes = $_SESSION['secoes'];
+    $divisoes = $_SESSION['divisoes'];
 ?>
 
 <!doctype html>
@@ -35,12 +37,9 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Funcionário <?=$funcionario->nome;?></h1>
+        <h1 class="display-4">Funcionário </h1><h3><?=$funcionario->nome;?></h3>
         <p class="lead">
             Editar funcionário:
-        </p>
-        <p>
-            <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
         </p>
     </div>
 
@@ -56,8 +55,26 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Crachá:</label>
+                        <label>Matrícula/Crachá:</label>
                         <input type="text" class="form-control" name="cracha" value="<?php echo $funcionario->cracha;?>" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Situação:</label>
+                        <input type="text" class="form-control" name="situacao" value="<?php echo $funcionario->situacao;?>" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Cargo:</label>
+                        <input type="text" class="form-control" name="cargo" value="<?php echo $funcionario->cargo;?>" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Data de Admissão:</label>
+                        <input type="text" class="form-control" name="dataAdmissao" value="<?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?>" value="" required>
                     </div>
                 </div>
                 <div class="row">
@@ -69,9 +86,24 @@
                         </select>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Seção:</label>
+                        <select name="idSecao" class="form-control" >
+                            <?php
+                                foreach($secoes as $secao) {
+                                    if($funcionario->idSecao == $secao->idSecao){
+                                        echo "<option selected value=$secao->idSecao>$secao->descricao</option>";
+                                    } else {
+                                        echo "<option value=$secao->idSecao>$secao->descricao</option>";
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                
                 <input type="hidden" value="<?=$funcionario->idFuncionario;?>" name="idFuncionario" />
-                <input type="hidden" value="<?=$funcionario->idUsuario;?>" name="idUsuario" />
-                <input type="hidden" value="<?=$funcionario->dataCadastro;?>" name="dataCadastro" />
                 <hr class="mb-6">
                 <button class="btn btn-outline-primary" type="submit">Alterar dados</button>
                 <a class="btn btn-outline-danger" href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?php echo $funcionario->idFuncionario;?>">Exclui</a>

@@ -9,8 +9,6 @@
     if (isset($_REQUEST["login"])){ 
         $login = $_REQUEST["login"];
         $senha = md5($_REQUEST["senha"]);
-        echo($login.'-'.$senha);
-        echo '<br />';
         if($login!=null || $senha!=null) {        
             $sql = $conexao->prepare("SELECT * FROM usuario where login = :login AND senha = :senha");
             $sql->bindValue(':login', $login);
@@ -21,10 +19,9 @@
             
             if ($usuario->nome != "") {
                 $_SESSION["usuario"] = $usuario;
-                echo 'Usuario encontrado';
+                echo $usuario->nome;
                 Header("Location: ../View/index.php");
             } else {
-                echo 'Usuario não encontrado';
                 Header("Location: ../index.php?erro=1");
             }
         }
