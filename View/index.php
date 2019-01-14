@@ -50,7 +50,7 @@
       </p>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="card-deck mb-3 text-center">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="card-body">
                     <br />
-                    <a href="../Controler/controlerFuncionario.php?opcao=1">
+                    <a href="../Controler/controlerFuncionario.php?opcao=6&pagina=1">
                         <img src="../imagens/func1.png" width="120px" height="120px" /> 
                     </a>
                     <br /><br /><br /><br />
@@ -66,11 +66,25 @@
             </div>
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Absenteísmo</h4>
+                        <h4 class="my-0 font-weight-normal">Absenteísmo</h4>
                 </div>
                 <div class="card-body">
                     <br />
-                    <img src="../imagens/horas.png" height="120px" /> 
+                    <a href="../Controler/controlerAbsenteismo.php?opcao=1">
+                        <img src="../imagens/horas.png" height="120px" />
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Sanções</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="../Controler/controlerSancao.php?opcao=6&pagina=1">
+                        <img src="../imagens/disc.png"  height="120px" /> 
+                    </a>
                     <br /><br /><br /><br />
                 </div>
             </div>
@@ -80,17 +94,9 @@
                 </div>
                 <div class="card-body">
                     <br />
-                    <img src="../imagens/desemp.png" height="120px" /> 
-                    <br /><br /><br /><br />
-                </div>
-            </div>
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Disciplina</h4>
-                </div>
-                <div class="card-body">
-                    <br />
-                    <img src="../imagens/disc.png"  height="120px" /> 
+                    <a href="../Controler/controlerDesempenho.php?opcao=1">
+                        <img src="../imagens/desemp.png" height="120px" /> 
+                    </a>
                     <br /><br /><br /><br />
                 </div>
             </div>
@@ -101,52 +107,17 @@
                 <div class="card-body">
                     <br />
                     <img src="../imagens/relat.png" width="120px" height="120px" /> 
-                    <br /><br /><br /><br />
-                </div>
-            </div>
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Normas</h4>
-                </div>
-                <div class="card-body">
-                    <br />
-                    <img src="../imagens/normas.png" width="120px" height="120px" /> 
-                    <br /><br /><br /><br />
+                    <br><br><p>Em desenvolvimento</p>
                 </div>
             </div>
         </div>
-
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
-          <div class="row">
-            <div class="col-12 col-md">
-                <img class="mb-2" src="../imagens/imbel.ico" alt="">
-            </div>
-          <div class="col-6 col-md">
-            <h5>Lançamentos</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Funcionários</a></li>
-              <li><a class="text-muted" href="#">Sanções</a></li>
-              <li><a class="text-muted" href="#">Desempenho</a></li>
-              <li><a class="text-muted" href="#">Absenteísmo</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Relatórios</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Funcionários</a></li>
-              <li><a class="text-muted" href="#">Horas de Absenteísmo</a></li>
-              <li><a class="text-muted" href="#">Notas de Desempenho</a></li>
-              <li><a class="text-muted" href="#">Aproveitamento</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Normas</h5>
-            <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="../arquivos/2.A.12.N-001 - Rev.00 - Critérios para Aproveitamento Funcional.pdf" download>2.A.12.N-001-Rev.00</a></li>
-            </ul>
-          </div>
-        </div>
-      </footer>
+    </div>
+    <div class="container">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+          <?php
+              include('../includes/RodapeIndex.php');
+          ?>
+        </footer>
     </div>
 
 

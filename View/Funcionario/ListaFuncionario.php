@@ -7,6 +7,16 @@
     require '../../Model/Divisao.php';
     require '../../Model/Gerencia.php';
 
+    if ($_SESSION['gerencias'])  {
+        $funcionarios = $_SESSION['funcionarios'];
+        $usuarios = $_SESSION['usuarios'];
+        $secoes = $_SESSION['secoes'];
+        $divisoes = $_SESSION['divisoes'];
+        $gerencias = $_SESSION['gerencias'];
+    } else {
+        header("Location:../../Controler/controlerFuncionario?opcao=6&pagina=1");
+    }
+    
     $funcionarios = $_SESSION['funcionarios'];
     $usuarios = $_SESSION['usuarios'];
     $secoes = $_SESSION['secoes'];
@@ -21,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="../../imagens/imbel.ico">
 
     <title>Funcionários cadastrados</title>
 
@@ -50,23 +60,35 @@
         <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
             <div>
-
+                
             <?php
+            $qtd = 0;
             
             if($funcionarios == null) {
                 
-            } else {
+            } else {   
+                foreach($funcionarios as $funcionario) {
+                    $qtd+=1;
+                }
+                echo 'Total de <b>'.$qtd.'</b> funcionários ';
+                if(isset($_SESSION['porSecao'])) {
+                    unset($_SESSION['porSecao']);
+                    echo '<a href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1">[Listar todos]</a>';
+                }
+                
             ?>
             <table class="table table-striped">
                 <thead class='thead-dark text-center'>
                     <tr>
+                        <th colspan="2">Ações:</th>
                         <th>Crachá:</th>
                         <th>Nome:</th>
                         <th>Cargo:</th>
                         <th>Tipo:</th>
                         <th>Situação:</th>
+                        <th>Carga Horária:</th>
                         <th>Data de Admissão:</th>
                         <th>Seção:</th>
                         <th>Divisão:</th>
@@ -80,6 +102,14 @@
                     foreach ($funcionarios as $funcionario) {
                 ?>
                     <tr>
+                        <td>
+                            <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario?>">
+                                <img title="Editar Funcionário" src="../../imagens/edit.png" height="25px" /></a>
+                            </td>
+                        <td>
+                            <a href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?=$funcionario->idFuncionario?>">
+                                <img title="Excluir Funcionário" src="../../imagens/excluir.png" height="25px" /></a>
+                        </td>
                         
                         <!--CRACHÁ -->
                         <td>
@@ -88,17 +118,22 @@
                         
                         <!--NOME -->
                         <td> 
-                            <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario;?>"><?=$funcionario->nome; ?></a>  
+                            <a href="../../Controler/controlerFuncionario.php?opcao=10&idFuncionario=<?=$funcionario->idFuncionario;?>" title="Detalhes"><?=$funcionario->nome; ?></a>  
                         </td>
                         
                         <!--CARGO-->
                         <td>
-                            <a href="../../Controler/controlerFuncionario.php?opcao=5&filtroCargo='<?=$funcionario->cargo;?>'"><?=$funcionario->cargo;?></a> 
+                            <?=$funcionario->cargo;?> 
                         </td>
                         
                         <!--TIPO/CARGO-->
                         <td>
                             <?=$funcionario->situacao; ?>  
+                        </td>
+                        
+                        <!--CARGA HORARIA-->
+                        <td>
+                            <?=$funcionario->cargaHoraria; ?>  
                         </td>
                         
                         <!--ATIVO/INATIVO-->
@@ -124,7 +159,7 @@
                             <?php                            
                                 foreach($secoes as $secao) {
                                     if($secao->idSecao == $funcionario->idSecao) {
-                                        echo $secao->descricao;
+                                        echo "<a href='../../Controler/controlerFuncionario.php?opcao=7&idSecao=".$secao->idSecao."'>".$secao->descricao."</a>";
                                     }
                                 }                            
                             ?>  
@@ -137,7 +172,7 @@
                                     if($secao->idSecao == $funcionario->idSecao) {
                                         foreach($divisoes as $divisao) {
                                             if($secao->idDivisao == $divisao->idDivisao) {
-                                                echo $divisao->descricao;
+                                                echo "<a href='../../Controler/controlerFuncionario.php?opcao=8&idDivisao=".$divisao->idDivisao."'>".$divisao->descricao."</a>";
                                             }
                                         }
                                     }
@@ -155,7 +190,7 @@
                                             if($secao->idDivisao == $divisao->idDivisao) {
                                                 foreach($gerencias as $gerencia) {
                                                     if($gerencia->idGerencia == $divisao->idGerencia) {
-                                                        echo $gerencia->descricao;
+                                                        echo "<a href='../../Controler/controlerFuncionario.php?opcao=9&idGerencia=".$divisao->idGerencia."'>".$gerencia->descricao."</a>";
                                                     }
                                                 }
                                             }
@@ -188,6 +223,14 @@
                     <?php } ?>
                 </tbody>
             </table>
+                <p class="alert-warning">
+                    <?php
+                        if(isset($_SESSION['erroExclusao'])) {
+                            echo '<script>alert("Impossível excluir funcionário. Há lançamentos relacionados."); </script>';
+                            unset($_SESSION['erroExclusao']);
+                        }                    
+                    ?>
+                </p>
             <?php
             
                                 }

@@ -1,16 +1,18 @@
 <?php
 
 class TipoSancao{
-    private $idSancao;
+    private $idTipo;
+    private $idUsuario;
+    private $dataCadastro;
     private $descricao;
     private $peso;
     
-    public function getIdSancao() {
-        return $this->idSancao;
+    public function getIdTipo() {
+        return $this->idTipo;
     }
     
-    public function setIdSancao($idSancao) {
-        $this->idSancao = $idSancao;
+    public function setIdTipo($idTipo) {
+        $this->idTipo = $idTipo;
     }
     
     public function getDescricao() {
@@ -27,5 +29,21 @@ class TipoSancao{
     
     public function setPeso($peso) {
         $this->peso = $peso;
+    }
+    
+    public function setIdUsuario($idUsuario) {
+        $this->idUsuario = $idUsuario;
+    }
+    
+    public function getIdUsuario() {
+        return $this->idUsuario;
+    }
+    
+    public function setDataCadastro($dataCadastro) {
+        $this->dataCadastro = $dataCadastro;
+    }
+    
+    public function getDataCadastro() {
+        return $this->dataCadastro;
     }
 }

@@ -14,9 +14,81 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="favicon.ico">
+        <link rel="icon" href="../../imagens/imbel.ico">
 
         <title>Editar funcionário</title>
+        <script type="text/javascript">
+            function mascaraData(val) {
+            var pass = val.value;
+            var expr = /[0123456789]/;
+
+            for (i = 0; i < pass.length; i++) {
+              // charAt -> retorna o caractere posicionado no índice especificado
+              var lchar = val.value.charAt(i);
+              var nchar = val.value.charAt(i + 1);
+
+              if (i == 0) {
+                // search -> retorna um valor inteiro, indicando a posição do inicio da primeira
+                // ocorrência de expReg dentro de instStr. Se nenhuma ocorrencia for encontrada o método retornara -1
+                // instStr.search(expReg);
+                if ((lchar.search(expr) != 0) || (lchar > 3)) {
+                  val.value = "";
+                }
+
+              } else if (i == 1) {
+
+                if (lchar.search(expr) != 0) {
+                  // substring(indice1,indice2)
+                  // indice1, indice2 -> será usado para delimitar a string
+                  var tst1 = val.value.substring(0, (i));
+                  val.value = tst1;
+                  continue;
+                }
+
+                if ((nchar != '/') && (nchar != '')) {
+                  var tst1 = val.value.substring(0, (i) + 1);
+
+                  if (nchar.search(expr) != 0)
+                    var tst2 = val.value.substring(i + 2, pass.length);
+                  else
+                    var tst2 = val.value.substring(i + 1, pass.length);
+
+                  val.value = tst1 + '/' + tst2;
+                }
+
+              } else if (i == 4) {
+
+                if (lchar.search(expr) != 0) {
+                  var tst1 = val.value.substring(0, (i));
+                  val.value = tst1;
+                  continue;
+                }
+
+                if ((nchar != '/') && (nchar != '')) {
+                  var tst1 = val.value.substring(0, (i) + 1);
+
+                  if (nchar.search(expr) != 0)
+                    var tst2 = val.value.substring(i + 2, pass.length);
+                  else
+                    var tst2 = val.value.substring(i + 1, pass.length);
+
+                  val.value = tst1 + '/' + tst2;
+                }
+              }
+
+              if (i >= 6) {
+                if (lchar.search(expr) != 0) {
+                  var tst1 = val.value.substring(0, (i));
+                  val.value = tst1;
+                }
+              }
+            }
+
+            if (pass.length > 10)
+              val.value = val.value.substring(0, 10);
+            return true;
+          }
+    </script>
 
         <!-- Bootstrap core CSS -->
         <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -74,7 +146,19 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Data de Admissão:</label>
-                        <input type="text" class="form-control" name="dataAdmissao" value="<?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?>" value="" required>
+                        <input type="text" class="form-control" onkeypress="mascaraData(this)" name="dataAdmissao" value="<?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?>" value="" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Carga Horária:</label>
+                        <select name="cargaHoraria" class="form-control" >
+                            <option value="44">44 horas semanais</option><!--Maioria-->
+                            <option value="40">40 horas semanais</option><!--Advogado-->
+                            <option value="36">36 horas semanais</option><!--Guarda Patrimonial-->
+                            <option value="24">24 horas semanais</option><!--Técnico de Radiologia-->
+                            <option value="20">20 horas semanais</option><!--Médico Trabalho-->
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -107,15 +191,16 @@
                 <hr class="mb-6">
                 <button class="btn btn-outline-primary" type="submit">Alterar dados</button>
                 <a class="btn btn-outline-danger" href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?php echo $funcionario->idFuncionario;?>">Exclui</a>
-                <a  class="btn btn-outline-primary" href="../../Controler/controlerFuncionario.php?opcao=1">Cancelar</a>
+                <a  class="btn btn-outline-primary" href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1">Cancelar</a>
             </form>
         </div>
-
+    </div>
+    <div class="container">
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <?php
-            include('../../includes/Rodape.php');
-        ?>
-      </footer>
+          <?php
+              include('../../includes/Rodape.php');
+          ?>
+        </footer>
     </div>
 
 
@@ -127,6 +212,10 @@
     <script src="assets/js/vendor/popper.min.js"></script>
     <script src="dist/js/bootstrap.min.js"></script>
     <script src="assets/js/vendor/holder.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js'></script>
+    <script>
+        $('.input-group.date').datepicker({format: "dd/mm/yyyy"});
+    </script>
     <script>
       Holder.addTheme('thumb', {
         bg: '#55595c',

@@ -1,6 +1,11 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
+    
+    
+    if(!isset($_SESSION['tipoSancoes'])) {
+        header("Location: ../../Controler/controlerSancao.php?opcao=6&pagina=1");
+    }
 ?>
 
 <!doctype html>
@@ -10,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="../../imagens/imbel.ico">
 
     <title>Funcionários cadastrados</title>
 
@@ -41,7 +46,7 @@
         </p>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="col-md-12 order-md-1">
             <div>
 
@@ -53,14 +58,22 @@
             
             $funcionarios = $_SESSION['funcionarios'];
             $usuarios = $_SESSION['usuarios'];
-            $sancoes = $_SESSION['sancoes'];
             $tiposSancoes = $_SESSION['tipoSancoes'];
-            if($sancoes == null) {
-                
+            
+            if(!isset($_SESSION['sancoes'])) {
+                header("Location: ../../Controler/controlerSancao.php?opcao=6&pagina=1");
             } else {
+                $sancoes = $_SESSION['sancoes'];
+                $qtd = 0;
+                
+                foreach($sancoes as $sancao) {
+                    $qtd++;
+                }
+                echo 'Quantidade total de sanções: '.$qtd.'<br>';
             ?>
-            <table border="1" class="table">
-                <tr>
+            <table border='1' class="table table-striped">
+                <tr class="thead-dark text-center">
+                    <th colspan="2">Ações:</th>
                     <th>Funcionário:</th>
                     <th>Tipo de Sanção:</th>
                     <th>Peso:</th>
@@ -74,16 +87,22 @@
                 <?php
                     foreach ($sancoes as $sancao) {
                 ?>
-                    <tr>
+                <tr class="">
                         <td>
-                            <?php
-                            
+                            <a href="../../Controler/controlerSancao.php?opcao=2&idSancao=<?=$sancao->idSancao?>">
+                                <img title="Editar Sanção" src="../../imagens/edit.png" height="25px" /></a>
+                            </td>
+                        <td>
+                            <a href="../../Controler/controlerSancao.php?opcao=5&idSancao=<?=$sancao->idSancao?>">
+                                <img title="Excluir Sanção" src="../../imagens/excluir.png" height="25px" /></a>
+                        </td>
+                        <td>
+                            <?php                            
                                 foreach($funcionarios as $funcionario) {
                                     if($funcionario->idFuncionario == $sancao->idFuncionario) {
                                         echo $funcionario->nome;
                                     }
-                                }
-                            
+                                }                            
                             ?>  
                         </td>
                         <td>
@@ -114,17 +133,22 @@
                             <?= $sancao->numDoc;?>
                         </td>
                         <td>
-                            <?= $sancao->qtdDias;?>
+                            <?php
+                                if($sancao->idTipo == 4) {
+                                    echo $sancao->qtdDias;
+                                } else {
+                                    echo 'Não se aplica';
+                                }
+                            
+                            ?>
                         </td>
                         <td>
-                            <?php
-                            
+                            <?php                            
                                 foreach($usuarios as $usuario) {
                                     if($usuario->idUsuario == $sancao->idUsuario) {
                                         echo $usuario->nome;
                                     }
-                                }
-                            
+                                }                            
                             ?>  
                         </td>
                         <td>
@@ -139,12 +163,14 @@
                                 ?>
             </div>
         </div>
-
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <?php
-            include('../../includes/Rodape.php');
-        ?>
-      </footer>
+    </div>
+    <div class="container">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+          <?php
+              include('../../includes/Rodape.php');
+              unset($_SESSION['sancoes']);
+          ?>
+        </footer>
     </div>
 
 

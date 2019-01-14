@@ -32,7 +32,7 @@
             return $lista;
         }
         
-        public function getFuncionarioByID($idUsuario) {
+        public function getUsuarioById($idUsuario) {
             $sql = $this->con->prepare("SELECT * FROM usuario where idUsuario = :idUsuario");
             $sql->bindValue(':idUsuario', $idUsuario);
             $sql->execute();
@@ -42,14 +42,21 @@
             return $usuario;
         }
         
-        public function editarUsuario($funcionario){
-            $sql = $this->con->prepare("UPDATE funcionario SET nome = :nome, email = :email, usuario = :usuario, cpf = :cpf, dataDemissao = :dataDemissao WHERE idUsuario = :idUsuario");
-            $sql->bindValue(":idUsuario",$funcionario->idUsuario);
-            $sql->bindValue(":nome",$funcionario->nome);
-            $sql->bindValue(":email",$funcionario->email);
-            $sql->bindValue(":usuario",$funcionario->usuario);
-            $sql->bindValue(":cpf",$funcionario->cpf);
-            $sql->bindValue(":dataDemissao",$funcionario->dataDemissao);
+        public function editarUsuario($usuario){
+            $sql = $this->con->prepare("UPDATE usuario SET nome = :nome, login = :login, senha = :senha WHERE idUsuario = :idUsuario");
+            $sql->bindValue(":idUsuario",$usuario->idUsuario);
+            $sql->bindValue(":nome",$usuario->nome);
+            $sql->bindValue(":login",$usuario->login);
+            $sql->bindValue(":senha",$usuario->senha);
             $sql->execute();
         }
+        
+        public function novoUsuario($usuario) {
+            $sql = $this->con->prepare("INSERT INTO usuario(nome, login, senha) VALUES(:nome, :login, :senha)");
+            $sql->bindValue(":nome",$usuario->nome);
+            $sql->bindValue(":login",$usuario->login);
+            $sql->bindValue(":senha",$usuario->senha);
+            $sql->execute();
+        }
+        
     }

@@ -1,4 +1,7 @@
 <?php
+    require 'conexao.inc';
+    
+
     if(isset($_SESSION["usuario"])) {
         
     } else {

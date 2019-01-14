@@ -11,6 +11,7 @@ class Funcionario {
     private $dataCadastro;
     private $funcAtivo;
     private $situacao;
+    private $cargaHoraria;
     private $dataInativacao;
 
     public function getIdFuncionario(){
@@ -99,6 +100,14 @@ class Funcionario {
     
     public function getIdSecao() {
         return $this->idSecao;
+    }
+    
+    public function setCargaHoraria($cargaHoraria) {
+        $this->cargaHoraria = $cargaHoraria;
+    }
+    
+    public function getCargaHoraria() {
+        return $this->cargaHoraria;
     }
 }
 

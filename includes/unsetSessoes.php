@@ -1,0 +1,10 @@
+<?php
+    unset($_SESSION['secoes']);
+    unset($_SESSION['divisoes']);
+    unset($_SESSION['gerencias']);
+    unset($_SESSION['tipoSancoes']);
+    unset($_SESSION['sancoes']);
+    unset($_SESSION['notasDesempenho']);
+    unset($_SESSION['absenteismo']);
+    unset($_SESSION['funcionario']);
+    ?>

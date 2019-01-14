@@ -2,7 +2,7 @@
 
 class Sancao{
     private $idSancao;
-    private $idTipoSancao;
+    private $idTipo;
     private $idFuncionario;
     private $idUsuario;
     private $numDoc;
@@ -19,16 +19,16 @@ class Sancao{
         $this->idSancao = $idSancao;
     }
     
-    public function getTipoIdSancao() {
-        return $this->idTipoSancao;
+    public function getIdTipo() {
+        return $this->idTipo;
     }
     
-    public function setIdTipoSancao($idTipoSancao) {
-        $this->idTipoSancao = $idTipoSancao;
+    public function setIdTipo($idTipo) {
+        $this->idTipo = $idTipo;
     }
     
     public function getIdFuncionario() {
-        return $this->idSancao;
+        return $this->idFuncionario;
     }
     
     public function setIdFuncionario($idFuncionario) {
@@ -73,7 +73,7 @@ class Sancao{
     }
     
     public function getDataLancamento() {
-        return $this->dataSancao;
+        return $this->dataLancamento;
     }
     
     public function setDataLancamento($dataLancamento) {

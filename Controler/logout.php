@@ -11,5 +11,13 @@
     $sql->execute();
         
     unset($_SESSION['usuario']);
+    unset($_SESSION['funcionarios']);
+    unset($_SESSION['secoes']);
+    unset($_SESSION['divisoes']);
+    unset($_SESSION['gerencias']);
+    unset($_SESSION['tipoSancoes']);
+    unset($_SESSION['sancoes']);
+    unset($_SESSION['notasDesempenho']);
+    unset($_SESSION['absenteismo']);
     
     Header("Location: ../index.php");
