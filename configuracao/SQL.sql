@@ -88,8 +88,11 @@ CREATE TABLE aproveitamento(
     idAproveitamento INT PRIMARY KEY AUTO_INCREMENT,
     idUsuario INT,
     idFuncionario INT,
+    idUsuarioUltimaAlteracao INT,
     semestre INT,
     ano INT,
+    dataLancamento TIMESTAMP,
+    dataUltimaAlteracao TIMESTAMP,
     horasAbsenteismo FLOAT,
     maxHorasAbsenteismo FLOAT,
     maxFatorDisciplinar FLOAT,
@@ -101,8 +104,7 @@ CREATE TABLE aproveitamento(
     indiceCargaHoraria FLOAT,
     indiceAbsenteismo FLOAT,
     indiceDisciplinar FLOAT,
-    indiceAproveitamento FLOAT,
-    dataLancamento TIMESTAMP
+    indiceAproveitamento FLOAT
 );
 
 

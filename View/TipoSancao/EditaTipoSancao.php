@@ -127,7 +127,7 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Peso:</label>
-                        <input type="text" class="form-control" name="peso" value="?=$tipoSancao->peso;?>" required>
+                        <input type="text" class="form-control" name="peso" value="<?=$tipoSancao->peso;?>" required>
                     </div>
                 </div>                
                 <input type="hidden" value="<?=$tipoSancao->idTipo;?>" name="idTipo" />

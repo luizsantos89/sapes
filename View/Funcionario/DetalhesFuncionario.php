@@ -1,6 +1,11 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
+    require '../../Model/DesempenhoDAO.php';
+    require '../../Model/SancaoDAO.php';
+    require '../../Model/TipoSancaoDAO.php';
+    require '../../Model/AbsenteismoDAO.php';
+    
     
     if(isset($_SESSION['funcionario'])){
         $funcionario = $_SESSION['funcionario'];
@@ -8,17 +13,14 @@
         header("Location: ../../Controler/controlerFuncionario.php?opcao=6&pagina=1");
     }
     
-    if(!isset($_SESSION['tipoSancoes'])) {
-        include('../../includes/setSessoes.php');
-        echo 'entrou aqui';
-        $secoes = $_SESSION['secoes'];
-        $divisoes = $_SESSION['divisoes'];
-        $gerencias = $_SESSION['gerencias'];
-        $notasDesempenho = $_SESSION['notasDesempenho'];
-        $sancoes = $_SESSION['sancoes'];
-        $tiposSancoes = $_SESSION['tipoSancoes'];
-        $listaAbsenteismo = $_SESSION['absenteismo'];
-    }
+    $secoes = $_SESSION['secoes'];
+    $divisoes = $_SESSION['divisoes'];
+    $gerencias = $_SESSION['gerencias'];
+    $notasDesempenho = $_SESSION['notasDesempenho'];
+    $sancoes = $_SESSION['sancoes'];
+    $tiposSancoes = $_SESSION['tipoSancoes'];
+    $listaAbsenteismo = $_SESSION['absenteismo'];
+    $listaAproveitamento = $_SESSION['aproveitamento'];
 ?>
 
 <!doctype html>
@@ -38,16 +40,24 @@
         <!-- Custom styles for this template -->
         <link href="../../estilos/css/pricing.css" rel="stylesheet">
         
+        <style>            
+        @media print{
+           #noprint{
+               display:none;
+           }
+        }
+        </style>
+        
     </head>
 
   <body>
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" />
-        <nav class="my-2 my-md-0 mr-md-3">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" id="noprint">
+        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" id="noprint" />
+        <nav class="my-2 my-md-0 mr-md-3" id="noprint">
             <?php include("../../includes/Menus.php"); ?>
         </nav>
-        <a class="btn btn-outline-primary" href="../../Controler/logout.php">Sair</a>
+        <a class="btn btn-outline-primary" href="../../Controler/logout.php" id="noprint">Sair</a>
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -58,10 +68,6 @@
         <div class="col-md-12 order-md-1 ">
             <h3>Dados do funcionário:</h3>
             <table class="table table-success">
-                <tr>
-                    <th>ID Funcionário: </th>
-                    <td><?=$funcionario->idFuncionario;?></td>
-                </tr>
                 <tr>
                     <th>Nome completo: </th>
                     <td><?=$funcionario->nome;?></td>
@@ -191,14 +197,17 @@
                         
                             $mediaDesempenho = $link->query($query);
                             
+                            $qtdHoras = 0;
+                            
                             while($media = mysqli_fetch_array($mediaDesempenho)) {
                                 $idFunc = $media['idFuncionario'];
-                                $qtdHoras = $media['quant'];
                                 
                                 if($idFunc == $funcionario->idFuncionario) {
-                                    echo round($qtdHoras,2);
+                                    $qtdHoras = $media['quant'];
                                 }
                             }
+                            
+                            echo round($qtdHoras,2);
                         ?> horas
                     </td>
                 </tr>
@@ -209,8 +218,9 @@
             
             <table class="table table-success">
                 <tr>
-                    <th>ID:</th>
                     <th>Data:</th>
+                    <th>Sanção:</th>
+                    <th>Peso:</th>
                     <th>Documento:</th>
                     <th>Dias:</th>
                     <th>Motivo:</th>
@@ -219,13 +229,16 @@
             <?php 
                 foreach($sancoes as $sancao) {
                     if($sancao->idFuncionario == $funcionario->idFuncionario){
-                        echo '<tr><td>'.$sancao->idSancao.'</td>';
-                        echo '<td>'.date('d/m/Y',strtotime($sancao->dataSancao)).'</td>';
-                        //echo '<td>'.$tipo->descricao.'</td>';
-                        //echo '<td>'.$tipo->peso.'</td>';
-                        echo '<td>'.$sancao->numDoc.'</td>';
-                        echo '<td>'.$sancao->qtdDias.'</td>';
-                        echo '<td>'.$sancao->motivo.'</td></tr>';
+                        foreach ($tiposSancoes as $tipo) {
+                            if($tipo->idTipo == $sancao->idTipo){
+                                echo '<td>'.date('d/m/Y',strtotime($sancao->dataSancao)).'</td>';
+                                echo '<td>'.$tipo->descricao.'</td>';
+                                echo '<td>'.$tipo->peso.'</td>';
+                                echo '<td>'.$sancao->numDoc.'</td>';
+                                echo '<td>'.$sancao->qtdDias.'</td>';
+                                echo '<td>'.$sancao->motivo.'</td></tr>';
+                            }
+                        }
                     }
                 }
             
@@ -240,22 +253,63 @@
                         
                             $totalSancoes = $link->query($query);
                             
+                            $quantidade = 0;
+                            
                             while($media = mysqli_fetch_array($totalSancoes)) {
                                 $idFunc = $media['idFuncionario'];
-                                $quantidade = $media['quantidade'];
                                 
                                 if($idFunc == $funcionario->idFuncionario) {
-                                    echo $quantidade;
+                                    $quantidade = $media['quantidade'];
                                 }
                             }
+                            
+                            echo $quantidade;
                         ?> sanções disciplinares
                     </td>
                 </tr>
             </table>
         </div>
+        
+        <div class="col-md-12 order-md-1">
+            <h3>4. Histórico de Aproveitamento Funcional</h3>
+            <table class="table table-success">
+                <tr><th>Período</th><th>Índice de aproveitamento funcional: </th></tr>
+            <?php
+                foreach($listaAproveitamento as $aproveitamento) {
+                    if($aproveitamento->idFuncionario == $funcionario->idFuncionario) {
+                        echo "<tr><td>$aproveitamento->semestre º semestre - $aproveitamento->ano </td><td>$aproveitamento->indiceAproveitamento</td></tr>";
+                    }
+                }            
+            ?><tr>
+                    <th>Média total histórica: </th>
+                    <td>
+                        <?php
+                            $aprovMedia = 0;
+                        
+                            $link = mysqli_connect("localhost", "root", "", "sapes");
+                        
+                            $query = "select idFuncionario, AVG(indiceAproveitamento) as aprovMedio from aproveitamento GROUP BY idFuncionario;";
+                        
+                            $mediaAproveitamento = $link->query($query);
+                            
+                            while($media = mysqli_fetch_array($mediaAproveitamento)) {
+                                $idFunc = $media['idFuncionario'];
+                                
+                                if($idFunc == $funcionario->idFuncionario) {
+                                    $aprovMedia = $media['aprovMedio'];
+                                }
+                            }
+                            
+                            echo round($aprovMedia,5);
+                        ?>
+                    </td>
+                </tr>
+            </table>
+            </table>
+        </div>
     </div>
-    <div class="container">
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="container" id="noprint">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top" id="noprint">
           <?php
               include('../../includes/Rodape.php');
               include('../../includes/unsetSessoes.php');
@@ -263,25 +317,5 @@
         </footer>
     </div>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    <script src="assets/js/vendor/holder.min.js"></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js'></script>
-    <script>
-        $('.input-group.date').datepicker({format: "dd/mm/yyyy"});
-    </script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
   </body>
 </html>

@@ -84,9 +84,23 @@
         $desempenho->setDataLancamento(date('Y-m-d H:i:s'));
         
         $desempenhoDAO = new DesempenhoDAO();
-        $desempenhoDAO->incluirDesempenho($desempenho);
+        
+        $listaDesempenhoFunc = $desempenhoDAO->getDesempenhoFunc($desempenho);
+        
+        $erro = false;
+        
+        foreach($listaDesempenhoFunc as $desemp) {
+            if(($desemp->semestre == $desempenho->getSemestre()) && ($desemp->ano == $desempenho->getAno())){
+                header("Location: ../View/Desempenho/LancaDesempenho.php?erro");
+                $erro = true;
+            }
+        }
                 
-        header("Location:controlerDesempenho.php?opcao=1");
+        if ($erro == $false) {
+            $desempenhoDAO->incluirDesempenho($desempenho);
+            header("Location:controlerDesempenho.php?opcao=1");
+        }
+        
     }
     
     //Exclui desempenho

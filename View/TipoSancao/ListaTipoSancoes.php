@@ -24,6 +24,18 @@
     <link rel="icon" href="../../imagens/imbel.ico">
 
     <title>Tipos de sanções cadastrados</title>
+    
+    <script type="text/javascript">
+    // função para desabilitar a tecla F5.
+        window.onkeydown = function (e) {
+            if (e.keyCode === 116) {
+                alert("Função não permitida");
+                e.keyCode = 0;
+                e.returnValue = false;
+                return false;
+            }
+        }
+    </script>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">

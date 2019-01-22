@@ -29,6 +29,26 @@
     <link rel="icon" href="../../imagens/imbel.ico">
 
     <title>Horas de absenteísmo</title>
+    
+    <script type="text/javascript">
+    // função para desabilitar a tecla F5.
+        window.onkeydown = function (e) {
+            if (e.keyCode === 116) {
+                alert("Função não permitida");
+                e.keyCode = 0;
+                e.returnValue = false;
+                return false;
+            }
+        }
+    </script>
+    
+    <style type="text/css">        
+        @media print{
+           #noprint{
+               display:none;
+           }
+        }
+    </style>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -39,9 +59,9 @@
 
   <body>
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" />
-        <nav class="my-2 my-md-0 mr-md-3">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" id="noprint">
+        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png"  id="noprint" />
+        <nav class="my-2 my-md-0 mr-md-3"  id="noprint">
             <?php include("../../includes/Menus.php"); ?>
         </nav>
         <a class="btn btn-outline-primary" href="../../Controler/logout.php">Sair</a>

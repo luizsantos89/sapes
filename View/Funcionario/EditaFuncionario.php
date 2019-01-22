@@ -17,79 +17,79 @@
         <link rel="icon" href="../../imagens/imbel.ico">
 
         <title>Editar funcionário</title>
-        <script type="text/javascript">
-            function mascaraData(val) {
-            var pass = val.value;
-            var expr = /[0123456789]/;
+        <script language=javascript>
+            //MÁSCARA DE VALORES
 
-            for (i = 0; i < pass.length; i++) {
-              // charAt -> retorna o caractere posicionado no índice especificado
-              var lchar = val.value.charAt(i);
-              var nchar = val.value.charAt(i + 1);
+            function txtBoxFormat(objeto, sMask, evtKeyPress) {
+                    var i, nCount, sValue, fldLen, mskLen,bolMask, sCod, nTecla;
 
-              if (i == 0) {
-                // search -> retorna um valor inteiro, indicando a posição do inicio da primeira
-                // ocorrência de expReg dentro de instStr. Se nenhuma ocorrencia for encontrada o método retornara -1
-                // instStr.search(expReg);
-                if ((lchar.search(expr) != 0) || (lchar > 3)) {
-                  val.value = "";
-                }
 
-              } else if (i == 1) {
-
-                if (lchar.search(expr) != 0) {
-                  // substring(indice1,indice2)
-                  // indice1, indice2 -> será usado para delimitar a string
-                  var tst1 = val.value.substring(0, (i));
-                  val.value = tst1;
-                  continue;
-                }
-
-                if ((nchar != '/') && (nchar != '')) {
-                  var tst1 = val.value.substring(0, (i) + 1);
-
-                  if (nchar.search(expr) != 0)
-                    var tst2 = val.value.substring(i + 2, pass.length);
-                  else
-                    var tst2 = val.value.substring(i + 1, pass.length);
-
-                  val.value = tst1 + '/' + tst2;
-                }
-
-              } else if (i == 4) {
-
-                if (lchar.search(expr) != 0) {
-                  var tst1 = val.value.substring(0, (i));
-                  val.value = tst1;
-                  continue;
-                }
-
-                if ((nchar != '/') && (nchar != '')) {
-                  var tst1 = val.value.substring(0, (i) + 1);
-
-                  if (nchar.search(expr) != 0)
-                    var tst2 = val.value.substring(i + 2, pass.length);
-                  else
-                    var tst2 = val.value.substring(i + 1, pass.length);
-
-                  val.value = tst1 + '/' + tst2;
-                }
-              }
-
-              if (i >= 6) {
-                if (lchar.search(expr) != 0) {
-                  var tst1 = val.value.substring(0, (i));
-                  val.value = tst1;
-                }
-              }
+            if(document.all) { // Internet Explorer
+                    nTecla = evtKeyPress.keyCode;
+            } else if(document.layers) { // Nestcape
+                    nTecla = evtKeyPress.which;
+            } else {
+                    nTecla = evtKeyPress.which;
+                    if (nTecla == 8) {
+                            return true;
+                    }
             }
 
-            if (pass.length > 10)
-              val.value = val.value.substring(0, 10);
-            return true;
-          }
-    </script>
+                    sValue = objeto.value;
 
+                    // Limpa todos os caracteres de formatação que
+                    // já estiverem no campo.
+                    sValue = sValue.toString().replace( "-", "" );
+                    sValue = sValue.toString().replace( "-", "" );
+                    sValue = sValue.toString().replace( ".", "" );
+                    sValue = sValue.toString().replace( ".", "" );
+                    sValue = sValue.toString().replace( "/", "" );
+                    sValue = sValue.toString().replace( "/", "" );
+                    sValue = sValue.toString().replace( ":", "" );
+                    sValue = sValue.toString().replace( ":", "" );
+                    sValue = sValue.toString().replace( "(", "" );
+                    sValue = sValue.toString().replace( "(", "" );
+                    sValue = sValue.toString().replace( ")", "" );
+                    sValue = sValue.toString().replace( ")", "" );
+                    sValue = sValue.toString().replace( " ", "" );
+                    sValue = sValue.toString().replace( " ", "" );
+                    fldLen = sValue.length;
+                    mskLen = sMask.length;
+
+                    i = 0;
+                    nCount = 0;
+                    sCod = "";
+                    mskLen = fldLen;
+
+                    while (i <= mskLen) {
+                      bolMask = ((sMask.charAt(i) == "-") || (sMask.charAt(i) == ".") || (sMask.charAt(i) == "/") || (sMask.charAt(i) == ":"))
+                      bolMask = bolMask || ((sMask.charAt(i) == "(") || (sMask.charAt(i) == ")") || (sMask.charAt(i) == " "))
+
+                      if (bolMask) {
+                            sCod += sMask.charAt(i);
+                            mskLen++; }
+                      else {
+                            sCod += sValue.charAt(nCount);
+                            nCount++;
+                      }
+
+                      i++;
+                    }
+
+                    objeto.value = sCod;
+
+                    if (nTecla != 8) { // backspace
+                      if (sMask.charAt(i-1) == "9") { // apenas números...
+                            return ((nTecla > 47) && (nTecla < 58)); } 
+                      else { // qualquer caracter...
+                            return true;
+                      } 
+                    }
+                    else {
+                      return true;
+                    }
+              }
+            </script>
         <!-- Bootstrap core CSS -->
         <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
 
@@ -146,7 +146,7 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Data de Admissão:</label>
-                        <input type="text" class="form-control" onkeypress="mascaraData(this)" name="dataAdmissao" value="<?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?>" value="" required>
+                        <input type="text" class="form-control" onKeyPress="return txtBoxFormat(this, '99/99/9999', event);" name="dataAdmissao" value="<?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?>" value="" required>
                     </div>
                 </div>
                 <div class="row">

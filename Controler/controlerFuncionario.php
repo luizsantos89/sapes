@@ -7,13 +7,15 @@
     require('../Model/SecaoDAO.php');
     require('../Model/DivisaoDAO.php');
     require('../Model/GerenciaDAO.php');
+    require('../Model/AbsenteismoDAO.php');
+    require('../Model/DesempenhoDAO.php');
+    require('../Model/SancaoDAO.php');
+    require('../Model/TipoSancaoDAO.php');
+    require('../Model/AproveitamentoDAO.php');
     
+    //controlerFuncionario?opcao=6&pagina=1
     
     $usuario = $_SESSION['usuario'];
-    $sancoes = $_SESSION['sancoes'];
-    $listaAbsenteismo = $_SESSION['absenteismo'];
-    $notasDesempenho = $_SESSION['notasDesempenho'];
-    $sancoes = $_SESSION['sancoes'];
     
     if(!isset($_REQUEST['opcao'])) {
         Header("location:../index.php");
@@ -58,9 +60,16 @@
         $funcionario->setCracha($_REQUEST["cracha"]);
         $funcionario->setCargo($_REQUEST["cargo"]);
         $funcionario->setCargaHoraria((int) ($_REQUEST["cargaHoraria"]));
-        
-        $dataAdmissao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataAdmissao"]));      
-        $funcionario->setDataAdmissao($dataAdmissao);
+        $dataAdmissao = $_REQUEST["dataAdmissao"];
+        $dia = substr($dataAdmissao, 0, 2);
+        echo $dia.'<br>';
+        $mes = substr($dataAdmissao, 3, 2);
+        echo $mes.'<br>';
+        $ano = substr($dataAdmissao, 6, 4);
+        echo $ano.'<br>';
+        $data = $ano.'-'.$mes.'-'.$dia;
+        //$dataAdmissao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataAdmissao"]));      
+        $funcionario->setDataAdmissao($data);
         $funcionario->setSituacao($_REQUEST["situacao"]);
         $funcionario->setIdSecao($_REQUEST['idSecao']);
         $funcionario->setFuncAtivo($_REQUEST["funcAtivo"]);
@@ -262,14 +271,29 @@
         $secaoDAO = new SecaoDAO();
         $divisaoDAO = new DivisaoDAO();
         $gerenciaDAO = new GerenciaDAO();
+        $absenteismoDAO = new AbsenteismoDAO();
+        $desempenhoDAO = new DesempenhoDAO();
+        $sancaoDAO = new SancaoDAO();
+        $tipoSancaoDAO = new TipoSancaoDAO();
+        $aproveitamentoDAO = new AproveitamentoDAO();
         $listaUsuarios = $usuarioDAO->getUsuarios();
         $listaSecoes = $secaoDAO->getSecoes();
         $listaDivisoes = $divisaoDAO->getDivisoes();
         $listaGerencias = $gerenciaDAO->getGerencias();
+        $listaAbsenteismo = $absenteismoDAO->getAbsenteismo();
+        $listaDesempenho = $desempenhoDAO->getDesempenhos();
+        $listaSancoes = $sancaoDAO->getSancoes();
+        $listaTipos = $tipoSancaoDAO->getTipoSancoes();
+        $listaAproveitamento = $aproveitamentoDAO->getAproveitamento();
         $_SESSION['funcionario'] =  $funcionarioDAO->getFuncionarioByID($idFuncionario);
         $_SESSION['usuarios'] = $listaUsuarios;
         $_SESSION['secoes'] = $listaSecoes;
         $_SESSION['divisoes'] = $listaDivisoes;
         $_SESSION['gerencias'] = $listaGerencias;
+        $_SESSION['notasDesempenho'] = $listaDesempenho;
+        $_SESSION['sancoes'] = $listaSancoes;
+        $_SESSION['tipoSancoes'] = $listaTipos;
+        $_SESSION['absenteismo'] = $listaAbsenteismo;
+        $_SESSION['aproveitamento'] = $listaAproveitamento;
         header("Location:../View/Funcionario/DetalhesFuncionario.php");
     }

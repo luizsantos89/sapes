@@ -19,6 +19,8 @@
         private $indiceDisciplinar;
         private $indiceAproveitamento;
         private $dataLancamento;
+        private $idUsuarioUltimaAlteracao;
+        private $dataUltimaAlteracao;
         
         public function setIdAproveitamento($idAproveitamento) {
             $this->idAproveitamento = $idAproveitamento;
@@ -29,7 +31,7 @@
         }
         
         public function setIdFuncionario($idFuncionario) {
-            $this->idFuncionario($idFuncionario);
+            $this->idFuncionario = $idFuncionario;
         }
         
         public function getIdFuncionario() {
@@ -162,5 +164,21 @@
         
         public function getDataLancamento(){
             return $this->dataLancamento;
+        }
+        
+        public function getIdUsuarioUltimaAlteracao() {
+            return $this->idUsuarioUltimaAlteracao;
+        }
+        
+        public function setIdUsuarioUltimaAlteracao($idUsuarioUltimaAlteracao) {
+            $this->idUsuarioUltimaAlteracao = $idUsuarioUltimaAlteracao;
+        }
+        
+        public function getDataUltimaAlteracao() {
+            return $this->dataUltimaAlteracao;
+        }
+        
+        public function setDataUltimaAlteracao($dataUltimaAlteracao) {
+            $this->dataUltimaAlteracao = $dataUltimaAlteracao;
         }
     }

@@ -2,7 +2,7 @@
     session_start();
     
     require('../includes/conexao.inc');
-    require_once('../Model/SancaoDAO.php'); 
+    require('../Model/SancaoDAO.php'); 
     require('../Model/FuncionarioDAO.php'); 
     require('../Model/UsuarioDAO.php'); 
     require('../Model/TipoSancaoDAO.php'); 
@@ -54,14 +54,22 @@
         $sancao = new Sancao();
         $sancao->setIdSancao((int) $_REQUEST['idSancao']);
         $sancao->setIdFuncionario((int) $_REQUEST["idFuncionario"]);
-        $sancao->setIdUsuario($_SESSION['usuario']->idUsuario);
+        $sancao->setIdUsuario((int) $_SESSION['usuario']->idUsuario);
         $sancao->setIdTipo((int)$_REQUEST["idTipo"]);
         $sancao->setQtdDias($_REQUEST['qtdDias']);
         $sancao->setMotivo($_REQUEST['motivo']);
         $sancao->setNumDoc($_REQUEST['numDoc']);
+        $dataSancao = $_REQUEST["dataSancao"];
+        $dia = substr($dataSancao, 0, 2);
+        echo $dia.'<br>';
+        $mes = substr($dataSancao, 3, 2);
+        echo $mes.'<br>';
+        $ano = substr($dataSancao, 6, 4);
+        echo $ano.'<br>';
+        $data = $ano.'-'.$mes.'-'.$dia;
         
         
-        $dataSancao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataSancao"]));      
+        $dataSancao = date('Y-m-d H:i:s',strtotime($data));      
         $sancao->setDataSancao($dataSancao);
         
         date_default_timezone_set('America/Sao_Paulo');
@@ -126,7 +134,8 @@
     }
     
     //Sanções paginado
-    if($opcao == 6) {
+    if($opcao == 6) {       
+        
         $sancaoDAO = new SancaoDAO();
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
@@ -138,13 +147,10 @@
         $lista = $sancaoDAO->getSancoesPaginacao($pagina);
         $numpaginas = $sancaoDAO->getPagina();
         $listaUsuarios = $usuarioDAO->getUsuarios();
-        $listaSecoes = $secaoDAO->getSecoes();
-        $listaDivisoes = $divisaoDAO->getDivisoes();
-        $listaGerencias = $gerenciaDAO->getGerencias();
+        $listaFuncionarios = $funcionarioDAO->getFuncionarios();
         $_SESSION['usuarios'] = $listaUsuarios;       
         $_SESSION['sancoes'] = $lista;
-        $_SESSION['funcionarios'] = $funcionarioDAO->getFuncionarios();
+        $_SESSION['funcionarios'] = $listaFuncionarios;
         
         header("Location: ../View/Sancao/ListaSancoesPagina.php?paginas=".$numpaginas);
     }
-    

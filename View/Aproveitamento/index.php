@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Aproveitamento Funcional</title>
+    <title>Avaliação de Desempenho - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -37,54 +37,63 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Bem vindo(a)</h1><br /><h3> 
-      <?php
-        echo $usuario->nome;
-      ?>
-      </h3>
-      <p class="lead">
-          Seu último acesso foi em: 
-      <?php        
-            echo date('d/m/Y H:i:s', strtotime($usuario->ultimoAcesso));
-      ?>
-      </p>
+        <h1 class="display-4">Aproveitamento Funcional</h1><br />
+      
     </div>
     <div class="container">
-            <form action='../../Controler/controlerAproveitamento.php?opcao=2' method='post'>
-                <label>Selecione o período para visualizar o aproveitamento funcional:</label>
-                <select name='semestre' class='form-control'>
-                    <option value='1'>Primeiro semestre</option>                
-                    <option value='2'>Segundo semestre</option>
-                </select>
-                <label>Ano: </label>
-                <input type="text" class="form-control" name="ano" value="" value="" required>
-                <p></p>
-                <button class='btn btn-primary'>Gerar</button>
-            </form>
-    </div>
-    <div class="container">          
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+
         <?php
-            include('../../includes/Rodape.php');
+            if(isset($_REQUEST['erro'])) {
         ?>
-      </footer>
+
+        <div class="alert alert-danger">Já foi gerado, anteriormente, o aproveitamento do período.</div><br>
+        <?php
+            }
+
+        ?>
+        <?php
+            if(isset($_REQUEST['sucesso'])) {
+        ?>
+
+        <div class="alert alert-danger">Gerado com sucesso.</div><br>
+        <?php
+            }
+
+        ?>
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Consultar</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="ConsultaAproveitamento.php">
+                        <img src="../../imagens/consult.png" width="120px" height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Calcular</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="GerarAproveitamento.php">
+                        <img src="../../imagens/aprov.png" height="120px" />
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+          <?php
+              include('../../includes/Rodape.php');
+          ?>
+        </footer>
     </div>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
   </body>
 </html>

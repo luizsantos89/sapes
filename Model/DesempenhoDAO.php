@@ -101,4 +101,18 @@
             $sql->bindValue(':idDesempenho', $desempenho->getIdDesempenho());
             $sql->execute();
         }
+        
+        public function getDesempenhoFunc($desempenho) {
+            $sql = $this->con->prepare("SELECT * FROM desempenho WHERE idFuncionario = :idFuncionario");
+            $sql->bindValue(':idFuncionario',$desempenho->getIdFuncionario());
+            $sql->execute();
+            $lista = array();
+        
+            $desempenho = new Desempenho();
+            
+            while ($desempenho = $sql->fetch(PDO::FETCH_OBJ)) {
+                $lista[] = $desempenho;
+            }
+            return $lista;
+        }
     }

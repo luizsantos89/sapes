@@ -119,6 +119,16 @@
     <div class="container">
       <div class="col-md-12 order-md-1">
           
+            <?php
+                if(isset($_REQUEST['erro'])) {
+            ?>
+          <div class="alert alert-danger">Nota semestral desse funcionário já lançada para o período selecionado.</div>
+            <?php
+                }
+          
+          
+          ?>
+          
           <form class="needs-validation" action="../../Controler/controlerDesempenho.php?opcao=4" method="post" novalidate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
