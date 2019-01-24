@@ -77,7 +77,7 @@
 
 
 
-            $link = mysqli_connect("localhost", "root", "", "sapes");
+            $link = mysqli_connect("localhost", "sapes", "seti@2018", "sapes");
 
             if ($semestre == 1) {
                 $dataInicial = $ano.'0101';
