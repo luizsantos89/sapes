@@ -5,19 +5,17 @@
   <div class="col-6 col-md">
     <h5>Lançamentos</h5>
     <ul class="list-unstyled text-small">
-      <li><a class="text-muted" href="#">Funcionários</a></li>
-      <li><a class="text-muted" href="#">Sanções</a></li>
-      <li><a class="text-muted" href="#">Desempenho</a></li>
-      <li><a class="text-muted" href="#">Absenteísmo</a></li>
+      <li><a class="text-muted" href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1">Funcionários</a></li>
+      <li><a class="text-muted" href="../../Controler/controlerSancao.php?opcao=1">Sanções</a></li>
+      <li><a class="text-muted" href="../../Controler/controlerDesempenho.php?opcao=1">Desempenho</a></li>
+      <li><a class="text-muted" href="../../Controler/controlerAbsenteismo.php?opcao=1">Absenteísmo</a></li>
     </ul>
   </div>
   <div class="col-6 col-md">
     <h5>Relatórios</h5>
     <ul class="list-unstyled text-small">
-      <li><a class="text-muted" href="#">Funcionários</a></li>
-      <li><a class="text-muted" href="#">Horas de Absenteísmo</a></li>
-      <li><a class="text-muted" href="#">Notas de Desempenho</a></li>
-      <li><a class="text-muted" href="#">Aproveitamento</a></li>
+      <li><a class="text-muted" href="../../View/Relatorio/Funcionarios.php">Funcionários</a></li>
+      <li><a class="text-muted" href="../../View/Relatorio/Sancoes.php">Sanções</a></li>
     </ul>
   </div>
   <div class="col-6 col-md">
