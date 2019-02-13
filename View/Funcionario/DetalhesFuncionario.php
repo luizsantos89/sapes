@@ -21,6 +21,8 @@
     $tiposSancoes = $_SESSION['tipoSancoes'];
     $listaAbsenteismo = $_SESSION['absenteismo'];
     $listaAproveitamento = $_SESSION['aproveitamento'];
+    
+    $idFuncionario = $funcionario->idFuncionario;
 ?>
 
 <!doctype html>
@@ -144,8 +146,10 @@
                 <tr><th>Período</th><th>Nota: </th></tr>
             <?php
                 foreach($notasDesempenho as $nota) {
+                    $notas = Array();
                     if($nota->idFuncionario == $funcionario->idFuncionario) {
                         echo "<tr><td>$nota->semestre º semestre - $nota->ano </td><td>$nota->nota</td></tr>";
+                        $notas[] = $nota->nota;
                     }
                 }            
             ?>
@@ -153,21 +157,19 @@
                     <th>Média Total Histórica: </th>
                     <td>
                         <?php
-                            mysql_connect("localhost", "root", "");
+                            $count = 0;
+                            $total = 0;
                             
-                            mysql_select_db("sapes");
-                        
-                            $query = "select idFuncionario,round(avg(nota),5) as media from desempenho group by idFuncionario";
-                        
-                            $mediaDesempenho = mysql_query($query);
+                            foreach ($notas as $nota) {
+                                $total += $nota;
+                                $count += 1;
+                            }
                             
-                            while($media = mysql_fetch_array($mediaDesempenho)) {
-                                $idFunc = $media['idFuncionario'];
-                                $mediaFunc = $media['media'];
-                                
-                                if($idFunc == $funcionario->idFuncionario) {
-                                    echo $mediaFunc;
-                                }
+                            
+                            if($count != 0) {
+                                echo round(($total/$count),8);
+                            } else {
+                                echo 0;
                             }
                         ?>
                     </td>
@@ -182,36 +184,34 @@
                     <th>Absenteísmo: </th>
                 </tr>
             <?php
+                $horas = Array();
+            
                 foreach($listaAbsenteismo as $absenteismo) {
                     if($absenteismo->idFuncionario == $funcionario->idFuncionario) {
                         echo '<tr>';
                         echo "<td>$absenteismo->mes/$absenteismo->ano</td>";
                         echo "<td>$absenteismo->qtdHoras horas</td></tr>";
+                        $horas[] = $absenteismo->qtdHoras;
                     }
                 }
             ?><tr>
                     <th>Média mensal: </th>
                     <td>
                         <?php
-                            mysql_connect("localhost", "root", "");
+                            $count = 0;
+                            $total = 0;
                             
-                            mysql_select_db("sapes");                        
-                            
-                            $query = "select idFuncionario, AVG(qtdHoras) as quant from absenteismo GROUP BY idFuncionario;";
-                        
-                            $mediaDesempenho = mysql_query($query);
-                            
-                            $qtdHoras = 0;
-                            
-                            while($media = mysql_fetch_array($mediaDesempenho)) {
-                                $idFunc = $media['idFuncionario'];
-                                
-                                if($idFunc == $funcionario->idFuncionario) {
-                                    $qtdHoras = $media['quant'];
-                                }
+                            foreach ($horas as $totalHoras) {
+                                $total += $totalHoras;
+                                $count += 1;
                             }
                             
-                            echo round($qtdHoras,2);
+                            
+                            if($count != 0) {
+                                echo round(($total/$count),8);
+                            } else {
+                                echo 0;
+                            }
                         ?> horas
                     </td>
                 </tr>
@@ -231,6 +231,7 @@
                 </tr>
                 
             <?php 
+                $totalSancoes = 0;
                 foreach($sancoes as $sancao) {
                     if($sancao->idFuncionario == $funcionario->idFuncionario){
                         foreach ($tiposSancoes as $tipo) {
@@ -241,6 +242,7 @@
                                 echo '<td>'.$sancao->numDoc.'</td>';
                                 echo '<td>'.$sancao->qtdDias.'</td>';
                                 echo '<td>'.$sancao->motivo.'</td></tr>';
+                                $totalSancoes += 1;
                             }
                         }
                     }
@@ -249,28 +251,7 @@
             ?>
                 <tr>
                     <th>Total Histórico de Sanções: </th>
-                    <td colspan="4">
-                        <?php
-                            mysql_connect("localhost", "root", "");
-                            
-                            mysql_select_db("sapes");                        
-                            
-                            $query = "select idFuncionario, COUNT(*) as quantidade from sancao GROUP BY idFuncionario;";
-                        
-                            $totalSancoes = mysql_query($query);
-                            
-                            $quantidade = 0;
-                            
-                            while($media = mysql_fetch_array($totalSancoes)) {
-                                $idFunc = $media['idFuncionario'];
-                                
-                                if($idFunc == $funcionario->idFuncionario) {
-                                    $quantidade = $media['quantidade'];
-                                }
-                            }
-                            
-                            echo $quantidade;
-                        ?> sanções disciplinares
+                    <td colspan="4"><?=$totalSancoes?> sanções disciplinares
                     </td>
                 </tr>
             </table>
@@ -281,34 +262,30 @@
             <table class="table table-success">
                 <tr><th>Período</th><th>Índice de aproveitamento funcional: </th></tr>
             <?php
+                $aproveitamentos = Array();
                 foreach($listaAproveitamento as $aproveitamento) {
                     if($aproveitamento->idFuncionario == $funcionario->idFuncionario) {
                         echo "<tr><td>$aproveitamento->semestre º semestre - $aproveitamento->ano </td><td>$aproveitamento->indiceAproveitamento</td></tr>";
+                        $aproveitamentos[] = $aproveitamento->indiceAproveitamento;
                     }
                 }            
             ?><tr>
                     <th>Média total histórica: </th>
                     <td>
                         <?php
-                            $aprovMedia = 0;
-                        
-                            mysql_connect("localhost", "root", "");
+                            $count = 0;
+                            $total = 0;
                             
-                            mysql_select_db("sapes");                        
-                            
-                            $query = "select idFuncionario, AVG(indiceAproveitamento) as aprovMedio from aproveitamento GROUP BY idFuncionario;";
-                        
-                            $mediaAproveitamento = mysql_query($query);
-                            
-                            while($media = mysql_fetch_array($mediaAproveitamento)) {
-                                $idFunc = $media['idFuncionario'];
-                                
-                                if($idFunc == $funcionario->idFuncionario) {
-                                    $aprovMedia = $media['aprovMedio'];
-                                }
+                            foreach ($aproveitamentos as $aproveit) {
+                                $total += $aproveit;
+                                $count += 1;
                             }
                             
-                            echo round($aprovMedia,5);
+                            if($count != 0) {
+                                echo round(($total/$count),8);
+                            } else {
+                                echo 0;
+                            }
                         ?>
                     </td>
                 </tr>
