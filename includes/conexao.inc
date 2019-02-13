@@ -2,9 +2,18 @@
 class Conexao {
     private $servidor_mysql = 'localhost';
     private $nome_banco = 'sapes';
+    private $usuario = 'root';
+    private $senha = ''; 
+    private $con;
+    
+    /*
+     * 
+    private $servidor_mysql = 'localhost';
+    private $nome_banco = 'sapes';
     private $usuario = 'sapes';
     private $senha = 'seti@2018'; 
     private $con;
+     */
     
     public function getConexao()
     {

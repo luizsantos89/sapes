@@ -153,13 +153,15 @@
                     <th>Média Total Histórica: </th>
                     <td>
                         <?php
-                            $link = mysqli_connect("localhost", "root", "", "sapes");
+                            mysql_connect("localhost", "root", "");
+                            
+                            mysql_select_db("sapes");
                         
                             $query = "select idFuncionario,round(avg(nota),5) as media from desempenho group by idFuncionario";
                         
-                            $mediaDesempenho = $link->query($query);
+                            $mediaDesempenho = mysql_query($query);
                             
-                            while($media = mysqli_fetch_array($mediaDesempenho)) {
+                            while($media = mysql_fetch_array($mediaDesempenho)) {
                                 $idFunc = $media['idFuncionario'];
                                 $mediaFunc = $media['media'];
                                 
@@ -191,15 +193,17 @@
                     <th>Média mensal: </th>
                     <td>
                         <?php
-                            $link = mysqli_connect("localhost", "root", "", "sapes");
-                        
+                            mysql_connect("localhost", "root", "");
+                            
+                            mysql_select_db("sapes");                        
+                            
                             $query = "select idFuncionario, AVG(qtdHoras) as quant from absenteismo GROUP BY idFuncionario;";
                         
-                            $mediaDesempenho = $link->query($query);
+                            $mediaDesempenho = mysql_query($query);
                             
                             $qtdHoras = 0;
                             
-                            while($media = mysqli_fetch_array($mediaDesempenho)) {
+                            while($media = mysql_fetch_array($mediaDesempenho)) {
                                 $idFunc = $media['idFuncionario'];
                                 
                                 if($idFunc == $funcionario->idFuncionario) {
@@ -247,15 +251,17 @@
                     <th>Total Histórico de Sanções: </th>
                     <td colspan="4">
                         <?php
-                            $link = mysqli_connect("localhost", "root", "", "sapes");
-                        
+                            mysql_connect("localhost", "root", "");
+                            
+                            mysql_select_db("sapes");                        
+                            
                             $query = "select idFuncionario, COUNT(*) as quantidade from sancao GROUP BY idFuncionario;";
                         
-                            $totalSancoes = $link->query($query);
+                            $totalSancoes = mysql_query($query);
                             
                             $quantidade = 0;
                             
-                            while($media = mysqli_fetch_array($totalSancoes)) {
+                            while($media = mysql_fetch_array($totalSancoes)) {
                                 $idFunc = $media['idFuncionario'];
                                 
                                 if($idFunc == $funcionario->idFuncionario) {
@@ -286,13 +292,15 @@
                         <?php
                             $aprovMedia = 0;
                         
-                            $link = mysqli_connect("localhost", "root", "", "sapes");
-                        
+                            mysql_connect("localhost", "root", "");
+                            
+                            mysql_select_db("sapes");                        
+                            
                             $query = "select idFuncionario, AVG(indiceAproveitamento) as aprovMedio from aproveitamento GROUP BY idFuncionario;";
                         
-                            $mediaAproveitamento = $link->query($query);
+                            $mediaAproveitamento = mysql_query($query);
                             
-                            while($media = mysqli_fetch_array($mediaAproveitamento)) {
+                            while($media = mysql_fetch_array($mediaAproveitamento)) {
                                 $idFunc = $media['idFuncionario'];
                                 
                                 if($idFunc == $funcionario->idFuncionario) {

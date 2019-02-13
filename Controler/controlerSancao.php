@@ -142,15 +142,19 @@
         $secaoDAO = new SecaoDAO();
         $divisaoDAO = new DivisaoDAO();
         $gerenciaDAO = new GerenciaDAO();
+        $tipoSancaoDAO = new TipoSancaoDAO();
         $pagina = (int) $_REQUEST['pagina'];
         
         $lista = $sancaoDAO->getSancoesPaginacao($pagina);
         $numpaginas = $sancaoDAO->getPagina();
         $listaUsuarios = $usuarioDAO->getUsuarios();
         $listaFuncionarios = $funcionarioDAO->getFuncionarios();
+        $tipoSancoes = $tipoSancaoDAO->getTipoSancoes();
         $_SESSION['usuarios'] = $listaUsuarios;       
         $_SESSION['sancoes'] = $lista;
         $_SESSION['funcionarios'] = $listaFuncionarios;
+        $_SESSION['tipoSancoes'] = $tipoSancoes;
         
-        header("Location: ../View/Sancao/ListaSancoesPagina.php?paginas=".$numpaginas);
+        header("Location:../View/Sancao/ListaSancoesPagina.php?paginas=".$numpaginas);
+        
     }

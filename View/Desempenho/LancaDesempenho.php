@@ -129,7 +129,7 @@
           
           ?>
           
-          <form class="needs-validation" action="../../Controler/controlerDesempenho.php?opcao=4" method="post" novalidate>
+          <form class="needs-validation" action="../../Controler/controlerDesempenho.php?opcao=4" method="post" data-toggle="validator">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Funcionário:</label>

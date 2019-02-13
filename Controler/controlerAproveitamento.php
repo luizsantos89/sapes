@@ -77,7 +77,9 @@
 
 
 
-            $link = mysqli_connect("localhost", "sapes", "seti@2018", "sapes");
+            mysql_connect("localhost", "root","");
+            
+            mysql_select_db("sapes");
 
             if ($semestre == 1) {
                 $dataInicial = $ano.'0101';
@@ -129,11 +131,11 @@
                                 GROUP BY a.idFuncionario;";
                             }
 
-                            $totalAbsenteismo = $link->query($queryAbsenteismo);
+                            $totalAbsenteismo = mysql_query($queryAbsenteismo);
 
                             //Imprime na tela o absenteísmo de todos
                             if($totalAbsenteismo){
-                                while($row = mysqli_fetch_array($totalAbsenteismo)){
+                                while($row = mysql_fetch_array($totalAbsenteismo)){
                                     $idFuncionario = $row['idFuncionario'];                                 
                                     if($funcionario->idFuncionario == $idFuncionario) {
                                         $aproveitamento->setHorasAbsenteismo(round($row['absentTotal'],2));   
@@ -148,10 +150,10 @@
                                 $queryMaxAbsenteismo = "select idFuncionario, ROUND(MAX(total),2) as totAbs from (SELECT idFuncionario, SUM(qtdHoras) AS total FROM absenteismo WHERE mes > 6 AND ano = $ano GROUP BY idFuncionario) AS horas";             
                             }
 
-                            $maxAbsenteismo =  $link->query($queryMaxAbsenteismo);
+                            $maxAbsenteismo =  mysql_query($queryMaxAbsenteismo);
 
                             if($maxAbsenteismo){
-                                $row = mysqli_fetch_array($maxAbsenteismo);
+                                $row = mysql_fetch_array($maxAbsenteismo);
                                 $idFuncionario = $row[0];
                                 $maxAbsenteismo = (float) $row[1];
                                 $aproveitamento->setMaxHorasAbsenteismo($maxAbsenteismo);
@@ -185,12 +187,12 @@
                                                                 t.peso) AS fDisc 
                                      GROUP BY idFuncionario;";
 
-                             $totalSancoesPeriodoFuncionario = $link->query($querySancao);
+                             $totalSancoesPeriodoFuncionario = mysql_query($querySancao);
 
 
                              //Total de sanções disciplinares e o fator dsciplinar por período por funcionário
                              if($totalSancoesPeriodoFuncionario){
-                                 while($row = mysqli_fetch_array($totalSancoesPeriodoFuncionario)){
+                                 while($row = mysql_fetch_array($totalSancoesPeriodoFuncionario)){
                                     $idFuncionario = $row['idFuncionario'];
                                     if($idFuncionario == $funcionario->idFuncionario) {
                                        $fatorDisciplinar = $row['fatorDisciplinar'];
@@ -208,10 +210,10 @@
                             WHERE dataSancao between '$dataInicial' AND '$dataFinal'
                             GROUP BY s.idFuncionario, t.peso) AS fDisc GROUP BY idFuncionario) AS fatorDisc";
 
-                            $maxSancao = $link->query($queryMaxSancao);
+                            $maxSancao = mysql_query($queryMaxSancao);
 
                             if($maxSancao){
-                                $row = mysqli_fetch_array($maxSancao);
+                                $row = mysql_fetch_array($maxSancao);
                                 $idFuncionario = $row[0];
                                 $fatorDisciplinarMax = (float) $row[1];
                                 $aproveitamento->setMaxFatorDisciplinar($fatorDisciplinarMax);
@@ -224,11 +226,11 @@
                             WHERE dataSancao between '$dataInicial' AND '$dataFinal'
                             GROUP BY s.idFuncionario, t.peso) AS fDisc GROUP BY idFuncionario";
 
-                            $totalSancoesPeriodoFuncionario = $link->query($querySancao);
+                            $totalSancoesPeriodoFuncionario = mysql_query($querySancao);
 
                             //Total de sanções disciplinares e o fator dsciplinar por período por funcionário
                             if($totalSancoesPeriodoFuncionario){
-                                while($row = mysqli_fetch_array($totalSancoesPeriodoFuncionario)){
+                                while($row = mysql_fetch_array($totalSancoesPeriodoFuncionario)){
                                     $idFuncionario = $row['idFuncionario'];
                                     $fatorDisciplinar = $row['fatorDisciplinar'];
                                     if($fatorDisciplinar && $fatorDisciplinar != 0) {
@@ -299,8 +301,9 @@
         $listaDesempenho = $desempenhoDAO->getDesempenhos();
 
 
-
-        $link = mysqli_connect("localhost", "root", "", "sapes");
+        mysql_connect("localhost", "root", "");
+        
+        mysql_select_db("sapes");
 
         if ($semestre == 1) {
             $dataInicial = $ano.'0101';
@@ -352,11 +355,11 @@
                             GROUP BY a.idFuncionario;";
                         }
 
-                        $totalAbsenteismo = $link->query($queryAbsenteismo);
+                        $totalAbsenteismo = mysql_query($queryAbsenteismo);
 
                         //Imprime na tela o absenteísmo de todos
                         if($totalAbsenteismo){
-                            while($row = mysqli_fetch_array($totalAbsenteismo)){
+                            while($row = mysql_fetch_array($totalAbsenteismo)){
                                 $idFuncionario = $row['idFuncionario'];                                 
                                 if($funcionario->idFuncionario == $idFuncionario) {
                                     $aproveitamento->setHorasAbsenteismo(round($row['absentTotal'],2));   
@@ -371,7 +374,7 @@
                             $queryMaxAbsenteismo = "select idFuncionario, ROUND(MAX(total),2) as totAbs from (SELECT idFuncionario, SUM(qtdHoras) AS total FROM absenteismo WHERE mes > 6 AND ano = $ano GROUP BY idFuncionario) AS horas";             
                         }
 
-                        $maxAbsenteismo =  $link->query($queryMaxAbsenteismo);
+                        $maxAbsenteismo =  mysql_query($queryMaxAbsenteismo);
 
                         if($maxAbsenteismo){
                             $row = mysqli_fetch_array($maxAbsenteismo);
@@ -408,12 +411,12 @@
                                                             t.peso) AS fDisc 
                                  GROUP BY idFuncionario;";
 
-                         $totalSancoesPeriodoFuncionario = $link->query($querySancao);
+                         $totalSancoesPeriodoFuncionario = mysql_query($querySancao);
 
 
                          //Total de sanções disciplinares e o fator dsciplinar por período por funcionário
                          if($totalSancoesPeriodoFuncionario){
-                             while($row = mysqli_fetch_array($totalSancoesPeriodoFuncionario)){
+                             while($row = mysql_fetch_array($totalSancoesPeriodoFuncionario)){
                                 $idFuncionario = $row['idFuncionario'];
                                 if($idFuncionario == $funcionario->idFuncionario) {
                                    $fatorDisciplinar = $row['fatorDisciplinar'];
@@ -431,10 +434,10 @@
                         WHERE dataSancao between '$dataInicial' AND '$dataFinal'
                         GROUP BY s.idFuncionario, t.peso) AS fDisc GROUP BY idFuncionario) AS fatorDisc";
 
-                        $maxSancao = $link->query($queryMaxSancao);
+                        $maxSancao = mysql_query($queryMaxSancao);
 
                         if($maxSancao){
-                            $row = mysqli_fetch_array($maxSancao);
+                            $row = mysql_fetch_array($maxSancao);
                             $idFuncionario = $row[0];
                             $fatorDisciplinarMax = (float) $row[1];
                             $aproveitamento->setMaxFatorDisciplinar($fatorDisciplinarMax);
@@ -447,11 +450,11 @@
                         WHERE dataSancao between '$dataInicial' AND '$dataFinal'
                         GROUP BY s.idFuncionario, t.peso) AS fDisc GROUP BY idFuncionario";
 
-                        $totalSancoesPeriodoFuncionario = $link->query($querySancao);
+                        $totalSancoesPeriodoFuncionario = mysql_query($querySancao);
 
                         //Total de sanções disciplinares e o fator dsciplinar por período por funcionário
                         if($totalSancoesPeriodoFuncionario){
-                            while($row = mysqli_fetch_array($totalSancoesPeriodoFuncionario)){
+                            while($row = mysql_fetch_array($totalSancoesPeriodoFuncionario)){
                                 $idFuncionario = $row['idFuncionario'];
                                 $fatorDisciplinar = $row['fatorDisciplinar'];
                                 if($fatorDisciplinar && $fatorDisciplinar != 0) {
