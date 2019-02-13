@@ -125,7 +125,7 @@
       <div class="col-md-12 order-md-1">
                 
             <h4 class="mb-3">Dados do funcionário:</h4>
-            <form class="needs-validation" action="../../Controler/controlerFuncionario.php?opcao=4" method="post" novalidate>
+            <form class="needs-validation" action="../../Controler/controlerFuncionario.php?opcao=4" method="post" validate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Nome:</label>

@@ -2,7 +2,6 @@
     session_start();
     include("../../includes/verificaSessao.php");
     require('../../Model/Funcionario.php');
-    $tipoSancao = $_SESSION['tipoSancao'];
     $funcionarios = $_SESSION['funcionarios'];
     $usuario = $_SESSION['usuario'];
 ?>
@@ -118,23 +117,22 @@
     <div class="container">
       <div class="col-md-12 order-md-1">
           
-            <form class="needs-validation" action="../../Controler/controlerTipoSancao.php?opcao=4" method="post" novalidate>
+            <form class="needs-validation" action="../../Controler/controlerTipoSancao.php?opcao=4" method="post" validate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Descrição:</label>
-                        <input type="text" class="form-control" name="descricao"  value="" required>
+                        <input type="text" class="form-control" name="descricao" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Peso:</label>
-                        <input type="text" class="form-control" name="peso" value="" required>
+                        <input type="text" class="form-control" name="peso" required>
                     </div>
                 </div>                
                 <input type="hidden" value="<?=$usuario->idUsuario;?>" name="idUsuario" />
-                <hr class="mb-6">
+                
                 <button class="btn btn-outline-primary" type="submit">Salvar</button>
-                <a class="btn btn-outline-danger" href="../../Controler/controlerTipoSancao.php?opcao=5&idTipoSancao=<?php echo $tipoSancao->idTipoSancao;?>">Exclui</a>
                 <a  class="btn btn-outline-primary" href="../../Controler/controlerTipoSancao.php?opcao=1">Cancelar</a>
             </form>
         </div>

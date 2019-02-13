@@ -5,7 +5,7 @@
     
     $usuario = $_SESSION['usuario'];    
     
-    $link = mysqli_connect("localhost", "sapes", "seti@2018", "sapes");
+    $link = mysqli_connect("localhost", "root", "", "sapes");
     
     $queryFuncionario = "select * FROM (select f.nome, COUNT(*) as quantidade from sancao AS s INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario GROUP BY s.idFuncionario) as selecao ORDER BY quantidade DESC LIMIT 10;";
     

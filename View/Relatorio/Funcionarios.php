@@ -5,7 +5,7 @@
     
     $usuario = $_SESSION['usuario'];    
     
-    $link = mysqli_connect("localhost", "sapes", "seti@2018", "sapes");
+    $link = mysqli_connect("localhost", "root", "", "sapes");
     
     $querySecao = "select s.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao GROUP BY f.idSecao;";
     

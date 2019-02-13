@@ -25,7 +25,7 @@
         }
         
         public function getAbsenteismo() {
-            $query = "SELECT * FROM absenteismo ORDER BY ano, mes";
+            $query = "SELECT * FROM absenteismo ORDER BY ano, mes, idFuncionario";
             $rs = $this->con->query($query);
             $lista = array();
         
@@ -37,6 +37,21 @@
             return $lista;
         }
         
+        public function getAbsenteismoFunc($absenteismo) {
+            $sql = $this->con->prepare("SELECT * FROM absenteismo WHERE idFuncionario = :idFuncionario");
+            $sql->bindValue(':idFuncionario',$absenteismo->getIdFuncionario());
+            $sql->execute();
+            $lista = array();
+        
+            $absenteismo = new Absenteismo();
+            
+            while ($absenteismo = $sql->fetch(PDO::FETCH_OBJ)) {
+                $lista[] = $absenteismo;
+            }
+            return $lista;
+        }
+        
+       
         public function getFuncionariosBySecao($idSecao) {
             $sql = $this->con->prepare("SELECT * FROM funcionario where idSecao = :idSecao ORDER BY funcAtivo DESC, cracha ASC ");
             $sql->bindValue(':idSecao', $idSecao);

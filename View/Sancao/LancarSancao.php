@@ -117,7 +117,7 @@
 
     <div class="container">
       <div class="col-md-12 order-md-1">
-          <form class="needs-validation" action="../../Controler/controlerSancao.php?opcao=4" method="post" novalidate>
+          <form class="needs-validation" action="../../Controler/controlerSancao.php?opcao=4" method="post" validate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Funcionário:</label>
@@ -147,25 +147,27 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Data da Sanção:</label>
-                        <input type="text" class="form-control" onkeypress="mascaraData(this)" name="dataSancao" value="" required>
+                        <input type="text" class="form-control" onkeypress="mascaraData(this)" name="dataSancao" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Motivo:</label>
-                        <textarea class="form-control" name="motivo" value="" required></textarea>
+                        <textarea class="form-control" name="motivo" required>
+                            
+                        </textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Documento:</label>
-                        <input type="text" class="form-control" name="numDoc"  value="" required>
+                        <input type="text" class="form-control" name="numDoc" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Quantidade de Dias:</label>
-                        <input type="text" class="form-control" name="qtdDias"  value="" required>
+                        <input type="text" class="form-control" name="qtdDias">
                     </div>
                 </div>
                 <hr class="mb-6">

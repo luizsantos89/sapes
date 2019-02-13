@@ -119,7 +119,18 @@
     <div class="container">
       <div class="col-md-12 order-md-1">
           
-          <form class="needs-validation" action="../../Controler/controlerAbsenteismo.php?opcao=4" method="post" novalidate>
+          
+            <?php
+                if(isset($_REQUEST['erro'])) {
+            ?>
+          <div class="alert alert-danger">Horas de absenteísmo desse funcionário já lançadas para o período selecionado.</div>
+            <?php
+                }
+          
+          
+          ?>
+          
+          <form class="needs-validation" action="../../Controler/controlerAbsenteismo.php?opcao=4" method="post" validate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Funcionário:</label>
@@ -135,7 +146,7 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Quantidade de Horas:</label>
-                        <input type="text" class="form-control" name="qtdHoras" value=" " required>
+                        <input type="text" class="form-control" name="qtdHoras" required>
                     </div>
                 </div>  
                 <div class="row">
@@ -160,7 +171,7 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Ano:</label>
-                        <input type="text" class="form-control" name="ano" value=" " required>
+                        <input type="text" class="form-control" name="ano" required>
                     </div>
                 </div>              
               <input type="hidden" value="<?=$usuario->idUsuario?>" name="idUsuario" />

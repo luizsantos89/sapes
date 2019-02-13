@@ -31,7 +31,9 @@
         $_SESSION['funcionarios'] = $listaFuncionarios;
         $_SESSION['usuarios'] = $listaUsuarios;
         $_SESSION['absenteismo'] = $listaAbsenteismo;
+        
         header("Location:../View/Absenteismo/ListagemGeral.php");
+        
     }    
     
     //Lista absenteísmo por ID
@@ -87,9 +89,20 @@
         $absenteismo->setDataLancamento(date('Y-m-d H:i:s'));
         
         $absenteismoDAO = new AbsenteismoDAO();
-        $absenteismoDAO->incluirAbsenteismo($absenteismo);
                 
-        header("Location:controlerAbsenteismo.php?opcao=1");
+        $listaAbsenteismoFunc = $absenteismoDAO->getAbsenteismoFunc($absenteismo);
+        
+        foreach($listaAbsenteismoFunc as $absent) {
+            if(($absent->mes == $absenteismo->getMes()) && ($absent->ano == $absenteismo->getAno())){
+                header("Location: ../View/Absenteismo/LancaAbsenteismo.php?erro");
+                $erro = true;
+            }
+        }
+                
+        if ($erro == $false) {
+            $absenteismoDAO->incluirAbsenteismo($absenteismo);
+            header("Location:controlerAbsenteismo.php?opcao=1");
+        }
     }
     
     //Exclui absenteísmo
