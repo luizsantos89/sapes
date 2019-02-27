@@ -18,6 +18,9 @@
     //Lista todos os lançamentos de horas de absenteísmo
     if($opcao == 1){
         
+        header("Location:../View/Absenteismo/index.php");
+        
+        /*
         if(isset($_SESSION['filtroPorPeriodo'])) {
             unset($_SESSION['filtroPorPeriodo']);
         }
@@ -33,6 +36,8 @@
         $_SESSION['absenteismo'] = $listaAbsenteismo;
         
         header("Location:../View/Absenteismo/ListagemGeral.php");
+        
+         */
         
     }    
     
@@ -118,27 +123,25 @@
     
     //Absenteísmo paginado
     if($opcao == 6) {
+        $mes = (int) $_REQUEST['mes'];
+        $ano = (int) $_REQUEST['ano'];
+        
+        if(isset($_SESSION['absenteismo'])) {
+            unset($_SESSION['absenteismo']);
+        }
+        
+        $absenteismoDAO = new AbsenteismoDAO();        
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
-        $secaoDAO = new SecaoDAO();
-        $divisaoDAO = new DivisaoDAO();
-        $gerenciaDAO = new GerenciaDAO();
-        $pagina = (int) $_REQUEST['pagina'];
-        
-        $lista = $funcionarioDAO->getFuncionariosPaginacao($pagina);
-        $numpaginas = $funcionarioDAO->getPagina();
+        $listaAbsenteismo = $absenteismoDAO->getAbsenteismoPeriodo($mes, $ano);
         $listaUsuarios = $usuarioDAO->getUsuarios();
-        $listaSecoes = $secaoDAO->getSecoes();
-        $listaDivisoes = $divisaoDAO->getDivisoes();
-        $listaGerencias = $gerenciaDAO->getGerencias();
+        $_SESSION['funcionarios'] = $funcionarios;
         $_SESSION['usuarios'] = $listaUsuarios;
-        $_SESSION['secoes'] = $listaSecoes;
-        $_SESSION['divisoes'] = $listaDivisoes;
-        $_SESSION['gerencias'] = $listaGerencias;
+        $_SESSION['absenteismo'] = $listaAbsenteismo;
+        $_SESSION['semestre']= $semestre;
+        $_SESSION['ano'] = $ano;
         
-        $_SESSION['funcionarios'] = $lista;
-        
-        header("Location: ../View/Funcionario/ListaFuncionarioPagina.php?paginas=".$numpaginas);
+        header("Location:../View/Absenteismo/ListagemGeral.php");
     }
     
     if($opcao == 7) {

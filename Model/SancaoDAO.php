@@ -25,7 +25,7 @@
         }
         
         public function getSancoes() {
-            $query = "SELECT * FROM sancao ORDER BY idFuncionario ASC, dataSancao DESC";
+            $query = "SELECT * FROM sancao ORDER BY dataSancao";
             $rs = $this->con->query($query);
             $lista = array();
         

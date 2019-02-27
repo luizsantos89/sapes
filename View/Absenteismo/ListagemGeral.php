@@ -14,8 +14,6 @@
     $funcionarios = $_SESSION['funcionarios'];
     $usuarios = $_SESSION['usuarios'];
     
-    
-    
     $listaAbsenteismo = $_SESSION['absenteismo'];
 ?>
 
@@ -70,6 +68,8 @@
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Horas de absenteísmo:</h1>
         
+        <a class="btn btn-outline-primary" href="index.php">Voltar</a>
+        
         <a class="btn btn-outline-primary" href="LancaAbsenteismo.php">Lançamento</a>
     </div>
 
@@ -80,52 +80,17 @@
             
             if($listaAbsenteismo == null) {
                 if(isset($_SESSION['filtroPorPeriodo'])) {
-                    echo '<a href="../../Controler/controlerAbsenteismo.php?opcao=1" class="btn btn-primary">Listar todos os lançamentos</a>';
+                    echo '<h3>Sem registros para o período informado</h3>';
                 }                
             } else {
-                
-                
-                foreach($listaAbsenteismo as $absenteismo) {
-                    $qtd+=1;
-                }
-                if(isset($_SESSION['porsecao'])) {
-                    echo 'Total de <b>'.$qtd.'</b> funcionários';
-                }
-                
+                               
             ?>
-            <fieldset class="blockquote">
-                <legend>Filtrar por período</legend>
-                <form action="../../Controler/controlerAbsenteismo.php?opcao=7" method="post" class="form-inline">
-                    <select name="mes" class="form-control">
-                        <option value="1">Janeiro</option>
-                        <option value="2">Fevereiro</option>
-                        <option value="3">Março</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Maio</option>
-                        <option value="6">Junho</option>
-                        <option value="7">Julho</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
-                    </select>
-                    <input type="number" name="ano" size="6" value='2019' required class="form-control" />
-                    <button class="btn btn-outline-secondary"  type="submit">Filtrar</button>
-                    <input type="hidden" name="filtroPeriodo" />
-                    <?php
-                        if(isset($_SESSION['filtroPorPeriodo'])) {
-                            echo '<a href="../../Controler/controlerAbsenteismo.php?opcao=1" class="btn btn-primary">Listar todos os lançamentos</a>';
-                        }
-                    ?>
-                </form>
-            </fieldset>
             <div>
             <table class="table table-striped">
                 <thead class='thead-dark text-center'>
                     <tr>
                         <th colspan="2">Ações:</th>
-                        <th>Funcionário:</th>
+                        <th>Funcionário (Crachá-Nome):</th>
                         <th>Qtde. Horas:</th>
                         <th>Mês/Ano:</th>
                         <th>Lançado por:</th>
@@ -149,7 +114,7 @@
                             <?php                            
                                 foreach($funcionarios as $funcionario) {
                                     if($funcionario->idFuncionario == $absenteismo->idFuncionario) {
-                                        echo $funcionario->nome;
+                                        echo $funcionario->cracha.' - '.$funcionario->nome;
                                     }
                                 }                            
                             ?> 

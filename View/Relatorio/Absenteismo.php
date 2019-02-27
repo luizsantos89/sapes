@@ -7,9 +7,9 @@
     
     $link = mysqli_connect("localhost", "root", "", "sapes");
     
-    $queryFuncionarioMenos = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario GROUP BY f.idFuncionario ORDER BY totalHorasFunc ASC LIMIT 30;";
+    $queryFuncionarioMenos = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario GROUP BY f.idFuncionario ORDER BY totalHorasFunc ASC LIMIT 20;";
     
-    $queryFuncionarioMais = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 30;";
+    $queryFuncionarioMais = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 20;";
     
     $querySecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s	ON f.idSecao = s.idSecao GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
     
@@ -53,7 +53,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Nome','Quantidade'],
+                ['Funcionário: ','Quantidade em horas: '],
                 <?php
                     while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -79,7 +79,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Nome','Quantidade'],
+                ['Funcionário: ','Quantidade em horas: '],
                 <?php
                     while ($array = mysqli_fetch_array($graficoFuncionarioMenos)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -106,7 +106,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Nome','Quantidade'],
+                ['Seção: ','Quantidade em horas: '],
                 <?php
                     while ($array = mysqli_fetch_array($graficoSecao)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -132,7 +132,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Nome','Quantidade'],
+                ['Divisão: ','Quantidade em horas: '],
                 <?php
                     while ($array = mysqli_fetch_array($graficoDivisao)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -164,7 +164,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Nome','Quantidade'],
+                ['Gerência: ','Quantidade em horas: '],
                 <?php
                     while ($array = mysqli_fetch_array($graficoGerencia)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -209,8 +209,8 @@
     <div class="container">
         <div class="card-deck mb-2 text-center">
             <div class="card mb-3 box-shadow">                
-                <div id="grafFuncMais" style="width: 1100px; height: 2200px"></div>
-               <!-- <div id="grafFuncMenos" style="width: 1100px; height: 1000px"></div>-->
+                <div id="grafFuncMais" style="width: 1100px; height: 1600px"></div>
+                <div id="grafFuncMenos" style="width: 1100px; height: 1600px"></div>
                 <div id="grafSecao" style="width: 1100px; height: 650px"></div>
                 <div id="grafDivisao" style="width: 1100px; height: 650px"></div>
                 <div id="grafGerencia" style="width: 1100px; height: 650px"></div>
