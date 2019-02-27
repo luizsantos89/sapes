@@ -1,10 +1,26 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
-    require('../../Model/Funcionario.php');
-    $funcionario = $_SESSION['funcionario'];
-    $secoes = $_SESSION['secoes'];
-    $divisoes = $_SESSION['divisoes'];
+    require('../../Model/FuncionarioDAO.php');
+    require('../../Model/SecaoDAO.php');
+    require('../../Model/DivisaoDAO.php');
+    
+    $secaoDAO = new SecaoDAO();
+    $divisaoDAO = new DivisaoDAO();
+    
+    if(isset($_SESSION['funcionario'])) {
+        $funcionario = $_SESSION['funcionario'];
+    }
+    
+    $secoes = $secaoDAO->getSecoes();
+    $divisoes = $divisaoDAO->getDivisoes();
+    
+    if(isset($_REQUEST['idFuncionario'])) {
+        $funcionarioDAO = new FuncionarioDAO();
+        $funcionario = new Funcionario();
+        $funcionario = $funcionarioDAO->getFuncionarioByID((int) $_REQUEST['idFuncionario']);
+    }
+    
 ?>
 
 <!doctype html>

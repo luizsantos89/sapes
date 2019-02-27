@@ -69,6 +69,9 @@
     <div class="container">
         <div class="col-md-12 order-md-1 ">
             <h3>Dados do funcionário:</h3>
+            
+            
+            
             <table class="table table-success">
                 <tr>
                     <th>Nome completo: </th>
@@ -292,12 +295,17 @@
             </table>
             </table>
         </div>
+        
+        <div class="col-md-12 order-md-1">
+            <a href="EditaFuncionario.php?idFuncionario=<?=$funcionario->idFuncionario?>" class="btn btn-primary">Editar</a>
+        </div>
+        
     </div>
     <div class="container" id="noprint">
         <footer class="pt-4 my-md-5 pt-md-5 border-top" id="noprint">
           <?php
-              include('../../includes/Rodape.php');
-              include('../../includes/unsetSessoes.php');
+                include('../../includes/Rodape.php');
+                include('../../includes/unsetSessoes.php');
           ?>
         </footer>
     </div>
