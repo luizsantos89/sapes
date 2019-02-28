@@ -125,9 +125,9 @@
                     <tr>   
                         <td>
                             <?php                            
-                                foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $aproveitamento->idUsuario) {
-                                        echo $usuario->nome;
+                                foreach($usuarios as $user) {
+                                    if($user->idUsuario == $aproveitamento->idUsuario) {
+                                        echo $user->nome;
                                     }
                                 }                            
                             ?> 

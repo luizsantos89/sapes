@@ -1,10 +1,9 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
-    $secoes = $_SESSION['secoes'];
     $usuario = $_SESSION['usuario'];
     if($usuario->idTipoUsuario == 3) {
-        Header("Location:ListaFuncionario.php");
+        Header("Location:../../index.php");
     }
 ?>
 
@@ -116,86 +115,39 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Funcionários</h1>
-        <p class="lead">
-            Funcionários cadastrados:
-        </p>
-        <p>
-            <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
-        </p>
+        <h1 class="display-4">Usuários</h1>
     </div>
 
     <div class="container">
       <div class="col-md-12 order-md-1">
                 
-            <h4 class="mb-3">Dados do funcionário:</h4>
-            <form class="needs-validation" action="../../Controler/controlerFuncionario.php?opcao=4" method="post" validate>
+            <h4 class="mb-3">Dados do usuário:</h4>
+            <form class="needs-validation" action="../../Controler/controlerUsuario.php?opcao=4" method="post" validate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Nome:</label>
-                        <input type="text" class="form-control" name="nome" value="" required>
+                        <input type="text" class="form-control" name="nome" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Matrícula/Crachá:</label>
-                        <input type="text" class="form-control" name="cracha" value="" required>
+                        <label>Login:</label>
+                        <input type="text" class="form-control" name="login" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Situação:</label>
-                        <input type="text" class="form-control" name="situacao" value="" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Cargo:</label>
-                        <input type="text" class="form-control" name="cargo" value="" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Data de Admissão:</label>
-                        <input type="text" class="form-control" name="dataAdmissao" onkeypress="mascaraData(this)"  value="" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Situação:</label>
-                        <select name="funcAtivo" class="form-control" >
-                            <option value="1">Ativo</option>
-                            <option value="0">Inativo</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Carga Horária:</label>
-                        <select name="cargaHoraria" class="form-control" >
-                            <option value="44">44 horas semanais</option><!--Maioria-->
-                            <option value="40">40 horas semanais</option><!--Advogado-->
-                            <option value="36">36 horas semanais</option><!--Guarda Patrimonial-->
-                            <option value="24">24 horas semanais</option><!--Técnico de Radiologia-->
-                            <option value="20">20 horas semanais</option><!--Médico Trabalho-->
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Seção:</label>
-                        <select name="idSecao" class="form-control" >
-                            <?php
-                                foreach($secoes as $secao) {
-                                    echo "<option value=$secao->idSecao>$secao->descricao</option>";
-                                }
-                            ?>
+                        <label>Tipo de Usuário:</label>
+                        <select name="idTipoUsuario" class="form-control">
+                            <option value="1">Administrador</option>
+                            <option value="2">SAPES</option>
+                            <option value="3">Gerentes</option>
                         </select>
                     </div>
                 </div>
                 <hr class="mb-6">
                 <button class="btn btn-outline-primary" type="submit">Cadastrar</button>
-                <a  class="btn btn-outline-primary" href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1">Cancelar</a>
+                <a  class="btn btn-outline-primary" href="../../Controler/controlerUsuario.php?opcao=1">Cancelar</a>
             </form>
         </div>
     </div>

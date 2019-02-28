@@ -1,6 +1,11 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
+    
+    if($usuario->idTipoUsuario == 3) {
+        Header('Location: ListaSancoes.php');
+    }
+    
     $funcionarios = $_SESSION['funcionarios'];
     $tiposSancao = $_SESSION['tipoSancoes'];
 ?>

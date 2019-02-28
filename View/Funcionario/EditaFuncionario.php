@@ -5,6 +5,10 @@
     require('../../Model/SecaoDAO.php');
     require('../../Model/DivisaoDAO.php');
     
+    if($usuario->idTipoUsuario == 3) {
+        Header("Location:ListaFuncionario.php");
+    }
+    
     $secaoDAO = new SecaoDAO();
     $divisaoDAO = new DivisaoDAO();
     

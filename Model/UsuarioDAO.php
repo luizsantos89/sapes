@@ -43,19 +43,33 @@
         }
         
         public function editarUsuario($usuario){
-            $sql = $this->con->prepare("UPDATE usuario SET nome = :nome, login = :login, senha = :senha WHERE idUsuario = :idUsuario");
-            $sql->bindValue(":idUsuario",$usuario->idUsuario);
+            $sql = $this->con->prepare("UPDATE usuario SET idTipoUsuario = :idTipoUsuario, nome = :nome, login = :login, senha = :senha WHERE idUsuario = :idUsuario");
+            $sql->bindValue(":idTipoUsuario",$usuario->idTipoUsuario);
             $sql->bindValue(":nome",$usuario->nome);
             $sql->bindValue(":login",$usuario->login);
             $sql->bindValue(":senha",$usuario->senha);
+            $sql->bindValue(":idUsuario",$usuario->idUsuario);
             $sql->execute();
         }
         
         public function novoUsuario($usuario) {
-            $sql = $this->con->prepare("INSERT INTO usuario(nome, login, senha) VALUES(:nome, :login, :senha)");
-            $sql->bindValue(":nome",$usuario->nome);
-            $sql->bindValue(":login",$usuario->login);
-            $sql->bindValue(":senha",$usuario->senha);
+            $sql = $this->con->prepare("INSERT INTO usuario(idTipoUsuario,nome, login, senha) VALUES(:idTipoUsuario,:nome, :login, :senha)");
+            $sql->bindValue(":idTipoUsuario",$usuario->getIdTipoUsuario());
+            $sql->bindValue(":nome",$usuario->getNome());
+            $sql->bindValue(":login",$usuario->getLogin());
+            $sql->bindValue(":senha",$usuario->getSenha());
+            $sql->execute();
+        }
+        
+        public function excluiUsuario($usuario) {
+            $sql = $this->con->prepare("DELETE FROM usuario WHERE idUsuario = :idUsuario");
+            $sql->bindValue(":idUsuario",$usuario->getIdUsuario());
+            $sql->execute();
+        }
+        
+        public function resetaSenha($idUsuario) {
+            $sql = $this->con->prepare("UPDATE usuario SET senha = md5('imbel@123') WHERE idUsuario = :idUsuario");
+            $sql->bindValue(":idUsuario", $idUsuario);
             $sql->execute();
         }
         

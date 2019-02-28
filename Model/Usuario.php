@@ -2,6 +2,7 @@
 
     class Usuario {
         private $idUsuario;
+        private $idTipoUsuario;
         private $nome;
         private $login;
         private $senha;
@@ -14,6 +15,14 @@
         
         public function getIdUsuario() {
             return $this->idUsuario;
+        }
+        
+        public function setIdTipoUsuario($idTipoUsuario) {
+            $this->idTipoUsuario = $idTipoUsuario;
+        }
+        
+        public function getIdTipoUsuario() {
+            return $this->idTipoUsuario;
         }
 
         public function setNome($nome) {

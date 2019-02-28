@@ -5,6 +5,10 @@
     $absenteismo = $_SESSION['absenteismo'];
     $funcionarios = $_SESSION['funcionarios'];
     $usuarios = $_SESSION['usuarios'];
+    
+    if($usuario->idTipoUsuario == 3) {
+        header("Location: index.php");
+    }
 ?>
 
 <!doctype html>

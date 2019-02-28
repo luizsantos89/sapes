@@ -70,7 +70,13 @@
         
         <a class="btn btn-outline-primary" href="index.php">Voltar</a>
         
-        <a class="btn btn-outline-primary" href="LancaAbsenteismo.php">Lançamento</a>
+        <?php
+            if($usuario->idTipoUsuario != 3) {
+        ?>
+            <a class="btn btn-outline-primary" href="LancaAbsenteismo.php">Lançamento</a>
+        <?php
+            }
+        ?>
     </div>
 
     <div class="container-fluid">
@@ -89,7 +95,13 @@
             <table class="table table-striped">
                 <thead class='thead-dark text-center'>
                     <tr>
-                        <th colspan="2">Ações:</th>
+                        <?php
+                            if($usuario->idTipoUsuario != 3) {
+                        ?>
+                            <th colspan="2">Ações:</th>
+                        <?php
+                            }
+                        ?>
                         <th>Funcionário (Crachá-Nome):</th>
                         <th>Qtde. Horas:</th>
                         <th>Mês/Ano:</th>
@@ -101,15 +113,21 @@
                 <?php
                     foreach ($listaAbsenteismo as $absenteismo) {
                 ?>
-                    <tr>     
-                        <td>
-                            <a href="../../Controler/controlerAbsenteismo.php?opcao=2&idAbsenteismo=<?=$absenteismo->idAbsenteismo?>">
+                    <tr> 
+                        <?php
+                            if($usuario->idTipoUsuario != 3) {
+                        ?>
+                            <td>
+                                <a href="../../Controler/controlerAbsenteismo.php?opcao=2&idAbsenteismo=<?=$absenteismo->idAbsenteismo?>">
                                 <img title="Editar Horas de Absenteísmo" src="../../imagens/edit.png" height="25px" /></a>
                             </td>
-                        <td>
-                            <a href="../../Controler/controlerAbsenteismo.php?opcao=5&idAbsenteismo=<?=$absenteismo->idAbsenteismo?>">
+                            <td>
+                                <a href="../../Controler/controlerAbsenteismo.php?opcao=5&idAbsenteismo=<?=$absenteismo->idAbsenteismo?>">
                                 <img title="Excluir Horas de Absenteísmo" src="../../imagens/excluir.png" height="25px" /></a>
-                        </td>                   
+                            </td>    
+                        <?php
+                            }
+                        ?>               
                         <td>
                             <?php                            
                                 foreach($funcionarios as $funcionario) {
@@ -131,9 +149,9 @@
                         <!--CARGO-->
                         <td>
                             <?php
-                                foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $absenteismo->idUsuario) {
-                                        echo $usuario->nome;
+                                foreach($usuarios as $user) {
+                                    if($user->idUsuario == $absenteismo->idUsuario) {
+                                        echo $user->nome;
                                     }
                                 }
                             ?>

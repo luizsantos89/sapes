@@ -67,7 +67,13 @@
         <p class="lead">
             Sanções lançadas (25 por página):
         </p>
-        <a class="btn btn-outline-primary" href="LancarSancao.php">Nova Sanção</a>
+        <?php
+            if($usuario->idTipoUsuario !=3 ){
+        ?>
+                <a class="btn btn-outline-primary" href="LancarSancao.php">Nova Sanção</a>
+        <?php
+            }
+        ?>
     </div>
 
     <div class="container-fluid">
@@ -89,10 +95,17 @@
             if($funcionarios == null) {
                 
             } else {
+                if($sancoes != null) {
             ?>
             <table class="table table-striped">
                 <tr class="thead-dark text-center">
-                    <th colspan="2">Ações:</th>
+                    <?php
+                        if($usuario->idTipoUsuario != 3) {
+                    ?>
+                            <th colspan="2">Ações:</th>
+                    <?php
+                        }
+                    ?>
                     <th>Id Sanção: </th>
                     <th>Funcionário:</th>
                     <th>Tipo de Sanção:</th>
@@ -108,6 +121,10 @@
                     foreach ($sancoes as $sancao) {
                 ?>
                 <tr class="">
+                        
+                    <?php
+                        if($usuario->idTipoUsuario != 3) {
+                    ?>                            
                         <td>
                             <a href="../../Controler/controlerSancao.php?opcao=2&idSancao=<?=$sancao->idSancao?>">
                                 <img title="Editar Sanção" src="../../imagens/edit.png" height="25px" /></a>
@@ -116,6 +133,9 @@
                             <a href="../../Controler/controlerSancao.php?opcao=5&idSancao=<?=$sancao->idSancao?>">
                                 <img title="Excluir Sanção" src="../../imagens/excluir.png" height="25px" /></a>
                         </td>
+                    <?php
+                        }
+                    ?>
                         <td><?=$sancao->idSancao?></td>
                         <td>
                             <?php                            
@@ -165,9 +185,9 @@
                         </td>
                         <td>
                             <?php                            
-                                foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $sancao->idUsuario) {
-                                        echo $usuario->nome;
+                                foreach($usuarios as $user) {
+                                    if($user->idUsuario == $sancao->idUsuario) {
+                                        echo $user->nome;
                                     }
                                 }                            
                             ?>  
@@ -179,10 +199,17 @@
                     <?php } ?>
                 </tbody>
             </table>
-                
-            <div>Páginas:  
                 <?php
-                    for ($i = 1; $i < $numpaginas; $i++) {                    
+                } else {
+                    echo '<h3>Nenhuma sanção foi lançada ainda.</h3>';
+                }
+                ?>
+                
+            <div>  
+                <?php
+                    if($numpaginas > 0) {
+                        echo 'Páginas: ';
+                        for ($i = 1; $i < $numpaginas; $i++) {                    
                 ?>
                         <a href="../../Controler/controlerSancao.php?opcao=6&pagina=<?=$i?>">
                 <?php
@@ -193,6 +220,7 @@
 
                         if($i < ($numpaginas-1))
                             echo ' - ';
+                        }
                     }
                 }
             ?>

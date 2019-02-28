@@ -1,18 +1,14 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
-    require('../../Model/Funcionario.php');
-    
+    require('../../Model/UsuarioDAO.php');
     
     if($usuario->idTipoUsuario == 3) {
-        Header('Location: ListaSancoes.php');
+        Header("Location:../index.php");
     }
     
-    $sancao = $_SESSION['sancao'];
-    $tiposSancoes = $_SESSION['tipoSancoes'];
-    $funcionarios = $_SESSION['funcionarios'];
-    $secoes = $_SESSION['secoes'];
-    $divisoes = $_SESSION['divisoes'];
+    $EditUsuario = new Usuario();
+    $EditUsuario = $_SESSION['EditUsuario'];
 ?>
 
 <!doctype html>
@@ -24,7 +20,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../imagens/imbel.ico">
 
-        <title>Editar funcionário</title>
+        <title>Editar usuario</title>
         <script language=javascript>
             //MÁSCARA DE VALORES
 
@@ -98,7 +94,6 @@
                     }
               }
             </script>
-
         <!-- Bootstrap core CSS -->
         <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
 
@@ -118,72 +113,67 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Sanção </h1><h3>Manutenção de Sanções</h3>
+        <h1 class="display-4">Usuário </h1><h3><?=$usuario->nome;?></h3>
         <p class="lead">
-            Editar sanção:
+            Editar usuário:
         </p>
     </div>
 
     <div class="container">
       <div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Funcionário: <b>
-            <?php
-                foreach($funcionarios as $funcionario) {
-                    if($sancao->idFuncionario == $funcionario->idFuncionario) {
-                        echo $funcionario->nome.'</b>';
-                    }
-                } 
-            ?>
-            
-            </h4>
-            <form class="needs-validation" action="../../Controler/controlerSancao.php?opcao=3" method="post" novalidate>
+            <h4 class="mb-3">Dados do usuário:</h4>
+            <form class="needs-validation" action="../../Controler/controlerUsuario.php?opcao=3" method="post" validate>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Sanção:</label>
-                        <select name="idTipo">
+                        <label>Tipo de usuário:</label>
+                        <select name="idTipoUsuario">
                             <?php
-                                foreach($tiposSancoes as $tipo) {
-                                    if($sancao->idTipo == $tipo->idTipo) {
-                                        echo "<option selected value=$tipo->idTipo>$tipo->descricao</option>";
-                                    } else {
-                                        echo "<option value=$tipo->idTipo>$tipo->descricao</option>";
-                                    }
-                                } 
+                                if($EditUsuario->idTipoUsuario == 1) {
+                            ?>
+                                <option value="1" selected>Administradores</option>
+                                <option value="2">SAPES</option>
+                                <option value="3">Gerentes</option>
+                            <?php                                
+                                }
+                            ?>
+                            <?php
+                                if($EditUsuario->idTipoUsuario == 2) {
+                            ?>
+                                <option value="1">Administradores</option>
+                                <option value="2" selected>SAPES</option>
+                                <option value="3">Gerentes</option>
+                            <?php                                
+                                }
+                            ?>
+                            <?php
+                                if($EditUsuario->idTipoUsuario == 3) {
+                            ?>
+                                <option value="1">Administradores</option>
+                                <option value="2">SAPES</option>
+                                <option value="3" selected>Gerentes</option>
+                            <?php                                
+                                }
                             ?>
                         </select>
                     </div>
-                </div>
-                <div class="row">
+                </div><div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Motivo:</label>
-                        <textarea class="form-control" name="motivo" value="" required><?=$sancao->motivo;?></textarea>
+                        <label>Nome:</label>
+                        <input type="text" class="form-control" name="nome" value="<?php echo $EditUsuario->nome;?>" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Documento:</label>
-                        <input type="text" class="form-control" name="numDoc" value="<?=$sancao->numDoc;?>" value="" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Dias de suspensão:</label>
-                        <input type="text" class="form-control" name="qtdDias" value="<?=$sancao->qtdDias;?>" value="" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label>Data da Sanção:</label>
-                        <input type="text" class="form-control" onKeyPress="return txtBoxFormat(this, '99/99/9999', event);"  name="dataSancao" value="<?= date('d/m/Y',strtotime($sancao->dataSancao)); ?>" value="" required>
+                        <label>Login:</label>
+                        <input type="text" class="form-control" name="login" value="<?php echo $EditUsuario->login;?>" required>
                     </div>
                 </div>
                 
-                <input type="hidden" value="<?=$sancao->idSancao;?>" name="idSancao" />
-                <input type="hidden" value="<?=$sancao->idFuncionario;?>" name="idFuncionario" />
+                <input type="hidden" value="<?=$EditUsuario->idUsuario;?>" name="idUsuario" />
                 <hr class="mb-6">
                 <button class="btn btn-outline-primary" type="submit">Alterar dados</button>
-                <a class="btn btn-outline-danger" href="../../Controler/controlerSancao.php?opcao=5&idFuncionario=<?php echo $funcionario->idFuncionario;?>">Exclui</a>
-                <a  class="btn btn-outline-primary" href="../../Controler/controlerSancao.php?opcao=6&pagina=1">Cancelar</a>
+                <a class="btn btn-outline-danger" href="../../Controler/controlerUsuario.php?opcao=5&idUsuario=<?php echo $EditUsuario->idUsuario?>">Exclui</a>
+                <a  class="btn btn-outline-primary" href="../../Controler/controlerUsuario.php?opcao=1">Cancelar</a>
             </form>
         </div>
     </div>

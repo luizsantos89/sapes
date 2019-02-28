@@ -9,6 +9,10 @@
     }
     $semestre = $_REQUEST['semestre'];
     $ano = $_REQUEST['ano'];
+    
+    if($usuario->idTipoUsuario == 3) {
+        header("location: index.php");
+    }
 ?>
 
 <!doctype html>

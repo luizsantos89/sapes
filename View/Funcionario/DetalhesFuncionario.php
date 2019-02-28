@@ -13,6 +13,7 @@
         header("Location: ../../Controler/controlerFuncionario.php?opcao=6&pagina=1");
     }
     
+    $usuario = $_SESSION['usuario'];    
     $secoes = $_SESSION['secoes'];
     $divisoes = $_SESSION['divisoes'];
     $gerencias = $_SESSION['gerencias'];
@@ -68,9 +69,7 @@
 
     <div class="container">
         <div class="col-md-12 order-md-1 ">
-            <h3>Dados do funcionário:</h3>
-            
-            
+            <h3>Dados do funcionário:</h3>  
             
             <table class="table table-success">
                 <tr>
@@ -295,11 +294,18 @@
             </table>
             </table>
         </div>
-        
         <div class="col-md-12 order-md-1">
-            <a href="EditaFuncionario.php?idFuncionario=<?=$funcionario->idFuncionario?>" class="btn btn-primary">Editar</a>
+            <?php
+                if($usuario->idTipoUsuario != 3) {
+
+            ?>
+                <a href="EditaFuncionario.php?idFuncionario=<?=$funcionario->idFuncionario?>" class="btn btn-primary">Editar</a>
+
+            <?php
+                }
+            ?>
+            <a href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1" class="btn btn-outline-primary">Voltar</a>
         </div>
-        
     </div>
     <div class="container" id="noprint">
         <footer class="pt-4 my-md-5 pt-md-5 border-top" id="noprint">

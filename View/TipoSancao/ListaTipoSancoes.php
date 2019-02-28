@@ -60,11 +60,17 @@
             Tipos de sanções cadastradas:
         </p>
         <p>
-            <a class="btn btn-outline-primary" href="CadastrarTipoSancao.php">Novo tipo de sanção</a>
+            <?php
+                if($usuario->idTipoUsuario !=3) {
+            ?>
+                <a class="btn btn-outline-primary" href="CadastrarTipoSancao.php">Novo tipo de sanção</a>
+            <?php
+                }
+            ?>
         </p>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
       <div class="col-md-12 order-md-1">
             <div>
 
@@ -73,51 +79,62 @@
                 
             } else {
             ?>
-            <table class="table table-striped">
-                <tr class="thead-dark text-center">
-                    <th colspan="2">Ações:</th>
-                    <th>Descrição:</th>
-                    <th>Peso:</th>
-                    <th>Cadastrada por:</th>
-                    <th>Data de Cadastro:</th>
-                </tr>
-                <?php
-                    foreach ($tiposSancoes as $tipo) {
-                ?>
-                <tr class="">
-                        <td>
-                            <a href="../../Controler/controlerTipoSancao.php?opcao=2&idTipoSancao=<?=$tipo->idTipo?>">
-                                <img title="Editar" src="../../imagens/edit.png" height="25px" /></a>
-                            </td>
-                        <td>
-                            <a href="../../Controler/controlerTipoSancao.php?opcao=5&idTipoSancao=<?=$tipo->idTipo?>">
-                                <img title="Excluir" src="../../imagens/excluir.png" height="25px" /></a>
-                        </td>
-                        <td>
-                            <?=$tipo->descricao?> 
-                        </td>
-                        <td>
-                            <?=$tipo->peso;?>
-                        </td>
-                        <td>
+                <table class="table table-striped">
+                    <tr class="thead-dark text-center">
+                        <?php
+                            if($usuario->idTipoUsuario !=3) {
+                        ?>
+                                <th colspan="2">Ações:</th>
+                        <?php
+                            }
+                        ?>
+                        <th>Descrição:</th>
+                        <th>Peso:</th>
+                        <th>Cadastrada por:</th>
+                        <th>Data de Cadastro:</th>
+                    </tr>
+                    <?php
+                        foreach ($tiposSancoes as $tipo) {
+                    ?>
+                    <tr class="">
                             <?php
-                                foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $tipo->idUsuario) {
-                                        echo $usuario->nome;
-                                    }
+                                if($usuario->idTipoUsuario !=3) {
+                            ?>
+                                <td>
+                                    <a href="../../Controler/controlerTipoSancao.php?opcao=2&idTipoSancao=<?=$tipo->idTipo?>">
+                                        <img title="Editar" src="../../imagens/edit.png" height="25px" /></a>
+                                    </td>
+                                <td>
+                                    <a href="../../Controler/controlerTipoSancao.php?opcao=5&idTipoSancao=<?=$tipo->idTipo?>">
+                                        <img title="Excluir" src="../../imagens/excluir.png" height="25px" /></a>
+                                </td>
+                            <?php
                                 }
                             ?>
-                        </td>
-                        <td>
-                            <?= date('d/m/Y',strtotime($tipo->dataCadastro)); ?>
-                        </td>
-                    </tr>
-                    <?php } ?>
-            </table>
-            <?php
-            
-                                }
+                            <td>
+                                <?=$tipo->descricao?> 
+                            </td>
+                            <td>
+                                <?=$tipo->peso;?>
+                            </td>
+                            <td>
+                                <?php
+                                    foreach($usuarios as $user) {
+                                        if($user->idUsuario == $tipo->idUsuario) {
+                                            echo $user->nome;
+                                        }
+                                    }
                                 ?>
+                            </td>
+                            <td>
+                                <?= date('d/m/Y',strtotime($tipo->dataCadastro)); ?>
+                            </td>
+                        </tr>
+                        <?php } ?>
+                </table>
+        <?php            
+            }
+        ?>
             </div>
         </div>
     </div>

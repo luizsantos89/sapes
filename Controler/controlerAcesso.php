@@ -17,7 +17,6 @@
     
     //Vai pra página de informação
     if($opcao == 0) {
-        echo 'esou aqui? ';
         header("Location: ../View/Cadastro/MinhaConta.php");
     }
     
@@ -34,11 +33,14 @@
             if($senhaNova == $confirmacaoSenha) {
                 $usuario->senha = $senhaNova;
                 $usuarioDAO->editarUsuario($usuario);
+                echo 'edita';
                 header("Location: ../View/Cadastro/MinhaConta.php?senha='sucesso'");
             } else {
-                header("Location: ../View/Cadastro/AlterarSenha.php?erro=1");
+                'echo senhas não conferem';
+                 header("Location: ../View/Cadastro/AlterarSenha.php?erro=1");
             }           
         } else {
+            echo 'senha atual errada';
                 header("Location: ../View/Cadastro/AlterarSenha.php?erro=2");
         }           
     }

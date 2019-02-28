@@ -7,6 +7,8 @@
     require '../../Model/Divisao.php';
     require '../../Model/Gerencia.php';
 
+    $usuario = $_SESSION['usuario'];
+    
     if ($_SESSION['gerencias'])  {
         $funcionarios = $_SESSION['funcionarios'];
         $numpaginas = $_REQUEST['paginas'];
@@ -73,7 +75,13 @@
         <p class="lead">
             Funcionários cadastrados (25 por página):
         </p>
-        <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
+        <?php
+            if($usuario->idTipoUsuario != 3) {
+        ?>
+            <a class="btn btn-outline-primary" href="CadastrarFuncionario.php">Cadastrar</a>
+        <?php
+            }
+        ?>
     </div>
 
     <div class="container-fluid">
@@ -102,7 +110,13 @@
             <table class="table table-striped">
                 <thead class='thead-dark text-center'>
                     <tr>
+                        <?php
+                            if($usuario->idTipoUsuario != 3) {
+                        ?>
                         <th colspan="2">Ações:</th>
+                        <?php
+                            }
+                        ?>
                         <th>Crachá:</th>
                         <th>Nome:</th>
                         <th>Cargo:</th>
@@ -122,14 +136,20 @@
                     foreach ($funcionarios as $funcionario) {
                 ?>
                     <tr>
-                        <td>
-                            <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario?>">
-                                <img title="Editar Funcionário" src="../../imagens/edit.png" height="25px" /></a>
-                            </td>
-                        <td>
-                            <a href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?=$funcionario->idFuncionario?>">
-                                <img title="Excluir Funcionário" src="../../imagens/excluir.png" height="25px" /></a>
-                        </td>
+                        <?php
+                            if($usuario->idTipoUsuario != 3) {
+                        ?>
+                                <td>
+                                    <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario?>">
+                                        <img title="Editar Funcionário" src="../../imagens/edit.png" height="25px" /></a>
+                                    </td>
+                                <td>
+                                    <a href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?=$funcionario->idFuncionario?>">
+                                        <img title="Excluir Funcionário" src="../../imagens/excluir.png" height="25px" /></a>
+                                </td>
+                        <?php
+                            }
+                        ?>
                         
                         <!--CRACHÁ -->
                         <td align="center">
@@ -230,9 +250,9 @@
                         <td>
                             <?php
                             
-                                foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $funcionario->idUsuario) {
-                                        echo $usuario->nome;
+                                foreach($usuarios as $user) {
+                                    if($user->idUsuario == $funcionario->idUsuario) {
+                                        echo $user->nome;
                                     }
                                 }
                             

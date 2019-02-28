@@ -1,7 +1,10 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
-    $usuario = $_SESSION['usuario'];
+    
+    if($usuario->idTipoUsuario == 3) {
+        header("location: index.php");
+    }
 ?>
 
 <!doctype html>

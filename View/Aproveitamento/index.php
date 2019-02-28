@@ -73,6 +73,9 @@
                     <br /><br /><br /><br />
                 </div>
             </div>
+            <?php
+                if($usuario->idTipoUsuario != 3) {
+            ?>
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                         <h4 class="my-0 font-weight-normal">Calcular</h4>
@@ -85,6 +88,9 @@
                     <br /><br /><br /><br />
                 </div>
             </div>
+            <?php
+                }
+            ?>
         </div>
     </div>
     <div class="container">

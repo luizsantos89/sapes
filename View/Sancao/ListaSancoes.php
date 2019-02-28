@@ -54,7 +54,13 @@
             Sanções lançadas:
         </p>
         <p>
-            <a class="btn btn-outline-primary" href="LancarSancao.php">Nova sanção</a>
+            <?php
+                if($usuario->idTipoUsuario != 3) {
+            ?>
+                    <a class="btn btn-outline-primary" href="LancarSancao.php">Nova sanção</a>
+            <?php
+                }
+            ?>
         </p>
     </div>
 
@@ -82,97 +88,115 @@
                     $qtd++;
                 }
                 echo 'Quantidade total de sanções: '.$qtd.'<br>';
+                
+                if($sancoes != null) {
             ?>
-            <table border='1' class="table table-striped">
-                <tr class="thead-dark text-center">
-                    <th colspan="2">Ações:</th>
-                    <th>Funcionário:</th>
-                    <th>Tipo de Sanção:</th>
-                    <th>Peso:</th>
-                    <th>Data da Sanção:</th>
-                    <th>Motivo:</th>
-                    <th>Documento:</th>
-                    <th>Dias de suspensão:</th>
-                    <th>Lançamento:</th>
-                    <th>Data de Lançamento:</th>
-                </tr>
-                <?php
-                    foreach ($sancoes as $sancao) {
-                ?>
-                <tr class="">
-                        <td>
-                            <a href="../../Controler/controlerSancao.php?opcao=2&idSancao=<?=$sancao->idSancao?>">
-                                <img title="Editar Sanção" src="../../imagens/edit.png" height="25px" /></a>
-                            </td>
-                        <td>
-                            <a href="../../Controler/controlerSancao.php?opcao=5&idSancao=<?=$sancao->idSancao?>">
-                                <img title="Excluir Sanção" src="../../imagens/excluir.png" height="25px" /></a>
-                        </td>
-                        <td>
-                            <?php                            
-                                foreach($funcionarios as $funcionario) {
-                                    if($funcionario->idFuncionario == $sancao->idFuncionario) {
-                                        echo $funcionario->nome;
-                                    }
-                                }                            
-                            ?>  
-                        </td>
-                        <td>
-                            <?php
-                                foreach($tiposSancoes as $tipoSancao) {
-                                    if($tipoSancao->idTipo == $sancao->idTipo) {
-                                        echo $tipoSancao->descricao;
-                                    }
-                                }
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                                foreach($tiposSancoes as $tipoSancao) {
-                                    if($tipoSancao->idTipo == $sancao->idTipo) {
-                                        echo $tipoSancao->peso;
-                                    }
-                                }
-                            ?>
-                        </td>
-                        <td>
-                            <?= date('d/m/Y',strtotime($sancao->dataSancao)); ?>  
-                        </td>
-                        <td>
-                            <?= $sancao->motivo;?>
-                        </td>
-                        <td>
-                            <?= $sancao->numDoc;?>
-                        </td>
-                        <td>
-                            <?php
-                                if($sancao->idTipo == 4) {
-                                    echo $sancao->qtdDias;
-                                } else {
-                                    echo 'Não se aplica';
-                                }
-                            
-                            ?>
-                        </td>
-                        <td>
-                            <?php                            
-                                foreach($usuarios as $usuario) {
-                                    if($usuario->idUsuario == $sancao->idUsuario) {
-                                        echo $usuario->nome;
-                                    }
-                                }                            
-                            ?>  
-                        </td>
-                        <td>
-                            <?= date('d/m/Y',strtotime($sancao->dataLancamento)); ?>  
-                        </td>
+                <table border='1' class="table table-striped">
+                    <tr class="thead-dark text-center">
+                        <?php
+                            if($usuario->idTipoUsuario != 3) {
+                        ?>
+                                <th colspan="2">Ações:</th>
+                        <?php
+                            }
+                        ?>
+                        <th>Funcionário:</th>
+                        <th>Tipo de Sanção:</th>
+                        <th>Peso:</th>
+                        <th>Data da Sanção:</th>
+                        <th>Motivo:</th>
+                        <th>Documento:</th>
+                        <th>Dias de suspensão:</th>
+                        <th>Lançamento:</th>
+                        <th>Data de Lançamento:</th>
                     </tr>
-                    <?php } ?>
-            </table>
-            <?php
-            
+                    <?php
+                            foreach ($sancoes as $sancao) {
+                    ?>
+                        <tr class="">
+                            <?php
+                                if($usuario->idTipoUsuario != 3) {
+                            ?>                            
+                                <td>
+                                    <a href="../../Controler/controlerSancao.php?opcao=2&idSancao=<?=$sancao->idSancao?>">
+                                        <img title="Editar Sanção" src="../../imagens/edit.png" height="25px" /></a>
+                                    </td>
+                                <td>
+                                    <a href="../../Controler/controlerSancao.php?opcao=5&idSancao=<?=$sancao->idSancao?>">
+                                        <img title="Excluir Sanção" src="../../imagens/excluir.png" height="25px" /></a>
+                                </td>
+                            <?php
                                 }
-                                ?>
+                            ?>
+                                <td>
+                                    <?php                            
+                                        foreach($funcionarios as $funcionario) {
+                                            if($funcionario->idFuncionario == $sancao->idFuncionario) {
+                                                echo $funcionario->nome;
+                                            }
+                                        }                            
+                                    ?>  
+                                </td>
+                                <td>
+                                    <?php
+                                        foreach($tiposSancoes as $tipoSancao) {
+                                            if($tipoSancao->idTipo == $sancao->idTipo) {
+                                                echo $tipoSancao->descricao;
+                                            }
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                        foreach($tiposSancoes as $tipoSancao) {
+                                            if($tipoSancao->idTipo == $sancao->idTipo) {
+                                                echo $tipoSancao->peso;
+                                            }
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?= date('d/m/Y',strtotime($sancao->dataSancao)); ?>  
+                                </td>
+                                <td>
+                                    <?= $sancao->motivo;?>
+                                </td>
+                                <td>
+                                    <?= $sancao->numDoc;?>
+                                </td>
+                                <td>
+                                    <?php
+                                        if($sancao->idTipo == 4) {
+                                            echo $sancao->qtdDias;
+                                        } else {
+                                            echo 'Não se aplica';
+                                        }
+
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php                            
+                                        foreach($usuarios as $user) {
+                                            if($user->idUsuario == $sancao->idUsuario) {
+                                                echo $user->nome;
+                                            }
+                                        }                            
+                                    ?>  
+                                </td>
+                                <td>
+                                    <?= date('d/m/Y',strtotime($sancao->dataLancamento)); ?>  
+                                </td>
+                            </tr>
+                    <?php 
+                        } 
+                    ?>
+                </table>
+            <?php
+                    } else {
+                        echo '<h3>Nenhuma sanção lançada</h3>';
+                    }
+                }
+            ?>
             </div>
         </div>
     </div>

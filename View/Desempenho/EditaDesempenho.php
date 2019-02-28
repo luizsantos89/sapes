@@ -5,6 +5,9 @@
     $desempenho = $_SESSION['desempenho'];
     $funcionarios = $_SESSION['funcionarios'];
     
+    if($usuario->idTipoUsuario == 3) {
+        header("Location: index.php");
+    }
 ?>
 
 <!doctype html>

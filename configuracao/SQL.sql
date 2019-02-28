@@ -76,8 +76,14 @@ CREATE TABLE absenteismo(
     dataLancamento TIMESTAMP
 );
 
+CREATE TABLE tipo_usuario(
+    idTipoUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    descricao VARCHAR(50)
+);
+
 CREATE TABLE usuario(
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    idTipoUsuario INT,
     nome VARCHAR(500),
     login VARCHAR(50),
     senha VARCHAR(1000),
@@ -193,9 +199,13 @@ INSERT INTO tipo_sancao(idUsuario, descricao, peso, dataCadastro) VALUES (1,'Adv
 INSERT INTO tipo_sancao(idUsuario, descricao, peso, dataCadastro) VALUES (1,'Advertencia por escrito',2, CURRENT_TIME);
 INSERT INTO tipo_sancao(idUsuario, descricao, peso, dataCadastro) VALUES (1,'Suspensao',3, CURRENT_TIME);
 
+INSERT INTO tipo_usuario(idTipoUsuario, descricao) VALUES (1,'Administradores');
+INSERT INTO tipo_usuario(idTipoUsuario, descricao) VALUES (2,'SAPES');
+INSERT INTO tipo_usuario(idTipoUsuario, descricao) VALUES (3,'Gerentes');
+
 INSERT INTO funcionario(nome,cracha,dataCadastro,dataAdmissao, cargo,funcAtivo, idUsuario, idSecao, situacao, cargaHoraria) VALUES('Luiz Claudio Afonso dos Santos',739,CURRENT_TIME,'2018-02-19','Tec Adm Especializado',true,1,12,'EC',44);
 
-INSERT INTO usuario(nome,login,senha, ultimoAcesso) VALUES ('Administrador','admin',md5('123456'),CURRENT_TIME);
+INSERT INTO usuario(idTipoUsuario,nome,login,senha, ultimoAcesso) VALUES (1,'Administrador','admin',md5('123456'),CURRENT_TIME);
 
 INSERT INTO sancao(idFuncionario,idUsuario,idTipo,numDoc,qtdDias,motivo,dataSancao,dataLancamento) VALUES(1,1,1,'A-001',0,'Teste','2018-12-01',CURRENT_TIME);
 

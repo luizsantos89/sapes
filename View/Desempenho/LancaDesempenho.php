@@ -5,7 +5,10 @@
     require('../../Model/Funcionario.php');
     require('../../Model/Usuario.php');
     $funcionarios = $_SESSION['funcionarios'];
-    $usuario = $_SESSION['usuario'];
+    
+    if($usuario->idTipoUsuario == 3) {
+        header("Location: index.php");
+    }
 ?>
 
 <!doctype html>

@@ -4,6 +4,10 @@
     require('../../Model/Funcionario.php');
     $tipoSancao = $_SESSION['tipoSancao'];
     $funcionarios = $_SESSION['funcionarios'];
+    
+    if($usuario->idTipoUsuario == 3) {
+        Header('Location:ListaTipoSancoes.php');
+    }
 ?>
 
 <!doctype html>
