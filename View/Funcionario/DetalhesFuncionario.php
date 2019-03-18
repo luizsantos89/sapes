@@ -150,7 +150,7 @@
                 foreach($notasDesempenho as $nota) {
                     $notas = Array();
                     if($nota->idFuncionario == $funcionario->idFuncionario) {
-                        echo "<tr><td>$nota->semestre º semestre - $nota->ano </td><td>$nota->nota</td></tr>";
+                        echo "<tr><td>$nota->semestre º semestre - $nota->ano </td><td>".str_replace('.',',', $nota->nota)."</td></tr>";
                         $notas[] = $nota->nota;
                     }
                 }            
@@ -192,7 +192,7 @@
                     if($absenteismo->idFuncionario == $funcionario->idFuncionario) {
                         echo '<tr>';
                         echo "<td>$absenteismo->mes/$absenteismo->ano</td>";
-                        echo "<td>$absenteismo->qtdHoras horas</td></tr>";
+                        echo "<td>".str_replace('.',',',$absenteismo->qtdHoras)." horas</td></tr>";
                         $horas[] = $absenteismo->qtdHoras;
                     }
                 }
@@ -210,7 +210,7 @@
                             
                             
                             if($count != 0) {
-                                echo round(($total/$count),8);
+                                echo str_replace('.',',',round(($total/$count),2));
                             } else {
                                 echo 0;
                             }

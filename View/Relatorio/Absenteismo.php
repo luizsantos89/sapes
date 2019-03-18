@@ -1,24 +1,37 @@
 <?php
     session_start();
     
+    if(isset($_REQUEST['semestre'])){
+        $semestre = (int) $_REQUEST['semestre'];
+        $ano = (int) $_REQUEST['ano'];
+    } else {
+        header("Location: GeraAbsenteismo.php");
+    }
+    
     include("../../includes/verificaSessao.php");
     
     $usuario = $_SESSION['usuario'];    
     
     $link = mysqli_connect("localhost", "root", "", "sapes");
     
-    $queryFuncionarioMenos = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario GROUP BY f.idFuncionario ORDER BY totalHorasFunc ASC LIMIT 20;";
-    
-    $queryFuncionarioMais = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 20;";
-    
-    $querySecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s	ON f.idSecao = s.idSecao GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
-    
-    $queryDivisao = "SELECT d.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC;";
-    
-    $queryGerencia = "SELECT g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC;";
-    
-    $graficoFuncionarioMenos = $link->query($queryFuncionarioMenos);
-    
+    if($semestre == 1) {
+        $queryFuncionarioMais = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario WHERE mes < 7  AND ano = $ano GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 50;";
+
+        $querySecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes < 7  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
+
+        $queryDivisao = "SELECT d.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes < 7  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC;";
+
+        $queryGerencia = "SELECT g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes < 7  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC;";
+    } else {
+        $queryFuncionarioMais = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario WHERE mes > 6  AND ano = $ano GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 50;";
+
+        $querySecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE > 6  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
+
+        $queryDivisao = "SELECT d.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes > 6  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC;";
+
+        $queryGerencia = "SELECT g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes > 6  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC;";
+    }
+        
     $graficoFuncionarioMais = $link->query($queryFuncionarioMais);
     
     $graficoSecao = $link->query($querySecao);
@@ -46,58 +59,6 @@
     <!-- Custom styles for this template -->
     <link href="../../estilos/css/pricing.css" rel="stylesheet">
     <script type="text/javascript" src="../../scripts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart(){
-            var data = new google.visualization.DataTable();
-            var data = google.visualization.arrayToDataTable([
-                ['Funcionário: ','Quantidade em horas: '],
-                <?php
-                    while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
-                        echo "['".$array[0]."', ".$array[1]."],";
-                    }
-                ?>
-               ]);
-
-           
-            var options = {
-              title: '20 funcionários com mais horas de absenteismo',
-              is3D: true,
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('grafFuncMais'));
-            chart.draw(data, options);
-        }
-
-    </script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart(){
-            var data = new google.visualization.DataTable();
-            var data = google.visualization.arrayToDataTable([
-                ['Funcionário: ','Quantidade em horas: '],
-                <?php
-                    while ($array = mysqli_fetch_array($graficoFuncionarioMenos)){
-                        echo "['".$array[0]."', ".$array[1]."],";
-                    }
-                ?>
-               ]);
-
-           
-            var options = {
-              title: '20 funcionários com menos horas de absenteismo',
-              is3D: true,
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('grafFuncMenos'));
-            chart.draw(data, options);
-        }
-
-    </script>
     
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
@@ -203,14 +164,30 @@
 
      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Relatório</h1><br />
-        <h3>Horas de absenteísmo</h3>
+        <h3>Horas de absenteísmo - <?=$semestre?>º semestre - <?=$ano?></h3>
+        <a href="GeraAbsenteismo.php" class="btn btn-primary">Voltar</a>
     </div>
 
     <div class="container">
         <div class="card-deck mb-2 text-center">
             <div class="card mb-3 box-shadow">                
-                <div id="grafFuncMais" style="width: 1100px; height: 1600px"></div>
-                <div id="grafFuncMenos" style="width: 1100px; height: 1600px"></div>
+                <!--<div id="grafFuncMais" style="width: 1000px; height: 1200px"></div>-->
+                <table border='1' class="table table-striped">
+                    <tr>
+                        <th colspan="2">OS 50 FUNCIONÁRIOS COM MAIS HORAS DE ABSENTEÍSMO NO PERÍODO:</th>
+                    </tr>
+                    <tr>
+                        <th>Funcionário: </th>
+                        <th>Quant. Horas: </th>
+                    </tr>
+                    <?php
+                        $cont = 1;
+                        while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
+                            echo "<tr><td>".$cont.' - '.$array[0]."</td><td>".$array[1]."</td></tr>";
+                            $cont+=1;
+                        }
+                    ?>
+                </table>
                 <div id="grafSecao" style="width: 1100px; height: 650px"></div>
                 <div id="grafDivisao" style="width: 1100px; height: 650px"></div>
                 <div id="grafGerencia" style="width: 1100px; height: 650px"></div>
