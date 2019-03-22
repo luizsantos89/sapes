@@ -85,8 +85,8 @@
             $qtd = 0;
             
             if($listaAbsenteismo == null) {
-                if(isset($_SESSION['filtroPorPeriodo'])) {
-                    echo '<h3>Sem registros para o período informado</h3>';
+                if(isset($_SESSION['filtroPorPeriodo'])) {                        
+                    echo ' <div class="alert alert-danger">Não há absenteísmo lançado para o período informado, por favor selecione outro período.</div><br>';
                 }                
             } else {
                                

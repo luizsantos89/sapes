@@ -149,8 +149,10 @@
                 </table>
             <?php
                 } else {
-            ?>
-                <h3>Nenhuma informação para o período selecionado.</h3>
+            ?> 
+                <div class="alert alert-danger">
+                    Não há desempenho lançado no período solicitado, por favor selecione outro período.
+                </div><br>
             <?php
                 }
             ?>

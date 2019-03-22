@@ -169,3 +169,38 @@
         header("Location:../View/Sancao/ListaSancoesPagina.php?paginas=".$numpaginas);
         
     }
+    
+    //Lista por período (SEMESTRE/ANO)
+    if($opcao == 7) {
+        $semestre = $_REQUEST['semestre'];
+        $ano = $_REQUEST['ano'];
+        
+        $sancaoDAO = new SancaoDAO();
+        $funcionarioDAO = new FuncionarioDAO();
+        $usuarioDAO = new UsuarioDAO();
+        $secaoDAO = new SecaoDAO();
+        $divisaoDAO = new DivisaoDAO();
+        $gerenciaDAO = new GerenciaDAO();
+        $tipoSancaoDAO = new TipoSancaoDAO();
+        
+        if($semestre == 1) {
+            $dataInicial = $ano."-01-01 00:00:00";
+            $dataFinal =  $ano."-03-30 23:59:59";
+        } else {
+            $dataInicial = $ano."-07-01 00:00:00";
+            $dataFinal =  $ano."-12-31 23:59:59";
+        }
+        
+        echo 'semestre: '.$semestre.'<br>ano: '.$ano;
+        
+        $listaSancoes = $sancaoDAO->sancaoPorSemestre($dataInicial, $dataFinal);
+                
+        $listaUsuarios = $usuarioDAO->getUsuarios();
+        $listaFuncionarios = $funcionarioDAO->getFuncionarios();
+        $tipoSancoes = $tipoSancaoDAO->getTipoSancoes();
+        $_SESSION['usuarios'] = $listaUsuarios;       
+        $_SESSION['sancoes'] = $listaSancoes;
+        $_SESSION['funcionarios'] = $listaFuncionarios;
+        $_SESSION['tipoSancoes'] = $tipoSancoes;
+        header("Location:../View/Sancao/ListaSancoes.php");
+    }

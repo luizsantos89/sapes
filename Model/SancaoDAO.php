@@ -92,7 +92,7 @@
         }
         
         public function sancaoPorSemestre($dataInicial, $dataFinal) {
-            $sql = $this->con->prepare("select * from sancao WHERE dataSancao between :dataInicial AND :dataFinal GROUP BY idFuncionario");
+            $sql = $this->con->prepare("select * from sancao WHERE dataSancao between :dataInicial AND :dataFinal");
             $sql->bindValue(':dataInicial', $dataInicial);
             $sql->bindValue(':dataFinal', $dataFinal);
             $sql->execute();

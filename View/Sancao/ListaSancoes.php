@@ -57,6 +57,7 @@
             <?php
                 if($usuario->idTipoUsuario != 3) {
             ?>
+                    <a class="btn btn-primary" href="index.php">Voltar</a>
                     <a class="btn btn-outline-primary" href="LancarSancao.php">Nova sanção</a>
             <?php
                 }
@@ -81,13 +82,7 @@
             if(!isset($_SESSION['sancoes'])) {
                 header("Location: ../../Controler/controlerSancao.php?opcao=6&pagina=1");
             } else {
-                $sancoes = $_SESSION['sancoes'];
-                $qtd = 0;
-                
-                foreach($sancoes as $sancao) {
-                    $qtd++;
-                }
-                echo 'Quantidade total de sanções: '.$qtd.'<br>';
+                $sancoes = $_SESSION['sancoes'];                
                 
                 if($sancoes != null) {
             ?>
@@ -193,7 +188,7 @@
                 </table>
             <?php
                     } else {
-                        echo '<h3>Nenhuma sanção lançada</h3>';
+                        echo ' <div class="alert alert-danger">Não há sanções lançadas para o período informado, por favor selecione outro período.</div><br>';
                     }
                 }
             ?>
@@ -204,7 +199,6 @@
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
           <?php
               include('../../includes/Rodape.php');
-              unset($_SESSION['sancoes']);
           ?>
         </footer>
     </div>
