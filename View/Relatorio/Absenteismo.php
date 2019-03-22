@@ -25,7 +25,7 @@
     } else {
         $queryFuncionarioMais = "SELECT f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario WHERE mes > 6  AND ano = $ano GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 50;";
 
-        $querySecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE > 6  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
+        $querySecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes > 6  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
 
         $queryDivisao = "SELECT d.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes > 6  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC;";
 
@@ -55,6 +55,14 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>            
+    @media print{
+       #noprint{
+           display:none;
+       }
+    }
+    </style>
 
     <!-- Custom styles for this template -->
     <link href="../../estilos/css/pricing.css" rel="stylesheet">
@@ -152,14 +160,14 @@
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
       <!--<h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>-->
-      <img src="../../imagens/logo2.png" class="my-0 mr-md-auto font-weight-normal" />
+      <img src="../../imagens/logo2.png" class="my-0 mr-md-auto font-weight-normal" id="noprint" />
       
-      <nav class="my-2 my-md-0 mr-md-3">
+      <nav class="my-2 my-md-0 mr-md-3" id="noprint">
           <?php
             include('../../includes/Menus.php');
           ?>
       </nav>
-      <a class="btn btn-outline-primary" href="../../Controler/logout.php">Sair</a>
+      <a class="btn btn-outline-primary" href="../../Controler/logout.php" id="noprint">Sair</a>
     </div>
 
      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -169,33 +177,31 @@
     </div>
 
     <div class="container">
-        <div class="card-deck mb-2 text-center">
-            <div class="card mb-3 box-shadow">                
-                <!--<div id="grafFuncMais" style="width: 1000px; height: 1200px"></div>-->
-                <table border='1' class="table table-striped">
-                    <tr>
-                        <th colspan="2">OS 50 FUNCIONÁRIOS COM MAIS HORAS DE ABSENTEÍSMO NO PERÍODO:</th>
-                    </tr>
-                    <tr>
-                        <th>Funcionário: </th>
-                        <th>Quant. Horas: </th>
-                    </tr>
-                    <?php
-                        $cont = 1;
-                        while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
-                            echo "<tr><td>".$cont.' - '.$array[0]."</td><td>".$array[1]."</td></tr>";
-                            $cont+=1;
-                        }
-                    ?>
-                </table>
-                <div id="grafSecao" style="width: 1100px; height: 650px"></div>
-                <div id="grafDivisao" style="width: 1100px; height: 650px"></div>
-                <div id="grafGerencia" style="width: 1100px; height: 650px"></div>
-            </div>
+        <div class="text-center">   
+            <!--<div id="grafFuncMais" style="width: 1000px; height: 1200px"></div>-->
+            <table border='1' class="table table-striped">
+                <tr>
+                    <th colspan="2">OS 50 FUNCIONÁRIOS COM MAIS HORAS DE ABSENTEÍSMO NO PERÍODO:</th>
+                </tr>
+                <tr>
+                    <th>Funcionário: </th>
+                    <th>Quant. Horas: </th>
+                </tr>
+                <?php
+                    $cont = 1;
+                    while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
+                        echo "<tr><td>".$cont.' - '.$array[0]."</td><td>".$array[1]."</td></tr>";
+                        $cont+=1;
+                    }
+                ?>
+            </table>
+            <div class="pagination" id="grafSecao" style="width: 1100px; height: 650px"></div>
+            <div  class="pagination" id="grafDivisao" style="width: 1100px; height: 650px"></div>
+            <div  class="pagination" id="grafGerencia" style="width: 1100px; height: 650px"></div>
         </div>
     </div>
     <div class="container">
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top" id="noprint">
           <?php
               include('../../includes/Rodape.php');
           ?>

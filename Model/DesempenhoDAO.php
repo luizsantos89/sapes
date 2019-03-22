@@ -38,7 +38,7 @@
         }
         
         public function getDesempenhosPeriodo($semestre,$ano) {
-            $sql = $this->con->prepare("SELECT * FROM desempenho WHERE semestre = :semestre AND ano = :ano");
+            $sql = $this->con->prepare("SELECT * FROM desempenho WHERE semestre = :semestre AND ano = :ano ORDER BY ano ASC, semestre ASC, nota DESC");
             $sql->bindValue(':semestre',$semestre);
             $sql->bindValue(':ano',$ano);
             $sql->execute();
@@ -54,7 +54,7 @@
                 
         
         public function getDesempenhoById($idDesempenho) {
-            $sql = $this->con->prepare("SELECT * FROM desempenho where idDesempenho = :idDesempenho");
+            $sql = $this->con->prepare("SELECT * FROM desempenho where idDesempenho = :idDesempenho ORDER BY ano ASC, semestre ASC, nota DESC");
             $sql->bindValue(':idDesempenho', $idDesempenho);
             $sql->execute();
             

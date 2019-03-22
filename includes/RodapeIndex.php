@@ -16,7 +16,8 @@
     <ul class="list-unstyled text-small">
       <li><a class="text-muted" href="../View/Relatorio/Funcionarios.php">Funcionários</a></li>
       <li><a class="text-muted" href="../View/Relatorio/Sancoes.php">Sanções</a></li>
-      <li><a class="text-muted" href="../View/Relatorio/Absenteismo.php">Absenteísmo</a></li>
+      <li><a class="text-muted" href="../View/Relatorio/GeraAbsenteismo.php">Absenteísmo</a></li>
+      <li><a class="text-muted" href="../View/Relatorio/GeraDesempenho.php">Desempenho</a></li>
     </ul>
   </div>
   <div class="col-6 col-md">

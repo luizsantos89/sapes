@@ -62,6 +62,7 @@
             <input type="text" class="form-control" name="ano" required>
             <p></p>
             <button class='btn btn-primary'>Consultar</button>
+            <a href="LancaAbsenteismo.php" class="btn btn-primary">Lançamento</a>
         </form>
 </div>
     <div class="container">

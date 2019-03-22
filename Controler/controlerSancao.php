@@ -97,10 +97,21 @@
         $sancao->setIdFuncionario((int) $_REQUEST["idFuncionario"]);
         $sancao->setIdUsuario($_SESSION['usuario']->idUsuario);
         $sancao->setIdTipo((int)$_REQUEST["idTipo"]);
-        $sancao->setDataSancao($_REQUEST["dataSancao"]);
-                
-        $dataSancao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataSancao"]));      
+        $dataSancao = $_REQUEST["dataSancao"];
+        $dia = substr($dataSancao, 0, 2);
+        echo $dia.'<br>';
+        $mes = substr($dataSancao, 3, 2);
+        echo $mes.'<br>';
+        $ano = substr($dataSancao, 6, 4);
+        echo $ano.'<br>';
+        $data = $ano.'-'.$mes.'-'.$dia;
+        
+        
+        $dataSancao = date('Y-m-d H:i:s',strtotime($data));      
         $sancao->setDataSancao($dataSancao);
+        
+        date_default_timezone_set('America/Sao_Paulo');
+        $sancao->setDataLancamento(date('Y-m-d H:i:s'));
         
         $sancao->setQtdDias($_REQUEST['qtdDias']);
         $sancao->setMotivo($_REQUEST['motivo']);
