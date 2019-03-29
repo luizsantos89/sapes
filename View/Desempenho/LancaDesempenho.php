@@ -99,7 +99,7 @@
               <input type="hidden" value="<?=$usuario->idUsuario?>" name="idUsuario" />
                 <hr class="mb-6">
                 <button class="btn btn-outline-primary" type="submit">Lançar</button>
-                <a  class="btn btn-outline-primary" href="../../Controler/controlerDesempenho.php?opcao=1">Cancelar</a>
+                <a  class="btn btn-outline-primary" href="index.php">Cancelar</a>
             </form>
         </div>
     </div>

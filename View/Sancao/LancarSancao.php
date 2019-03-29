@@ -177,7 +177,7 @@
                 </div>
                 <hr class="mb-6">
                 <button class="btn btn-outline-primary" type="submit">Cadastrar</button>
-                <a  class="btn btn-outline-primary" href="../../Controler/controlerSancao.php?opcao=4">Cancelar</a>
+                <a  class="btn btn-outline-primary" href="index.php">Cancelar</a>
             </form>
         </div>
 

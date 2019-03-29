@@ -52,6 +52,7 @@
             <input type="text" class="form-control" name="ano" required>
             <p></p>
             <button class='btn btn-primary'>Consultar</button>
+            <a href="LancarSancao.php" class="btn btn-outline-primary">Lançamento</a>
         </form>
 </div>
     <div class="container">
