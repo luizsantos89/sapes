@@ -162,12 +162,13 @@
                             $count = 0;
                             $total = 0;
                             
-                            foreach ($notas as $nota) {
-                                $total += $nota;
-                                $count += 1;
+                            foreach($notasDesempenho as $nota) {
+                                if($nota->idFuncionario == $funcionario->idFuncionario) {
+                                    $count += 1;
+                                    $total += $nota->nota;
+                                }
                             }
-                            
-                            
+                                                        
                             if($count != 0) {
                                 echo round(($total/$count),8);
                             } else {

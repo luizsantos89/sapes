@@ -144,12 +144,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label>Situação:</label>
-                        <input type="text" class="form-control" name="situacao" value="" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
                         <label>Cargo:</label>
                         <input type="text" class="form-control" name="cargo" value="" required>
                     </div>

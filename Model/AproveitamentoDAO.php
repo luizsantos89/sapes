@@ -63,7 +63,7 @@
         }
         
         public function getAproveitamentoPorPeriodo($semestre,$ano) {
-            $sql = $this->con->prepare("SELECT * FROM aproveitamento WHERE semestre = :semestre AND ano = :ano ORDER BY idFuncionario ASC;");
+            $sql = $this->con->prepare("SELECT * FROM aproveitamento WHERE semestre = :semestre AND ano = :ano ORDER BY indiceAproveitamento DESC;");
             $sql->bindValue(':semestre',$semestre);
             $sql->bindValue(':ano',$ano);
             $sql->execute();

@@ -120,7 +120,9 @@
                 </thead>
                 <tbody>
                 <?php
+                    $contador = 0;
                     foreach ($listaAproveitamento as $aproveitamento) {
+                        $contador += 1;
                 ?>
                     <tr>   
                         <td>
@@ -205,12 +207,13 @@
                         </td>
                         
                     </tr>
-                    <?php } ?>
+                    <?php }  ?>
                 </tbody>
             </table>
             <?php
             
                                 }
+                                echo "$contador registros<br>";
                                 ?>
             </div>
     </div>
