@@ -54,7 +54,6 @@
     </head>
 
   <body>
-
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" id="noprint">
         <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" id="noprint" />
         <nav class="my-2 my-md-0 mr-md-3" id="noprint">
@@ -295,17 +294,17 @@
             </table>
             </table>
         </div>
-        <div class="col-md-12 order-md-1">
+        <div class="col-md-12 order-md-1"  id="noprint">
             <?php
                 if($usuario->idTipoUsuario != 3) {
 
             ?>
-                <a href="EditaFuncionario.php?idFuncionario=<?=$funcionario->idFuncionario?>" class="btn btn-primary">Editar</a>
+                <a href="EditaFuncionario.php?idFuncionario=<?=$funcionario->idFuncionario?>" class="btn btn-primary" id="noprint">Editar</a>
 
             <?php
                 }
             ?>
-            <a href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1" class="btn btn-outline-primary">Voltar</a>
+            <a href="../../Controler/controlerFuncionario.php?opcao=6&pagina=1" class="btn btn-outline-primary"  id="noprint">Voltar</a>
         </div>
     </div>
     <div class="container" id="noprint">
