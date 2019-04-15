@@ -205,11 +205,11 @@
                         </td>
                         
                         <td align="center"> 
-                            <?php echo str_replace('.',',', $aproveitamento->pesoFatorDisciplinar); ?>
+                            <?php echo str_replace('.',',', $aproveitamento->indiceDisciplinar); ?>
                         </td>
                         
                         <td align="center"> 
-                            <?php echo str_replace('.',',', $aproveitamento->indiceDisciplinar); ?>
+                            <?php echo str_replace('.',',', $aproveitamento->pesoFatorDisciplinar); ?>
                         </td>
                         
                         

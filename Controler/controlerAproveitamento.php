@@ -169,20 +169,7 @@
 
 
                             //3. Fator disciplinar, sanções, tipos de sanções, índice e peso
-                            $querySancao = "SELECT idFuncionario, 
-                                SUM(qtd*peso) AS fatorDisciplinar 
-                                     FROM 
-                                                     (SELECT f.nome, 
-                                                                     s.idFuncionario, 
-                                                                     COUNT(*) as qtd, 
-                                                                     t.peso 
-                                                 FROM sancao AS s
-                                           INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario
-                                           INNER JOIN tipo_sancao AS t ON t.idTipo = s.idTipo
-                                           WHERE dataSancao between '20180101' AND '20180630'
-                                           GROUP BY s.idFuncionario, 
-                                                                t.peso) AS fDisc 
-                                     GROUP BY idFuncionario;";
+                            $querySancao = "SELECT idFuncionario,SUM(qtd*peso) AS fatorDisciplinar FROM (SELECT f.nome, s.idFuncionario, COUNT(*) as qtd, t.peso FROM sancao AS s INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario INNER JOIN tipo_sancao AS t ON t.idTipo = s.idTipo GROUP BY idFuncionario;";
 
                              $totalSancoesPeriodoFuncionario = $link->query($querySancao);
 
