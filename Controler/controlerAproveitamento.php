@@ -149,7 +149,7 @@
 
                             if($maxAbsenteismo){
                                 while ($row = mysqli_fetch_array($maxAbsenteismo)) {
-                                    echo 'Maximo de absenteísmo: '.$row['totAbs'].'<br><br>';
+                                   // echo 'Maximo de absenteísmo: '.$row['totAbs'].'<br><br>';
                                     $aproveitamento->setMaxHorasAbsenteismo($row['totAbs']);
                                 }
                             }

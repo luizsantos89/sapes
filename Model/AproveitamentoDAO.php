@@ -12,7 +12,7 @@
         }
         
         public function incluirAproveitamento($aproveitamento){
-            $sql = $this->con->prepare("insert into aproveitamento(idFuncionario, idUsuario, semestre, ano, horasAbsenteismo, maxHorasAbsenteismo, maxFatorDisciplinar, pesoDesempenho, pesoAbsenteismo, pesoFatorDisciplinar, fatorDisciplinar, indiceDesempenho, indiceCargaHoraria, indiceAbsenteismo, indiceDisciplinar, indiceAproveitamento, dataLancamento) values (:idFuncionario, :idUsuario, :semestre, :ano, :horasAbsenteismo, :maxHorasAbsenteismo, :maxFatorDisciplinar, :pesoDesempenho, :pesoAbsenteismo, :pesoFatorDisciplinar, :fatorDisciplinar, :indiceDesempenho, :indiceCargaHoraria, :indiceAbsenteismo, :indiceDisciplinar, :indiceAproveitamento, :dataLancamento)");
+            $sql = $this->con->prepare("insert into aproveitamento(idFuncionario, idUsuario, semestre, ano, horasAbsenteismo, maxHorasAbsenteismo, maxFatorDisciplinar, pesoDesempenho, pesoAbsenteismo, pesoFatorDisciplinar, fatorDisciplinar, indiceDesempenho, indiceCargaHoraria, indiceAbsenteismo, indiceDisciplinar, indiceAproveitamento, dataLancamento) values (:idFuncionario, :idUsuario, :semestre, :ano, :horasAbsenteismo, :maxHorasAbsenteismo, :maxFatorDisciplinar, :pesoDesempenho, :pesoAbsenteismo, :pesoFatorDisciplinar, :fatorDisciplinar, :indiceDesempenho, :indiceCargaHoraria, :indiceAbsenteismo, :indiceDisciplinar, :indiceAproveitamento, CURRENT_TIME)");
             
             $sql->bindValue(':idFuncionario', $aproveitamento->getIdFuncionario());
             $sql->bindValue(':idUsuario', $aproveitamento->getIdUsuario());
@@ -30,7 +30,6 @@
             $sql->bindValue(':indiceAbsenteismo', $aproveitamento->getIndiceAbsenteismo());
             $sql->bindValue(':indiceDisciplinar', $aproveitamento->getIndiceDisciplinar());
             $sql->bindValue(':indiceAproveitamento', $aproveitamento->getIndiceAproveitamento());
-            $sql->bindValue(':dataLancamento', $aproveitamento->getDataLancamento());
             
             $sql->execute();
         }
@@ -120,7 +119,7 @@
         }
         
         public function editarAproveitamento($aproveitamento){
-            $sql = $this->con->prepare("UPDATE aproveitamento SET idFuncionario = :idFuncionario, idUsuarioLancamento =: idUsuarioLancamento, semestre = :semestre, ano = :ano, horasAbsenteismo = :horasAbsenteismo, maxHorasAbsenteismo = :maxHorasAbsenteismo, maxFatorDisciplinar = :maxFatorDisciplinar, pesoDesempenho = :pesoDesempenho, pesoAbsenteismo = :pesoAbsenteismo, pesoFatorDisciplinar = :pesoFatorDisciplinar, fatorDisciplinar = :fatorDisciplinar, indiceDesempenho = :indiceDesempenho, indiceCargaHoraria = :indiceCargaHoraria, indiceAbsenteismo = :indiceAbsenteismo, indiceDisciplinar = :indiceDisciplinar, indiceAproveitamento = :indiceAproveitamento, dataLancamento = :dataLancamento, idUsuarioUltimaAlteracao = :idUsuarioUltimaAlteracao, dataUltimaAlteracao = :dataUltimaAlteracao) WHERE idAproveitamento = :idAproveitamento");
+            $sql = $this->con->prepare("UPDATE aproveitamento SET idFuncionario = :idFuncionario, idUsuarioLancamento =: idUsuarioLancamento, semestre = :semestre, ano = :ano, horasAbsenteismo = :horasAbsenteismo, maxHorasAbsenteismo = :maxHorasAbsenteismo, maxFatorDisciplinar = :maxFatorDisciplinar, pesoDesempenho = :pesoDesempenho, pesoAbsenteismo = :pesoAbsenteismo, pesoFatorDisciplinar = :pesoFatorDisciplinar, fatorDisciplinar = :fatorDisciplinar, indiceDesempenho = :indiceDesempenho, indiceCargaHoraria = :indiceCargaHoraria, indiceAbsenteismo = :indiceAbsenteismo, indiceDisciplinar = :indiceDisciplinar, indiceAproveitamento = :indiceAproveitamento, dataLancamento = :dataLancamento, idUsuarioUltimaAlteracao = :idUsuarioUltimaAlteracao, dataUltimaAlteracao = CURRENT_TIME) WHERE idAproveitamento = :idAproveitamento");
             
 
             $sql->bindValue(':idFuncionario', $aproveitamento->getIdFuncionario());
@@ -140,7 +139,6 @@
             $sql->bindValue(':indiceDisciplinar', $aproveitamento->getIndiceDisciplinar());
             $sql->bindValue(':indiceAproveitamento', $aproveitamento->getIndiceAproveitamento());
             $sql->bindValue(':dataLancamento', $aproveitamento->getDataLancamento());
-            $sql->bindValue(':dataUltimaAlteracao', $aproveitamento->getDataUltimaAlteracao());
             $sql->bindValue(':idUsuarioUltimaAlteracao', $aproveitamento->getIdUsuarioUltimaAlteracao());
                        
             $sql->execute();

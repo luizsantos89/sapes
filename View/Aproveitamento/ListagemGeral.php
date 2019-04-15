@@ -51,6 +51,9 @@
        #noprint{
            display:none;
        }
+       margin: 0;
+       padding: 0;
+       filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);
     }
     </style>
 
@@ -81,7 +84,7 @@
                 echo "Todos os lançamentos";
             ?>
         </h3>
-        <a href="ConsultaAproveitamento.php" class="btn btn-primary">Consultar novamente</a>
+        <a href="ConsultaAproveitamento.php" class="btn btn-primary" id="noprint">Consultar novamente</a>
     </div>
 
     <div class="container-fluid">
@@ -95,12 +98,14 @@
             } else {
                
             ?>
-                <center><a href="GerarNovamente.php?semestre=<?=$semestre?>&ano=<?=$ano?>" class="btn btn-danger">Gerar novamente</a></center><br>
+                <center><a href="GerarNovamente.php?semestre=<?=$semestre?>&ano=<?=$ano?>" class="btn btn-danger" id="noprint">Gerar novamente</a></center><br>
             <div>
-            <table border="1" class="table table-striped">
+            <table border="1" class="table table-striped small">
                 <thead class='thead-dark text-center'>
                     <tr>
+                        <th>#</th>
                         <th>Gerado por: </th>
+                        <th>Em: </th>
                         <th>Crachá:</th>
                         <th>Funcionário:</th>
                         <th>Nota de Desempenho:</th>
@@ -125,6 +130,12 @@
                         $contador += 1;
                 ?>
                     <tr>   
+                        <td>
+                            <?=$contador?>
+                        </td>
+                        <td>
+                            <?=date('d/m/Y H:i:s', strtotime($aproveitamento->dataLancamento));?> 
+                        </td>
                         <td>
                             <?php                            
                                 foreach($usuarios as $user) {
