@@ -6,6 +6,7 @@
     require '../../Model/Secao.php';
     require '../../Model/Divisao.php';
     require '../../Model/Gerencia.php';
+    require '../../Model/Aproveitamento.php';
 
     if(!isset($_SESSION['aproveitamento'])) {
         header("Location:../../Controler/controlerAproveitamento.php?opcao=1");
@@ -98,7 +99,6 @@
             } else {
                
             ?>
-                <center><a href="GerarNovamente.php?semestre=<?=$semestre?>&ano=<?=$ano?>" class="btn btn-danger" id="noprint">Gerar novamente</a></center><br>
             <div>
             <table border="1" class="table table-striped small">
                 <thead class='thead-dark text-center'>

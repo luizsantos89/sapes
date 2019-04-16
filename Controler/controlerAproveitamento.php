@@ -116,7 +116,6 @@
                             //echo "ID Funcionário: ".$funcionario->idFuncionario."<br>";
                             //echo 'Data inicial: '.$dataInicial.' - Data Final: '.$dataFinal.'<br><br>';
                             $aproveitamento->setIndiceDesempenho($desempenho->nota/10); 
-                            $aproveitamento->setPesoDesempenho(3);
                             //echo 'Nota de Desempenho: '.$desempenho->nota.'<br>';
                             //echo 'Índice de Desempenho: '.$aproveitamento->getIndiceDesempenho().'<br><br>';
 

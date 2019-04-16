@@ -21,9 +21,9 @@
             $sql->bindValue(':horasAbsenteismo', $aproveitamento->getHorasAbsenteismo());
             $sql->bindValue(':maxHorasAbsenteismo', $aproveitamento->getMaxHorasAbsenteismo());
             $sql->bindValue(':maxFatorDisciplinar', $aproveitamento->getMaxFatorDisciplinar());
-            $sql->bindValue(':pesoDesempenho', $aproveitamento->getPesoDesempenho());
-            $sql->bindValue(':pesoAbsenteismo', $aproveitamento->getPesoAbsenteismo());
-            $sql->bindValue(':pesoFatorDisciplinar', $aproveitamento->getFatorDisciplinar());
+            $sql->bindValue(':pesoDesempenho', 3);
+            $sql->bindValue(':pesoAbsenteismo', 2);
+            $sql->bindValue(':pesoFatorDisciplinar', 1);
             $sql->bindValue(':fatorDisciplinar', $aproveitamento->getFatorDisciplinar());
             $sql->bindValue(':indiceDesempenho', $aproveitamento->getIndiceDesempenho());
             $sql->bindValue(':indiceCargaHoraria',$aproveitamento->getIndiceCargaHoraria());
