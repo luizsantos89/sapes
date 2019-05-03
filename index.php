@@ -22,8 +22,8 @@
     <link href="estilos/css/signin.css" rel="stylesheet">
   </head>
 
-  <body class="text-center">
-        <form class="form-signin" action="Controler/controlerLogin.php" method="post">
+  <body class="text-center container">
+        <form class="form-signin container-login" action="Controler/controlerLogin.php" method="post">
             
             <img class="mb-4" src="imagens/logo1.png" alt="" height="106">
             <h1 class="h3 mb-3 font-weight-normal">Acessar</h1>

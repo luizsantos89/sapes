@@ -27,7 +27,7 @@
 ?>
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -45,20 +45,9 @@
         
         <style>            
         @media print{
-            #noprint{
-                display:none;
-            }
-           
-            background:transparent !important;
-            color:#000 !important;
-            text-shadow:none !important;
-            filter:none !important;
-            -ms-filter:none !important;
-            font-size: smaller;
-        }
-        
-        @page {
-            margin: 0.5cm;
+           #noprint{
+               display:none;
+           }
         }
         </style>
         
@@ -73,25 +62,65 @@
         <a class="btn btn-outline-primary" href="../../Controler/logout.php" id="noprint">Sair</a>
     </div>
 
-    <div class="pricing-header container text-center">
-        <h1 class="display-4 text-center">Histórico do funcionário</h1>
-        <h2><?=str_pad($funcionario->cracha,3,0, STR_PAD_LEFT).' - '.$funcionario->situacao.' '.$funcionario->nome;?></h2>        
-        <br>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Detalhes do funcionário </h1><h2><?=$funcionario->nome;?></h2>        
     </div>
 
     <div class="container">
-        <div class="col-md-12 order-md-1">
-            <h3>1. Dados Gerais:</h3>  
+        <div class="col-md-12 order-md-1 ">
+            <h3>Dados do funcionário:</h3>  
             
-            <table class="table table-info">
+            <table class="table table-success">
                 <tr>
-                    <th>Carga Horária:</th>
-                    <th>Data de Admissão:</th>
-                    <th>Seção/Divisão/Gerência:</th>
+                    <th>Nome completo: </th>
+                    <td><?=$funcionario->nome;?></td>
                 </tr>
                 <tr>
+                    <th>Crachá:</th>
+                    <td><?=$funcionario->cracha;?></td>
+                </tr>
+                <tr>
+                    <th>Tipo de Cargo:</th>
+                    <td><?=$funcionario->situacao;?></td>
+                </tr>
+                <tr>
+                    <th>Carga Horária:</th>
                     <td><?=$funcionario->cargaHoraria;?> horas semanais</td>
+                </tr>
+                <tr>
+                    <th>Data de Admissão:</th>
                     <td><?=date('d/m/Y',strtotime($funcionario->dataAdmissao));?></td>
+                </tr>
+                <tr>
+                    <th>Seção:</th>
+                    <td>                        
+                        <?php
+                            foreach($secoes as $secao) {
+                                if($secao->idSecao == $funcionario->idSecao) {
+                                    echo $secao->descricao;
+                                }
+                            }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Divisão:</th>
+                    <td>
+                        <?php                
+                            foreach($secoes as $secao) {
+                                if($secao->idSecao == $funcionario->idSecao) {
+                                    foreach($divisoes as $divisao) {
+                                        if($divisao->idDivisao == $secao->idDivisao) {
+                                            echo $divisao->descricao;
+                                        }
+                                    }
+                                }
+                            }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Gerência:</th>
                     <td>
                         <?php
                             foreach($secoes as $secao) {
@@ -100,7 +129,7 @@
                                         if($divisao->idDivisao == $secao->idDivisao) {
                                             foreach($gerencias as $gerencia) {
                                                 if($gerencia->idGerencia == $divisao->idGerencia) {
-                                                    echo $secao->descricao.'/'.$divisao->descricao.'/'.$gerencia->descricao;
+                                                    echo $gerencia->descricao;
                                                 }
                                             }
                                         }
@@ -113,8 +142,8 @@
             </table>
         </div>
         <div class="col-md-12 order-md-1">
-            <h3>2. Histórico de Desempenho:</h3>
-            <table class="table table-info">
+            <h3>1. Histórico de Desempenho:</h3>
+            <table class="table table-success">
                 <tr><th>Período</th><th>Nota: </th></tr>
             <?php
                 foreach($notasDesempenho as $nota) {
@@ -150,8 +179,8 @@
             </table>
         </div>
         <div class="col-md-12 order-md-1">
-            <h3>3. Histórico de Absenteísmo:</h3>
-            <table class="table table-info">
+            <h3>2. Histórico de Absenteísmo:</h3>
+            <table class="table table-success">
                 <tr>
                     <th>Mês/Ano: </th>
                     <th>Absenteísmo: </th>
@@ -162,7 +191,7 @@
                 foreach($listaAbsenteismo as $absenteismo) {
                     if($absenteismo->idFuncionario == $funcionario->idFuncionario) {
                         echo '<tr>';
-                        echo "<td>".str_pad($absenteismo->mes,2,0, STR_PAD_LEFT)."/$absenteismo->ano</td>";
+                        echo "<td>$absenteismo->mes/$absenteismo->ano</td>";
                         echo "<td>".str_replace('.',',',$absenteismo->qtdHoras)." horas</td></tr>";
                         $horas[] = $absenteismo->qtdHoras;
                     }
@@ -188,33 +217,12 @@
                         ?> horas
                     </td>
                 </tr>
-                <tr>
-                    <th>Total histórico: </th>
-                    <td>
-                        <?php
-                            $count = 0;
-                            $total = 0;
-                            
-                            foreach ($horas as $totalHoras) {
-                                $total += $totalHoras;
-                                $count += 1;
-                            }
-                            
-                            
-                            if($count != 0) {
-                                echo str_replace('.',',',$total);
-                            } else {
-                                echo 0;
-                            }
-                        ?> horas
-                    </td>
-                </tr>
             </table>
         </div>
         <div class="col-md-12 order-md-1">
-            <h3>4. Histórico de Sanções Disciplinares:</h3>            
+            <h3>3. Histórico de Sanções Disciplinares:</h3>            
             
-            <table class="table table-info">
+            <table class="table table-success">
                 <tr>
                     <th>Data:</th>
                     <th>Sanção:</th>
@@ -245,14 +253,15 @@
             ?>
                 <tr>
                     <th>Total Histórico de Sanções: </th>
-                    <td colspan="5"><?=$totalSancoes?> sanções disciplinares
+                    <td colspan="4"><?=$totalSancoes?> sanções disciplinares
                     </td>
                 </tr>
             </table>
         </div>
+        
         <div class="col-md-12 order-md-1">
-            <h3>5. Histórico de Aproveitamento Funcional</h3>
-            <table class="table table-info">
+            <h3>4. Histórico de Aproveitamento Funcional</h3>
+            <table class="table table-success">
                 <tr><th>Período</th><th>Índice de aproveitamento funcional: </th></tr>
             <?php
                 $aproveitamentos = Array();
@@ -283,18 +292,15 @@
                     </td>
                 </tr>
             </table>
-                Gerado em: <?php
-                    date_default_timezone_set('America/Sao_Paulo');
-                    $date = date('d/m/Y H:i:s');
-                    echo $date;               
-                ?>
+            </table>
         </div>
-        <br />
         <div class="col-md-12 order-md-1"  id="noprint">
             <?php
-                if($usuario->idTipoUsuario!=3) {
+                if($usuario->idTipoUsuario != 3) {
+
             ?>
                 <a href="EditaFuncionario.php?idFuncionario=<?=$funcionario->idFuncionario?>" class="btn btn-primary" id="noprint">Editar</a>
+
             <?php
                 }
             ?>

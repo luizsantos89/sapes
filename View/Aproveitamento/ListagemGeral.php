@@ -28,7 +28,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="iso-8859-1">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -55,6 +55,12 @@
        margin: 0;
        padding: 0;
        filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);
+       
+    }
+    
+    th {
+        position: sticky;
+        background-color: #999;
     }
     </style>
 
@@ -68,24 +74,24 @@
   <body>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" id="noprint">
-        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" id="noprint" />
+        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" />
         <nav class="my-2 my-md-0 mr-md-3" id="noprint">
             <?php include("../../includes/Menus.php"); ?>
         </nav>
         <a class="btn btn-outline-primary" href="../../Controler/logout.php" id="noprint">Sair</a>
     </div>
 
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <div class="pricing-header container text-center">
         <h1 class="display-4">Aproveitamento Funcional</h1>
         <h3>
             <?php
             if($semestre)
-                echo "Período: $semestre º - $ano";
+                echo "$semestre º semestre - $ano";
             else
                 echo "Todos os lançamentos";
             ?>
         </h3>
-        <a href="ConsultaAproveitamento.php" class="btn btn-primary" id="noprint">Consultar novamente</a>
+        <a href="ConsultaAproveitamento.php" class="btn btn-primary" id="noprint">Consultar novamente</a><br /><br />
     </div>
 
     <div class="container-fluid">
@@ -94,30 +100,25 @@
             
             if($listaAproveitamento == null) {
                 ?>                
-                <div class="alert alert-danger">Não foi gerado o aproveitamento funcional do período selecionado ou não há dados para tal, por favor selecione outro período, ou gere o aproveitamento do período correto.</div><br>
+                <div class="alert alert-danger" id="noprint">Não foi gerado o aproveitamento funcional do período selecionado ou não há dados para tal, por favor selecione outro período, ou gere o aproveitamento do período correto.</div><br>
             <?php    
             } else {
                
             ?>
             <div>
-            <table border="1" class="table table-striped small">
-                <thead class='thead-dark text-center'>
+            <table border="1" class="table table-light small">
+                <thead class='thead-dark text-center table-striped'>
                     <tr>
                         <th>#</th>
-                        <th>Gerado por: </th>
-                        <th>Em: </th>
-                        <th>Crachá:</th>
                         <th>Funcionário:</th>
                         <th>Nota de Desempenho:</th>
                         <th>i<sub>Desempenho</sub>:</th>
                         <th>P<sub>desempenho</sub>:</th>
                         <th>Horas absenteísmo:</th>
-                        <th>Máx. Absenteísmo:</th>
                         <th>i<sub>horas</sub>:</th>
                         <th>i<sub>absent</sub>:</th>
                         <th>P<sub>absent</sub>:</th>
                         <th>f<sub>disc</sub>:</th>
-                        <th>Max f<sub>disc</sub>:</th>
                         <th>i<sub>disc</sub>:</th>
                         <th>P<sub>disc</sub>:</th>
                         <th>i<sub>aprov</sub>:</th>
@@ -134,35 +135,14 @@
                             <?=$contador?>
                         </td>
                         <td>
-                            <?=date('d/m/Y H:i:s', strtotime($aproveitamento->dataLancamento));?> 
-                        </td>
-                        <td>
-                            <?php                            
-                                foreach($usuarios as $user) {
-                                    if($user->idUsuario == $aproveitamento->idUsuario) {
-                                        echo $user->nome;
-                                    }
-                                }                            
-                            ?> 
-                        </td>
-                        <td>
                             <?php                            
                                 foreach($funcionarios as $funcionario) {
                                     if($funcionario->idFuncionario == $aproveitamento->idFuncionario) {
-                                        echo $funcionario->cracha;
+                                        echo $funcionario->cracha.' - '.$funcionario->nome;
                                     }
                                 }                            
                             ?> 
                         </td>    
-                        <td>
-                            <?php                            
-                                foreach($funcionarios as $funcionario) {
-                                    if($funcionario->idFuncionario == $aproveitamento->idFuncionario) {
-                                        echo $funcionario->nome;
-                                    }
-                                }                            
-                            ?> 
-                        </td>
                         
                         <td align="center"> 
                             <?php echo str_replace('.',',', ($aproveitamento->indiceDesempenho)*10); ?>
@@ -181,10 +161,6 @@
                         </td>
                         
                         <td align="center"> 
-                            <?php echo str_replace('.',',', $aproveitamento->maxHorasAbsenteismo); ?>
-                        </td>
-                        
-                        <td align="center"> 
                             <?php echo str_replace('.',',', $aproveitamento->indiceCargaHoraria); ?>
                         </td>
                         
@@ -198,11 +174,7 @@
                         
                         <td align="center"> 
                             <?php echo str_replace('.',',', $aproveitamento->fatorDisciplinar); ?>
-                        </td>                      
-                        
-                        <td align="center"> 
-                            <?php echo str_replace('.',',', $aproveitamento->maxFatorDisciplinar); ?>
-                        </td>
+                        </td>    
                         
                         <td align="center"> 
                             <?php echo str_replace('.',',', $aproveitamento->indiceDisciplinar); ?>
@@ -215,6 +187,7 @@
                         
                         <td align="center"> 
                             <?php echo str_replace('.',',', $aproveitamento->indiceAproveitamento); ?>
+                            <?php echo '('.str_replace('.',',', ($aproveitamento->indiceAproveitamento*100)).'%)'; ?>
                         </td>
                         
                     </tr>
@@ -224,8 +197,13 @@
             <?php
             
                                 }
-                                echo "$contador registros<br>";
+                                echo "Total de <b>$contador registros</b><br>";
                                 ?>
+                Gerado em: <?php
+                    date_default_timezone_set('America/Sao_Paulo');
+                    $date = date('d/m/Y H:i:s');
+                    echo $date;               
+                ?>
             </div>
     </div>
       <div class="container">

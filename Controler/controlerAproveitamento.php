@@ -263,8 +263,3 @@
         $_SESSION['aproveitamento'] = $listaAproveitamento;
         header("Location:../View/Aproveitamento/ListagemGeral.php");
     } 
-    
-    // GERAR O RELATÓRIO NOVAMENTE
-    if ($opcao == 4) {       
-        
-    }

@@ -171,7 +171,7 @@
             <!--<div id="grafFuncMais" style="width: 1000px; height: 1200px"></div>-->
             <table border='1' class="table table-striped">
                 <tr>
-                    <th colspan="2">As 30 maiores notas de desempenho do período:</th>
+                    <th colspan="2">30 Maiores Notas de Desempenho do Período:</th>
                 </tr>
                 <tr>
                     <th>Funcionário: </th>
