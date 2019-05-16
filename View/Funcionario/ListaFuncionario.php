@@ -66,7 +66,7 @@
   <body>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" id="noprint">
-        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png"  id="noprint" />
+        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png"   />
         <nav class="my-2 my-md-0 mr-md-3"  id="noprint">
             <?php include("../../includes/Menus.php"); ?>
         </nav>
@@ -112,11 +112,11 @@
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
-                        <th colspan="2">Ações:</th>
+                        <th colspan="2" id="noprint">Ações:</th>
                         <?php
                             }
                         ?>
-                        <th>Crachá:</th>
+                        <th class="center">Crachá:</th>
                         <th>Nome:</th>
                         <th>Cargo:</th>
                         <th>Tipo:</th>
@@ -126,8 +126,6 @@
                         <th>Seção:</th>
                         <th>Divisão:</th>
                         <th>Gerência:</th>
-                        <th>Data de Cadastro:</th>
-                        <th>Cadastrado por:</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,11 +136,11 @@
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
-                                <td>
+                                <td id="noprint">
                                     <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario?>">
                                         <img title="Editar Funcionário" src="../../imagens/edit.png" height="25px" /></a>
                                     </td>
-                                <td>
+                                <td id="noprint">
                                     <a href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?=$funcionario->idFuncionario?>">
                                         <img title="Excluir Funcionário" src="../../imagens/excluir.png" height="25px" /></a>
                                 </td>
@@ -240,28 +238,15 @@
                             ?>  
                         </td>
                         
-                        <!--DATA DE CADASTRO -->
-                        <td>
-                            <?= date('d/m/Y',strtotime($funcionario->dataCadastro)); ?>  
-                        </td>
-                        
-                        <!-- CADASTRADO POR: -->
-                        <td>
-                            <?php
-                            
-                                foreach($usuarios as $user) {
-                                    if($user->idUsuario == $funcionario->idUsuario) {
-                                        echo $user->nome;
-                                    }
-                                }
-                            
-                            ?>  
-                        </td>
-                        
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
+                <?php
+                    date_default_timezone_set('America/Sao_Paulo');
+                    $date = date('d/m/Y H:i:s');
+                    echo $date;               
+                ?>
                 <p class="alert-warning">
                     <?php
                         if(isset($_SESSION['erroExclusao'])) {

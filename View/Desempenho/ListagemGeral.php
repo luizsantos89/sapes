@@ -114,7 +114,7 @@
                                 <?php                            
                                     foreach($funcionarios as $funcionario) {
                                         if($funcionario->idFuncionario == $nota->idFuncionario) {
-                                            echo $funcionario->nome;
+                                            echo $funcionario->cracha.' - '.$funcionario->nome;
                                         }
                                     }                            
                                 ?> 

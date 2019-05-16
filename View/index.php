@@ -70,7 +70,7 @@
                 </div>
                 <div class="card-body">
                     <br />
-                    <a href="../Controler/controlerAbsenteismo.php?opcao=1">
+                    <a href="../View/Absenteismo/index.php">
                         <img src="../imagens/horas.png" height="120px" />
                     </a>
                     <br /><br /><br /><br />
@@ -82,7 +82,7 @@
                 </div>
                 <div class="card-body">
                     <br />
-                    <a href="../Controler/controlerSancao.php?opcao=6&pagina=1">
+                    <a href="../View/Sancao/index.php">
                         <img src="../imagens/disc.png"  height="120px" /> 
                     </a>
                     <br /><br /><br /><br />
@@ -94,7 +94,7 @@
                 </div>
                 <div class="card-body">
                     <br />
-                    <a href="../Controler/controlerDesempenho.php?opcao=1">
+                    <a href="../View/Desempenho/index.php">
                         <img src="../imagens/desemp.png" height="120px" /> 
                     </a>
                     <br /><br /><br /><br />

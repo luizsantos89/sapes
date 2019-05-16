@@ -113,11 +113,11 @@
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
-                        <th colspan="2">Ações:</th>
+                        <th colspan="2" id="noprint">Ações:</th>
                         <?php
                             }
                         ?>
-                        <th>Crachá:</th>
+                        <th class="center">Crachá:</th>
                         <th>Nome:</th>
                         <th>Cargo:</th>
                         <th>Tipo:</th>
@@ -127,8 +127,6 @@
                         <th>Seção:</th>
                         <th>Divisão:</th>
                         <th>Gerência:</th>
-                        <th>Data de Cadastro:</th>
-                        <th>Cadastrado por:</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -139,11 +137,11 @@
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
-                                <td>
+                                <td id="noprint">
                                     <a href="../../Controler/controlerFuncionario.php?opcao=2&idFuncionario=<?=$funcionario->idFuncionario?>">
                                         <img title="Editar Funcionário" src="../../imagens/edit.png" height="25px" /></a>
                                     </td>
-                                <td>
+                                <td id="noprint">
                                     <a href="../../Controler/controlerFuncionario.php?opcao=5&idFuncionario=<?=$funcionario->idFuncionario?>">
                                         <img title="Excluir Funcionário" src="../../imagens/excluir.png" height="25px" /></a>
                                 </td>
@@ -240,25 +238,7 @@
                             
                             ?>  
                         </td>
-                        
-                        <!--DATA DE CADASTRO -->
-                        <td align="center">
-                            <?= date('d/m/Y',strtotime($funcionario->dataCadastro)); ?>  
-                        </td>
-                        
-                        <!-- CADASTRADO POR: -->
-                        <td>
-                            <?php
-                            
-                                foreach($usuarios as $user) {
-                                    if($user->idUsuario == $funcionario->idUsuario) {
-                                        echo $user->nome;
-                                    }
-                                }
-                            
-                            ?>  
-                        </td>
-                        
+                                                
                     </tr>
                     <?php } ?>
                 </tbody>
