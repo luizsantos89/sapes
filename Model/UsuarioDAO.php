@@ -43,12 +43,11 @@
         }
         
         public function editarUsuario($usuario){
-            $sql = $this->con->prepare("UPDATE usuario SET idTipoUsuario = :idTipoUsuario, nome = :nome, login = :login, senha = :senha WHERE idUsuario = :idUsuario");
-            $sql->bindValue(":idTipoUsuario",$usuario->idTipoUsuario);
-            $sql->bindValue(":nome",$usuario->nome);
-            $sql->bindValue(":login",$usuario->login);
-            $sql->bindValue(":senha",$usuario->senha);
-            $sql->bindValue(":idUsuario",$usuario->idUsuario);
+            $sql = $this->con->prepare("UPDATE usuario SET idTipoUsuario = :idTipoUsuario, nome = :nome, login = :login WHERE idUsuario = :idUsuario");
+            $sql->bindValue(":idTipoUsuario",$usuario->getIdTipoUsuario());
+            $sql->bindValue(":nome",$usuario->getNome());
+            $sql->bindValue(":login",$usuario->getLogin());
+            $sql->bindValue(":idUsuario",$usuario->getIdUsuario());
             $sql->execute();
         }
         

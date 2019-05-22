@@ -66,22 +66,22 @@
         $funcionario->setCargo($_REQUEST["cargo"]);
         $funcionario->setCargaHoraria((int) ($_REQUEST["cargaHoraria"]));
         $dataNascimento = $_REQUEST["dataNascimento"];
+        $dataAdmissao = $_REQUEST["dataAdmissao"];
         $sexo = $_REQUEST["sexo"];
         $diaNascimento = substr($dataNascimento, 0, 2);
         $mesNascimento = substr($dataNascimento, 3, 2);
         $anoNascimento = substr($dataNascimento, 6, 4);
-        $dataAdmissao = $_REQUEST["dataAdmissao"];
         $diaAdmissao = substr($dataAdmissao, 0, 2);
         $mesAdmissao = substr($dataAdmissao, 3, 2);
         $anoAdmissao = substr($dataAdmissao, 6, 4);
-        $dataAdmissao = $anoAdmissao.'-'.$mesAdmissao.'-'.$diaAdmissao;
-        $dataNascimento = $anoNascimento.'-'.$mesNascimento.'-'.$diaNascimento;
+        $dataAdmissaoForm = $anoAdmissao.'-'.$mesAdmissao.'-'.$diaAdmissao;
+        $dataNascimentoForm = $anoNascimento.'-'.$mesNascimento.'-'.$diaNascimento;
         //$dataAdmissao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataAdmissao"]));      
-        $funcionario->setDataAdmissao($dataAdmissao);
+        $funcionario->setDataAdmissao($dataAdmissaoForm);
         $funcionario->setSituacao($_REQUEST["situacao"]);
         $funcionario->setIdSecao($_REQUEST['idSecao']);
         $funcionario->setFuncAtivo($_REQUEST["funcAtivo"]);
-        $funcionario->setDataNascimento($dataNascimento);
+        $funcionario->setDataNascimento($dataNascimentoForm);
         $funcionario->setSexo($sexo);
         if($funcionario->getFuncAtivo()==0) {
             date_default_timezone_set('America/Sao_Paulo');
@@ -104,7 +104,18 @@
         $funcionario->setNome($_REQUEST["nome"]);
         $funcionario->setCracha($_REQUEST["cracha"]);
         $funcionario->setCargo($_REQUEST["cargo"]);  
-        $funcionario->setDataAdmissao($_REQUEST["dataAdmissao"]);
+        $dataNascimento = $_REQUEST["dataNascimento"];
+        $dataAdmissao = $_REQUEST["dataAdmissao"];
+        $diaNascimento = substr($dataNascimento, 0, 2);
+        $mesNascimento = substr($dataNascimento, 3, 2);
+        $anoNascimento = substr($dataNascimento, 6, 4);
+        $diaAdmissao = substr($dataAdmissao, 0, 2);
+        $mesAdmissao = substr($dataAdmissao, 3, 2);
+        $anoAdmissao = substr($dataAdmissao, 6, 4);
+        $dataAdmissaoForm = $anoAdmissao.'-'.$mesAdmissao.'-'.$diaAdmissao;
+        $dataNascimentoForm = $anoNascimento.'-'.$mesNascimento.'-'.$diaNascimento;
+        $funcionario->setDataNascimento($dataNascimentoForm);      
+        $funcionario->setDataAdmissao($dataAdmissaoForm);
         $funcionario->setSituacao($_REQUEST["funcAtivo"]);
         $funcionario->setIdSecao((int)$_REQUEST['idSecao']);
         $funcionario->setIdUsuario((int) $usuario->idUsuario);
@@ -116,7 +127,6 @@
         } else {
             $funcionario->setDataInativacao("0000-00-00 00:00:00");
         }
-        $funcionario->setDataNascimento($_REQUEST["dataNascimento"]);
         $funcionario->setSexo($_REQUEST["sexo"]);
         
         echo 'Cargo: '.$funcionario->getCargo().'<br>';
@@ -134,7 +144,8 @@
         $funcionarioDAO->incluirFuncionario($funcionario);
         echo "insert into funcionario (idUsuario, idSecao, nome, cargo, situacao, dataAdmissao, cracha, dataCadastro, funcAtivo, dataInativacao, cargaHoraria, sexo, dataNascimento) "
         . "values (1,30, 'Antonio da Silva Filho A', 'teste', 1, '2019-20-05', 120, '2019-20-05', 1, '0000-00-00', 44, 'masculino', '1989-07-02')";
-        header("Location:controlerFuncionario.php?opcao=1");
+        
+        header("Location:controlerFuncionario.php?opcao=6&pagina=1");
     }
     
     //Exclui funcionário
@@ -161,11 +172,11 @@
         }
         
         if(isset($_SESSION['erroExclusao'])) {
-            header("Location:controlerFuncionario.php?opcao=1");
+            header("Location:controlerFuncionario.php?opcao=6&pagina=1");
         } else {        
             $funcionarioDAO = new FuncionarioDAO();
             $funcionarioDAO->excluiFuncionario($funcionario);
-            header("Location:controlerFuncionario.php?opcao=1");
+            header("Location:controlerFuncionario.php?opcao=6&pagina=1");
         }
     }
     
@@ -354,5 +365,7 @@
         $_SESSION['gerencias'] = $listaGerencias;
         header("Location:../View/Funcionario/ListaFuncionario.php");
     }
+    
+    
     
      
