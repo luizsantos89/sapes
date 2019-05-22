@@ -95,7 +95,7 @@
     </script>
 
 
-    <title>Funcionários cadastrados</title>
+    <title>Usuários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">

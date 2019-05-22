@@ -96,7 +96,7 @@
     </script>
 
 
-    <title>Funcionários cadastrados</title>
+    <title>Funcionários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -151,7 +151,7 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label>Data de Admissão:</label>
-                        <input type="text" class="form-control" name="dataAdmissao" onkeypress="mascaraData(this)"  value="" required>
+                        <input type="text" class="form-control" name="dataAdmissao" placeholder="00/00/0000" onkeypress="mascaraData(this)"  value="" required>
                     </div>
                 </div>
                 <div class="row">
@@ -161,6 +161,21 @@
                             <option value="1">Ativo</option>
                             <option value="0">Inativo</option>
                         </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Sexo:</label>
+                        <select name="sexo" class="form-control" >
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Data de Nascimento:</label>
+                        <input type="text" class="form-control" name="dataNascimento" placeholder="00/00/0000" onkeypress="mascaraData(this)"  value="" required>
                     </div>
                 </div>
                 <div class="row">

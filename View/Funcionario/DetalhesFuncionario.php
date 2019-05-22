@@ -35,7 +35,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../imagens/imbel.ico">
 
-        <title>Detalhes do funcionário</title>
+        <title>Funcionários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
         <!-- Bootstrap core CSS -->
         <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -63,7 +63,7 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Detalhes do funcionário </h1><h2><?=$funcionario->nome;?></h2>        
+        <h1 class="display-4">Histórico do funcionário </h1><h2><?=$funcionario->nome;?></h2>        
     </div>
 
     <div class="container">
@@ -76,8 +76,30 @@
                     <td><?=$funcionario->nome;?></td>
                 </tr>
                 <tr>
+                    <th>Sexo:</th>
+                    <td style="text-transform: capitalize;"><?=$funcionario->sexo?></td>
+                </tr>
+                <tr>
+                    <th>Data de Nascimento:</th>
+                    <td>
+                        <?php
+                            if($funcionario->dataNascimento != " ") {
+                                date('d/m/Y',strtotime($funcionario->dataNascimento));
+                            }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Data de Admissão:</th>
+                    <td><?=date('d/m/Y',strtotime($funcionario->dataAdmissao));?></td>
+                </tr>
+                <tr>
                     <th>Crachá:</th>
-                    <td><?=$funcionario->cracha;?></td>
+                    <td><?=str_pad($funcionario->cracha,3,0, STR_PAD_LEFT)?></td>
+                </tr>
+                <tr>
+                    <th>Crachá:</th>
+                    <td><?=str_pad($funcionario->cracha,3,0, STR_PAD_LEFT)?></td>
                 </tr>
                 <tr>
                     <th>Tipo de Cargo:</th>
@@ -86,10 +108,6 @@
                 <tr>
                     <th>Carga Horária:</th>
                     <td><?=$funcionario->cargaHoraria;?> horas semanais</td>
-                </tr>
-                <tr>
-                    <th>Data de Admissão:</th>
-                    <td><?=date('d/m/Y',strtotime($funcionario->dataAdmissao));?></td>
                 </tr>
                 <tr>
                     <th>Seção:</th>

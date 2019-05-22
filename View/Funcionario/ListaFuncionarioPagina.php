@@ -31,7 +31,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Funcionários cadastrados</title>
+    <title>Funcionários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
     
     <script type="text/javascript">
     // função para desabilitar a tecla F5.
@@ -107,7 +107,7 @@
                 
             } else {
             ?>
-            <table class="table table-striped">
+            <table class="table table-striped text-small">
                 <thead class='thead-dark text-center'>
                     <tr>
                         <?php
@@ -119,6 +119,8 @@
                         ?>
                         <th class="center">Crachá:</th>
                         <th>Nome:</th>
+                        <th>Nascimento:</th>
+                        <th>Sexo:</th>
                         <th>Cargo:</th>
                         <th>Tipo:</th>
                         <th>Carga Horária:</th>
@@ -159,9 +161,17 @@
                             <a href="../../Controler/controlerFuncionario.php?opcao=10&idFuncionario=<?=$funcionario->idFuncionario;?>" title="Detalhes"><?=$funcionario->nome; ?></a>  
                         </td>
                         
+                        <td>
+                            <?= date('d/m/Y',strtotime($funcionario->dataNascimento)); ?> 
+                        </td>
+                        
+                        <td style="text-transform: capitalize;">
+                            <?=$funcionario->sexo;?>
+                        </td>
+                        
                         <!--CARGO-->
                         <td>
-                            <?=$funcionario->cargo;?> 
+                            <a href="../../Controler/controlerFuncionario.php?opcao=11&cargo=<?=$funcionario->cargo;?>" title="Filtrar por cargo"><?=$funcionario->cargo;?></a>
                         </td>
                         
                         <!--TIPO/CARGO-->

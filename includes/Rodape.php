@@ -18,6 +18,7 @@
       <li><a class="text-muted" href="../../View/Relatorio/Sancoes.php">Sanções</a></li>
       <li><a class="text-muted" href="../../View/Relatorio/GeraAbsenteismo.php">Absenteismo</a></li>
       <li><a class="text-muted" href="../../View/Relatorio/GeraDesempenho.php">Desempenho</a></li>
+      <li><a class="text-muted" href="../../View/Relatorio/GeraAproveitamento.php">Aproveitamento</a></li>
     </ul>
   </div>
   <div class="col-6 col-md">

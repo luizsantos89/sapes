@@ -24,7 +24,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../imagens/imbel.ico">
 
-        <title>Editar funcionário</title>
+        <title>Sanções - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
         <script language=javascript>
             //MÁSCARA DE VALORES
 

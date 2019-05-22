@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Avaliação de Desempenho - DVRH/FJF</title>
+    <title>Desempenho - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">

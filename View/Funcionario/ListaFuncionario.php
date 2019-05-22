@@ -34,7 +34,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Funcionários cadastrados</title>
+    <title>Funcionários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
     
     <script type="text/javascript">
     // função para desabilitar a tecla F5.
@@ -52,6 +52,11 @@
         @media print{
            #noprint{
                display:none;
+           }
+           
+           a {
+               text-decoration: none;
+               color: black;
            }
         }
     </style>
@@ -106,9 +111,9 @@
                 }
                 
             ?>
-            <table class="table table-striped">
+            <table class="table table-striped text-small">
                 <thead class='thead-dark text-center'>
-                    <tr>
+                    <tr class="text-small">
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
@@ -118,6 +123,8 @@
                         ?>
                         <th class="center">Crachá:</th>
                         <th>Nome:</th>
+                        <th>Data de Nascimento:</th>
+                        <th>Sexo:</th>
                         <th>Cargo:</th>
                         <th>Tipo:</th>
                         <th>Situação:</th>
@@ -128,11 +135,11 @@
                         <th>Gerência:</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-small">
                 <?php
                     foreach ($funcionarios as $funcionario) {
                 ?>
-                    <tr>
+                    <tr class="text-small">
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
@@ -158,19 +165,22 @@
                             <a href="../../Controler/controlerFuncionario.php?opcao=10&idFuncionario=<?=$funcionario->idFuncionario;?>" title="Detalhes"><?=$funcionario->nome; ?></a>  
                         </td>
                         
+                        <td>
+                            <?=date('d/m/Y',strtotime($funcionario->dataNascimento));?> 
+                        </td>
+                        
+                        <td style="text-transform: capitalize;">
+                            <?=$funcionario->sexo;?>
+                        </td>
+                        
                         <!--CARGO-->
                         <td>
-                            <?=$funcionario->cargo;?> 
+                            <a href="../../Controler/controlerFuncionario.php?opcao=11&cargo=<?=$funcionario->cargo;?>" title="Filtrar por cargo"><?=$funcionario->cargo;?></a>
                         </td>
                         
                         <!--TIPO/CARGO-->
                         <td>
                             <?=$funcionario->situacao; ?>  
-                        </td>
-                        
-                        <!--CARGA HORARIA-->
-                        <td>
-                            <?=$funcionario->cargaHoraria; ?>  
                         </td>
                         
                         <!--ATIVO/INATIVO-->
@@ -184,6 +194,11 @@
                             
                             
                             ?>
+                        </td>
+                        
+                        <!--CARGA HORARIA-->
+                        <td>
+                            <?=$funcionario->cargaHoraria; ?>  hrs/semana
                         </td>
                         
                         <!--DATA DE ADMISSAO-->
@@ -260,12 +275,13 @@
                                 }
                                 ?>
             </div>
-
-      <footer class="pt-4 my-md-5 pt-md-5 border-top"  id="noprint">
-        <?php
-            include('../../includes/Rodape.php');
-        ?>
-      </footer>
+    </div>
+    <div class="container">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top" id="noprint" >
+          <?php
+              include('../../includes/Rodape.php');
+          ?>
+        </footer>
     </div>
 
 

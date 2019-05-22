@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Aproveitamento Funcional</title>
+    <title>Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">

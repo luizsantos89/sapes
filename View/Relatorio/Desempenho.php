@@ -14,7 +14,7 @@
     
     $link = mysqli_connect("localhost", "root", "", "sapes");
     
-    $queryFuncionarioMais = "SELECT f.nome, d.nota as desempenho FROM desempenho as d INNER JOIN funcionario as f ON f.idFuncionario = d.idFuncionario WHERE semestre = $semestre AND ano = $ano ORDER BY d.nota DESC LIMIT 30;";
+    $queryFuncionarioMais = "SELECT f.nome, f.cracha, d.nota as desempenho FROM desempenho as d INNER JOIN funcionario as f ON f.idFuncionario = d.idFuncionario WHERE semestre = $semestre AND ano = $ano ORDER BY d.nota DESC LIMIT 30;";
 
     $querySecao = "SELECT s.descricao as secao, ROUND(AVG(nota),2) as media FROM desempenho as d INNER JOIN funcionario as f ON f.idFuncionario = d.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao WHERE semestre = $semestre AND ano = $ano GROUP BY s.idSecao ORDER BY AVG(nota) DESC;";
 
@@ -41,7 +41,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Avaliação de Desempenho - DVRH/FJF</title>
+    <title>Relatórios - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Seção: ','Média de Desempenho: '],
+                ['Seção','Média de Desempenho'],
                 <?php
                     while ($array = mysqli_fetch_array($graficoSecao)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -91,7 +91,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Divisão: ','Média de Desempenho: '],
+                ['Divisão','Média de Desempenho'],
                 <?php
                     while ($array = mysqli_fetch_array($graficoDivisao)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -123,7 +123,7 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Gerência: ','Média de desempenho: '],
+                ['Gerência','Média de desempenho'],
                 <?php
                     while ($array = mysqli_fetch_array($graficoGerencia)){
                         echo "['".$array[0]."', ".$array[1]."],";
@@ -170,24 +170,40 @@
         <div class="text-center">   
             <!--<div id="grafFuncMais" style="width: 1000px; height: 1200px"></div>-->
             <table border='1' class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan="4" class='text-center h4'>30 Maiores Notas de Desempenho no Período</th>
+                    </tr>
+                </thead>
                 <tr>
-                    <th colspan="2">30 Maiores Notas de Desempenho do Período:</th>
-                </tr>
-                <tr>
+                    <th>Ordem: </th>
+                    <th>Crachá: </th>
                     <th>Funcionário: </th>
                     <th>Nota: </th>
                 </tr>
                 <?php
                     $cont = 1;
                     while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
-                        echo "<tr><td>".$cont.' - '.$array[0]."</td><td>".$array[1]."</td></tr>";
+                        echo "<tr><td>".$cont.'</td><td>'.str_pad($array[1],3,0, STR_PAD_LEFT).'</td><td align="left">'.$array[0]."</td><td>".$array[2]."</td></tr>";
                         $cont+=1;
                     }
                 ?>
             </table>
-            <div class="pagination" id="grafSecao" style="width: 1100px; height: 650px"></div>
-            <div  class="pagination" id="grafDivisao" style="width: 1100px; height: 650px"></div>
-            <div  class="pagination" id="grafGerencia" style="width: 1100px; height: 650px"></div>
+            <div class="card-deck mb-2 text-center">
+                <div class="card mb-3 box-shadow">                
+                    <div id="grafSecao" style="width: 920px; height: 900px"></div>
+                </div>
+            </div>
+            <div class="card-deck mb-2 text-center">
+                <div class="card mb-3 box-shadow">                
+                    <div id="grafDivisao" style="width: 920px; height: 900px"></div>
+                </div>
+            </div>
+            <div class="card-deck mb-2 text-center">
+                <div class="card mb-3 box-shadow">                
+                    <div id="grafGerencia" style="width: 920px; height: 900px"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container">

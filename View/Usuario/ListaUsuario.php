@@ -15,7 +15,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Usuários cadastrados</title>
+    <title>Usuários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
     
     <script type="text/javascript">
     // função para desabilitar a tecla F5.

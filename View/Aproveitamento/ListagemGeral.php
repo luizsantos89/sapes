@@ -34,7 +34,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Aproveitamento Funcional</title>
+    <title>Sistema de Aproveitamento Funcional - DVRH/FJF</title>
     <script type="text/javascript">
     // função para desabilitar a tecla F5.
         window.onkeydown = function (e) {

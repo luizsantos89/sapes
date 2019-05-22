@@ -7,13 +7,35 @@
     
     $link = mysqli_connect("localhost", "root", "", "sapes");
     
+    $querySexo = "SELECT sexo, COUNT(*) as quantidade FROM funcionario GROUP BY sexo";
+    
+    $queryFaixaEtaria = "select 
+                            case when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 18 AND 30 then   
+                                            'Entre 18 e 30'  
+                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 30 AND 40 then    
+                                            'Entre 30 e 40'  
+                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 40 AND 50 then    
+                                            'Entre 40 e 50'
+                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 50 AND 60 then    
+                                            'Entre 50 e 60'
+                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) > 60 then    
+                                            'Acima de 60'
+                             end as faixaEtaria  
+                    , count(*) as quantidade  
+                    from funcionario
+                    group by dataNascimento;";
+    
     $querySecao = "select s.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao GROUP BY f.idSecao;";
     
     $queryDivisao = "select d.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao inner join divisao as d ON d.idDivisao = s.idDivisao GROUP BY d.idDivisao;";
     
     $queryGerencia = "select g.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao inner join divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia AS g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia;";
     
-    $graficoSecao = $link->query($querySecao);
+    $graficoSexo = $link->query($querySexo);
+    
+    $graficoFaixaEtaria = $link->query($queryFaixaEtaria);
+    
+    $graficoSecao = $link->query($querySecao);    
     
     $graficoDivisao = $link->query($queryDivisao);
     
@@ -30,7 +52,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Avaliação de Desempenho - DVRH/FJF</title>
+    <title>Relatórios - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -38,6 +60,60 @@
     <!-- Custom styles for this template -->
     <link href="../../estilos/css/pricing.css" rel="stylesheet">
     <script type="text/javascript" src="../../scripts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart(){
+            var data = new google.visualization.DataTable();
+            var data = google.visualization.arrayToDataTable([
+                ['Faixa Etaria','Quantidade'],
+                <?php
+                    while ($array = mysqli_fetch_array($graficoFaixaEtaria)){
+                        echo "['".$array[0]."', ".$array[1]."],";
+                    }
+                ?>
+               ]);
+
+            
+        var options = {
+          title: 'Funcionários por faixa etária',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('grafFaixaEtaria'));
+        chart.draw(data, options);
+
+        }
+
+    </script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart(){
+            var data = new google.visualization.DataTable();
+            var data = google.visualization.arrayToDataTable([
+                ['Sexo','Quantidade'],
+                <?php
+                    while ($array = mysqli_fetch_array($graficoSexo)){
+                        echo "['".$array[0]."', ".$array[1]."],";
+                    }
+                ?>
+               ]);
+
+            
+        var options = {
+          title: 'Funcionários por sexo',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('grafSexo'));
+        chart.draw(data, options);
+
+        }
+
+    </script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
 
@@ -141,6 +217,16 @@
     </div>
 
     <div class="container">
+        <div class="card-deck mb-2 text-center">
+            <div class="card mb-3 box-shadow">                
+                <div id="grafFaixaEtaria" style="width: 900px; height: 400px"></div>
+            </div>
+        </div>
+        <div class="card-deck mb-2 text-center">
+            <div class="card mb-3 box-shadow">                
+                <div id="grafSexo" style="width: 900px; height: 400px"></div>
+            </div>
+        </div>
         <div class="card-deck mb-2 text-center">
             <div class="card mb-3 box-shadow">                
                 <div id="grafSecao" style="width: 900px; height: 400px"></div>

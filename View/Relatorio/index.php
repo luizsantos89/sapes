@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Sistema de Aproveitamento Funcional - DVRH/FJF</title>
+    <title>Relatórios - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -37,60 +37,71 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Aproveitamento Funcional</h1><br />
+        <h1 class="display-4">Relatórios:</h1><br />
       
     </div>
-    <div class="container">
-
-        <?php
-            if(isset($_REQUEST['erro'])) {
-        ?>
-
-        <div class="alert alert-danger">Já foi gerado, anteriormente, o aproveitamento do período.</div><br>
-        <?php
-            }
-
-        ?>
-        <?php
-            if(isset($_REQUEST['sucesso'])) {
-        ?>
-
-        <div class="alert alert-danger">Gerado com sucesso.</div><br>
-        <?php
-            }
-
-        ?>
+    <div class="container-fluid">
         <div class="card-deck mb-3 text-center">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Consultar</h4>
+                    <h4 class="my-0 font-weight-normal">Funcionarios</h4>
                 </div>
                 <div class="card-body">
                     <br />
-                    <a href="ConsultaAproveitamento.php">
-                        <img src="../../imagens/consult.png" width="120px" height="120px" /> 
+                    <a href="Funcionarios.php">
+                        <img src="../../imagens/func1.png" width="120px" height="120px" /> 
                     </a>
                     <br /><br /><br /><br />
                 </div>
             </div>
-            <?php
-                if($usuario->idTipoUsuario != 3) {
-            ?>
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Calcular</h4>
+                        <h4 class="my-0 font-weight-normal">Absenteísmo</h4>
                 </div>
                 <div class="card-body">
                     <br />
-                    <a href="GerarAproveitamento.php">
-                        <img src="../../imagens/aprov.png" height="120px" />
+                    <a href="GeraAbsenteismo.php">
+                        <img src="../../imagens/horas.png" height="120px" />
                     </a>
                     <br /><br /><br /><br />
                 </div>
             </div>
-            <?php
-                }
-            ?>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Sanções</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="GeraSancao.php">
+                        <img src="../../imagens/disc.png"  height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Desempenho</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="GeraDesempenho.php">
+                        <img src="../../imagens/desemp.png" height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Aproveitamento</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="GeraAproveitamento.php">
+                        <img src="../../imagens/aprov.png" height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
         </div>
     </div>
     <div class="container">

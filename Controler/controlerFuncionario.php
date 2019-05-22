@@ -25,6 +25,11 @@
     
     //Lista todos os funcionarios
     if($opcao == 1){
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
         $secaoDAO = new SecaoDAO();
@@ -60,35 +65,30 @@
         $funcionario->setCracha($_REQUEST["cracha"]);
         $funcionario->setCargo($_REQUEST["cargo"]);
         $funcionario->setCargaHoraria((int) ($_REQUEST["cargaHoraria"]));
+        $dataNascimento = $_REQUEST["dataNascimento"];
+        $sexo = $_REQUEST["sexo"];
+        $diaNascimento = substr($dataNascimento, 0, 2);
+        $mesNascimento = substr($dataNascimento, 3, 2);
+        $anoNascimento = substr($dataNascimento, 6, 4);
         $dataAdmissao = $_REQUEST["dataAdmissao"];
-        $dia = substr($dataAdmissao, 0, 2);
-        echo $dia.'<br>';
-        $mes = substr($dataAdmissao, 3, 2);
-        echo $mes.'<br>';
-        $ano = substr($dataAdmissao, 6, 4);
-        echo $ano.'<br>';
-        $data = $ano.'-'.$mes.'-'.$dia;
+        $diaAdmissao = substr($dataAdmissao, 0, 2);
+        $mesAdmissao = substr($dataAdmissao, 3, 2);
+        $anoAdmissao = substr($dataAdmissao, 6, 4);
+        $dataAdmissao = $anoAdmissao.'-'.$mesAdmissao.'-'.$diaAdmissao;
+        $dataNascimento = $anoNascimento.'-'.$mesNascimento.'-'.$diaNascimento;
         //$dataAdmissao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataAdmissao"]));      
-        $funcionario->setDataAdmissao($data);
+        $funcionario->setDataAdmissao($dataAdmissao);
         $funcionario->setSituacao($_REQUEST["situacao"]);
         $funcionario->setIdSecao($_REQUEST['idSecao']);
         $funcionario->setFuncAtivo($_REQUEST["funcAtivo"]);
+        $funcionario->setDataNascimento($dataNascimento);
+        $funcionario->setSexo($sexo);
         if($funcionario->getFuncAtivo()==0) {
             date_default_timezone_set('America/Sao_Paulo');
             $funcionario->setDataInativacao(date('Y-m-d H:i:s'));
         } else {
             $funcionario->setDataInativacao("0000-00-00 00:00:00");
         }
-        
-        echo 'Cargo: '.$funcionario->getCargo().'<br>';
-        echo 'Crachá: '.$funcionario->getCracha().'<br>';
-        echo 'Data de Admissão: '.$funcionario->getDataAdmissao().'<br>';
-        echo 'Data de Inativação: '.$funcionario->getDataInativacao().'<br>';
-        echo 'Ativo? '.$funcionario->getFuncAtivo().'<br>';
-        echo 'Id: '.$funcionario->getIdFuncionario().'<br>';
-        echo 'Seção: '.$funcionario->getIdSecao().'<br>';
-        echo 'Nome: '.$funcionario->getNome().'<br>';
-        echo 'Situação: '.$funcionario->getSituacao().'<br>';
         
         $funcionarioDAO = new FuncionarioDAO();
         $funcionarioDAO->editarFuncionario($funcionario);
@@ -103,10 +103,9 @@
         $funcionario = new Funcionario();       
         $funcionario->setNome($_REQUEST["nome"]);
         $funcionario->setCracha($_REQUEST["cracha"]);
-        $funcionario->setCargo($_REQUEST["cargo"]);        
-        $dataAdmissao = date('Y-m-d H:i:s',strtotime($_REQUEST["dataAdmissao"]));      
-        $funcionario->setDataAdmissao($dataAdmissao);
-        $funcionario->setSituacao($_REQUEST["situacao"]);
+        $funcionario->setCargo($_REQUEST["cargo"]);  
+        $funcionario->setDataAdmissao($_REQUEST["dataAdmissao"]);
+        $funcionario->setSituacao($_REQUEST["funcAtivo"]);
         $funcionario->setIdSecao((int)$_REQUEST['idSecao']);
         $funcionario->setIdUsuario((int) $usuario->idUsuario);
         $funcionario->setFuncAtivo($_REQUEST["funcAtivo"]);
@@ -117,10 +116,13 @@
         } else {
             $funcionario->setDataInativacao("0000-00-00 00:00:00");
         }
+        $funcionario->setDataNascimento($_REQUEST["dataNascimento"]);
+        $funcionario->setSexo($_REQUEST["sexo"]);
         
         echo 'Cargo: '.$funcionario->getCargo().'<br>';
         echo 'Crachá: '.$funcionario->getCracha().'<br>';
         echo 'Data de Admissão: '.$funcionario->getDataAdmissao().'<br>';
+        echo 'Data de Nascimento: '.$funcionario->getDataNascimento().'<br>';
         echo 'Data de Inativação: '.$funcionario->getDataInativacao().'<br>';
         echo 'Ativo? '.$funcionario->getFuncAtivo().'<br>';
         echo 'Usuário '.$funcionario->getIdUsuario().'<br>';
@@ -130,6 +132,8 @@
                 
         $funcionarioDAO = new FuncionarioDAO();
         $funcionarioDAO->incluirFuncionario($funcionario);
+        echo "insert into funcionario (idUsuario, idSecao, nome, cargo, situacao, dataAdmissao, cracha, dataCadastro, funcAtivo, dataInativacao, cargaHoraria, sexo, dataNascimento) "
+        . "values (1,30, 'Antonio da Silva Filho A', 'teste', 1, '2019-20-05', 120, '2019-20-05', 1, '0000-00-00', 44, 'masculino', '1989-07-02')";
         header("Location:controlerFuncionario.php?opcao=1");
     }
     
@@ -167,6 +171,11 @@
     
     //Funcionario paginado
     if($opcao == 6) {
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
         $secaoDAO = new SecaoDAO();
@@ -192,6 +201,11 @@
     
     //Lista funcionários por seção
     if($opcao == 7) {
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
         $idSecao = $_REQUEST['idSecao'];
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
@@ -215,8 +229,13 @@
         header("Location:../View/Funcionario/ListaFuncionario.php");
     }
     
-    //Lista funcionários por seção
+    //Lista funcionários por divisão
     if($opcao == 8) {
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
         $idDivisao = $_REQUEST['idDivisao'];
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
@@ -240,6 +259,11 @@
     
     //Lista funcionários por gerência
     if($opcao == 9) {
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
         $idGerencia = $_REQUEST['idGerencia'];
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
@@ -265,6 +289,11 @@
     
     //Lista funcionario por ID
     if($opcao == 10){
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
         $idFuncionario = $_REQUEST["idFuncionario"];                
         $funcionarioDAO = new FuncionarioDAO();
         $usuarioDAO = new UsuarioDAO();
@@ -297,3 +326,33 @@
         $_SESSION['aproveitamento'] = $listaAproveitamento;
         header("Location:../View/Funcionario/DetalhesFuncionario.php");
     }
+    
+    //Lista funcionários por cargo
+    if($opcao == 11) {
+        unset($_SESSION['funcionarios']);
+        unset($_SESSION['usuarios']);
+        unset($_SESSION['secoes']);
+        unset($_SESSION['divisoes']);
+        unset($_SESSION['gerencias']);
+        $cargo = $_REQUEST['cargo'];
+        $funcionarioDAO = new FuncionarioDAO();
+        $usuarioDAO = new UsuarioDAO();
+        $secaoDAO = new SecaoDAO();
+        $divisaoDAO = new DivisaoDAO();
+        $gerenciaDAO = new GerenciaDAO();
+        echo $cargo;
+        $listaFuncionarios = $funcionarioDAO->getFuncionarioByCargo($cargo);
+        $listaUsuarios = $usuarioDAO->getUsuarios();
+        $listaSecoes = $secaoDAO->getSecoes();
+        $listaDivisoes = $divisaoDAO->getDivisoes();
+        $listaGerencias = $gerenciaDAO->getGerencias();
+        $_SESSION['funcionarios'] = $listaFuncionarios;
+        $_SESSION['usuarios'] = $listaUsuarios;
+        $_SESSION['secoes'] = $listaSecoes;
+        $_SESSION['porSecao'] = 0;
+        $_SESSION['divisoes'] = $listaDivisoes;
+        $_SESSION['gerencias'] = $listaGerencias;
+        header("Location:../View/Funcionario/ListaFuncionario.php");
+    }
+    
+     

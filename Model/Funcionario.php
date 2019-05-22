@@ -13,6 +13,8 @@ class Funcionario {
     private $situacao;
     private $cargaHoraria;
     private $dataInativacao;
+    private $sexo;
+    private $dataNascimento;
 
     public function getIdFuncionario(){
         return $this->idFuncionario;
@@ -108,6 +110,22 @@ class Funcionario {
     
     public function getCargaHoraria() {
         return $this->cargaHoraria;
+    }
+    
+    public function getSexo() {
+        return $this->sexo;
+    }
+    
+    public function setSexo($sexo) {
+        $this->sexo = $sexo;
+    }
+    
+    public function getDataNascimento() {
+        return $this->dataNascimento;
+    }
+    
+    public function setDataNascimento($dataNascimento) {
+        $this->dataNascimento = $dataNascimento;
     }
 }
 

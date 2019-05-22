@@ -37,11 +37,11 @@
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Relatório de Absenteísmo:</h1><br />
+        <h1 class="display-4">Relatório de Aproveitamento Funcional:</h1><br />
       
     </div>
     <div class="container">
-        <form action='Absenteismo.php' class="form" >
+        <form action='Aproveitamento.php' class="form" >
             <h3>Período para visualização:</h3>
             <label>Semestre: </label>
             <select name="semestre" class="form-control">
@@ -51,7 +51,7 @@
             <label>Ano: </label>
             <input type="text" class="form-control" name="ano" required>
             <p></p>
-            <button class='btn btn-primary'>Consultar</button>
+            <button class='btn btn-primary'>Gerar</button>
         </form>
 </div>
     <div class="container">

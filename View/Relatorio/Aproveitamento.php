@@ -1,35 +1,28 @@
 <?php
     session_start();
     
-    include("../../includes/verificaSessao.php");
-    
     if(isset($_REQUEST['semestre'])){
         $semestre = (int) $_REQUEST['semestre'];
         $ano = (int) $_REQUEST['ano'];
-        if ($semestre == 1) {
-            $dataInicial = $ano.'-01-01 00:00:00';
-            $dataFinal =$ano.'-06-30 23:59:59';
-        } else {
-            $dataInicial = $ano.'-07-01 00:00:00';
-            $dataFinal = $ano.'-12-31 23:59:59';
-        }
     } else {
-        header("Location: GeraSancao.php");
-    } 
+        header("Location: geraDesempenho.php");
+    }
     
-    $usuario = $_SESSION['usuario'];   
+    include("../../includes/verificaSessao.php");
+    
+    $usuario = $_SESSION['usuario'];    
     
     $link = mysqli_connect("localhost", "root", "", "sapes");
     
-    $queryFuncionario = "select * FROM (select f.cracha, f.nome, COUNT(*) as quantidade from sancao AS s INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario WHERE dataSancao BETWEEN '$dataInicial' AND '$dataFinal' GROUP BY s.idFuncionario) as selecao ORDER BY quantidade DESC;";
+    $queryFuncionarioMais = "SELECT f.nome, f.cracha, a.indiceAproveitamento FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario WHERE semestre = $semestre AND ano = $ano ORDER BY a.indiceAproveitamento DESC LIMIT 30;";
+
+    $querySecao = "SELECT s.descricao as secao, ROUND(AVG(a.indiceAproveitamento),2) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao WHERE semestre = $semestre AND ano = $ano GROUP BY s.idSecao ORDER BY AVG(a.indiceAproveitamento) DESC;";
+
+    $queryDivisao = "SELECT d.descricao as divisao, ROUND(AVG(a.indiceAproveitamento),2) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao WHERE semestre = $semestre AND ano = $ano GROUP BY d.idDivisao ORDER BY AVG(a.indiceAproveitamento) DESC;";
+
+    $queryGerencia = "SELECT g.descricao as gerencia, ROUND(AVG(a.indiceAproveitamento),2) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON d.idGerencia = g.idGerencia WHERE semestre = $semestre AND ano = $ano GROUP BY g.idGerencia ORDER BY AVG(a.indiceAproveitamento) DESC;";    
         
-    $querySecao = "select * FROM (select sc.descricao as nome, COUNT(*) as quantidade from sancao AS s INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario INNER JOIN secao AS sc ON f.idSecao = sc.idSecao WHERE dataSancao BETWEEN '$dataInicial' AND '$dataFinal' GROUP BY sc.idSecao) as selecao ORDER BY quantidade DESC;";
-    
-    $queryDivisao = "select * FROM (select d.descricao as nome, COUNT(*) as quantidade from sancao AS s INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario INNER JOIN secao AS sc ON f.idSecao = sc.idSecao INNER JOIN divisao AS d ON sc.idDivisao = d.idDivisao WHERE dataSancao BETWEEN '$dataInicial' AND '$dataFinal'   GROUP BY d.idDivisao) as selecao ORDER BY quantidade DESC;";
-    
-    $queryGerencia = "select * FROM (select g.descricao as nome, COUNT(*) as quantidade from sancao AS s INNER JOIN funcionario AS f ON s.idFuncionario = f.idFuncionario INNER JOIN secao AS sc ON f.idSecao = sc.idSecao INNER JOIN divisao AS d ON sc.idDivisao = d.idDivisao INNER JOIN gerencia AS g ON g.idGerencia = d.idGerencia WHERE dataSancao BETWEEN '$dataInicial' AND '$dataFinal' GROUP BY g.idGerencia) as selecao ORDER BY quantidade DESC;";
-    
-    $graficoFuncionario = $link->query($queryFuncionario);
+    $graficoFuncionarioMais = $link->query($queryFuncionarioMais);
     
     $graficoSecao = $link->query($querySecao);
     
@@ -72,17 +65,17 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Seção: ','Quantidade: '],
+                ['Seção','Média de Aproveitamento (em %)'],
                 <?php
                     while ($array = mysqli_fetch_array($graficoSecao)){
-                        echo "['".$array[0]."', ".$array[1]."],";
+                        echo "['".$array[0]."', ".$array[1]*100.0."],";
                     }
                 ?>
                ]);
 
             
             var options = {
-              title: 'Total de sanções por seção',
+              title: 'Média de Aproveitamento Funcional por Seção',
               is3D: true,
             };
 
@@ -98,17 +91,17 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Divisão: ','Quantidade: '],
+                ['Divisão','Média de Aproveitamento (em %)'],
                 <?php
                     while ($array = mysqli_fetch_array($graficoDivisao)){
-                        echo "['".$array[0]."', ".$array[1]."],";
+                        echo "['".$array[0]."', ".$array[1]*100.0."],";
                     }
                 ?>
                ]);
 
             
             var options = {
-                title: 'Total de sanções divisão',
+                title: 'Média de Aprovietamento Funcional por Divisão',
                 is3D: true,
                 slices: {  8: {offset: 0.2},
                           9: {offset: 0.4},
@@ -118,7 +111,7 @@
 
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('grafDivisao'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('grafDivisao'));
             chart.draw(data, options);
         }
 
@@ -130,21 +123,21 @@
         function drawChart(){
             var data = new google.visualization.DataTable();
             var data = google.visualization.arrayToDataTable([
-                ['Gerência: ','Quantidade: '],
+                ['Gerência','Média de Aproveitamento (em %)'],
                 <?php
                     while ($array = mysqli_fetch_array($graficoGerencia)){
-                        echo "['".$array[0]."', ".$array[1]."],";
+                        echo "['".$array[0]."', ".$array[1]*100.0."],";
                     }
                 ?>
                ]);
 
             
             var options = {
-              title: 'Total de sanções por gerência',
+              title: 'Média de AproveitamentoFuncional por Gerência',
               pieHole: 0.4,
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('grafGerencia'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('grafGerencia'));
             chart.draw(data, options);
 
 
@@ -169,7 +162,7 @@
 
      <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Relatório</h1><br />
-        <h3>Sanções - <?=$semestre?>º semestre - <?=$ano?></h3>
+        <h3>Notas de Desempenho - <?=$semestre?>º semestre - <?=$ano?></h3>
         <a href="GeraAbsenteismo.php" class="btn btn-primary">Voltar</a>
     </div>
 
@@ -179,36 +172,36 @@
             <table border='1' class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th colspan="4" class='text-center h4'>Funcionários com sanções no período:</th>
+                        <th colspan="4" class='text-center h4'>30 Maiores Índices de Aproveitamento Funcional no Período</th>
                     </tr>
                 </thead>
                 <tr>
-                    <th>Ordem:</th>
-                    <th>Crachá:</th>
+                    <th>Ordem: </th>
+                    <th>Crachá: </th>
                     <th>Funcionário: </th>
-                    <th>Quant. Sanções: </th>
+                    <th>Nota: </th>
                 </tr>
                 <?php
                     $cont = 1;
-                    while ($array = mysqli_fetch_array($graficoFuncionario)){
-                        echo "<tr><td>".$cont.'</td><td>'.str_pad($array[0],3,0,STR_PAD_LEFT)."</td><td align='left'>".$array[1]."</td><td>".$array[2]."</td></tr>";
+                    while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
+                        echo "<tr><td>".$cont.'</td><td>'.str_pad($array[1],3,0, STR_PAD_LEFT).'</td><td align="left">'.$array[0]."</td><td>".$array[2]." (".$array[2]*100.0."%)</td></tr>";
                         $cont+=1;
                     }
                 ?>
             </table>
             <div class="card-deck mb-2 text-center">
                 <div class="card mb-3 box-shadow">                
-                    <div id="grafSecao" style="width: 920px; height: 600px"></div>
+                    <div id="grafSecao" style="width: 920px; height: 900px"></div>
                 </div>
             </div>
             <div class="card-deck mb-2 text-center">
                 <div class="card mb-3 box-shadow">                
-                    <div id="grafDivisao" style="width: 920px; height:600px"></div>
+                    <div id="grafDivisao" style="width: 920px; height: 900px"></div>
                 </div>
             </div>
             <div class="card-deck mb-2 text-center">
                 <div class="card mb-3 box-shadow">                
-                    <div id="grafGerencia" style="width: 920px; height: 600px"></div>
+                    <div id="grafGerencia" style="width: 920px; height: 900px"></div>
                 </div>
             </div>
         </div>

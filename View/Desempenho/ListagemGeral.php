@@ -26,7 +26,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Notas de Desempenho</title>
+    <title>Desempenho - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
     
     <script type="text/javascript">
     // função para desabilitar a tecla F5.

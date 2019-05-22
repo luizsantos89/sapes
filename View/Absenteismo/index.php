@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Avaliação de Desempenho - DVRH/FJF</title>
+    <title>Absenteísmo - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -64,7 +64,7 @@
             <button class='btn btn-primary'>Consultar</button>
             <a href="LancaAbsenteismo.php" class="btn btn-outline-primary">Lançamento</a>
         </form>
-</div>
+    </div>
     <div class="container">
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
           <?php

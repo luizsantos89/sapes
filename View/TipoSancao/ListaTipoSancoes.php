@@ -23,7 +23,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../imagens/imbel.ico">
 
-    <title>Tipos de sanções cadastrados</title>
+    <title>Sanções - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
     
     <script type="text/javascript">
     // função para desabilitar a tecla F5.

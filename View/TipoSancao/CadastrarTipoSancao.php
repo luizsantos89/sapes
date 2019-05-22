@@ -15,7 +15,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../imagens/imbel.ico">
 
-        <title>Cadastrar tipo de sanção</title>
+        <title>Sanções - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
         <script type="text/javascript">
             function mascaraData(val) {
             var pass = val.value;

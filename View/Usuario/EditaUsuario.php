@@ -20,7 +20,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../imagens/imbel.ico">
 
-        <title>Editar usuario</title>
+    <title>Usuários - Sistema de Aproveitamento Funcional - DVRH/FJF</title>
         <script language=javascript>
             //MÁSCARA DE VALORES
 

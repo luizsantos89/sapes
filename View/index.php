@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../imagens/imbel.ico">
 
-    <title>Avaliação de Desempenho - DVRH/FJF</title>
+    <title>Sistema de Aproveitamento Funcional - DVRH/FJF</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -102,12 +102,26 @@
             </div>
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Aproveitamento</h4>
+                </div>
+                <div class="card-body">
+                    <br />
+                    <a href="../View/Aproveitamento/index.php">
+                        <img src="../imagens/aprov.png" height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Relatórios</h4>
                 </div>
                 <div class="card-body">
                     <br />
-                    <img src="../imagens/relat.png" width="120px" height="120px" /> 
-                    <br><br><p>Em desenvolvimento</p>
+                    <a href="../View/Relatorio/index.php">
+                        <img src="../imagens/relat.png" height="120px" /> 
+                    </a>
+                    <br /><br /><br /><br />
                 </div>
             </div>
         </div>

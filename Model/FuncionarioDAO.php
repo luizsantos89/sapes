@@ -12,7 +12,7 @@
         }
         
         public function incluirFuncionario($funcionario){
-            $sql = $this->con->prepare("insert into funcionario (idUsuario, idSecao, nome, cargo, situacao, dataAdmissao, cracha, dataCadastro, funcAtivo, dataInativacao, cargaHoraria) values (:idUsuario, :idSecao, :nome, :cargo, :situacao, :dataAdmissao, :cracha, :dataCadastro, :funcAtivo, :dataInativacao, :cargaHoraria)");
+            $sql = $this->con->prepare("insert into funcionario (idUsuario, idSecao, nome, cargo, situacao, dataAdmissao, cracha, dataCadastro, funcAtivo, dataInativacao, cargaHoraria, sexo, dataNascimento) values (:idUsuario, :idSecao, :nome, :cargo, :situacao, :dataAdmissao, :cracha, :dataCadastro, :funcAtivo, :dataInativacao, :cargaHoraria, :sexo, :dataNascimento)");
             $sql->bindValue(':idUsuario', $funcionario->getIdUsuario());
             $sql->bindValue(':idSecao',$funcionario->getIdSecao());
             $sql->bindValue(':nome',$funcionario->getNome());
@@ -24,6 +24,8 @@
             $sql->bindValue(':funcAtivo',$funcionario->getFuncAtivo());
             $sql->bindValue(":dataInativacao", $funcionario->getDataInativacao());
             $sql->bindValue(":cargaHoraria",$funcionario->getCargaHoraria());
+            $sql->bindValue(":sexo", $funcionario->getSexo());
+            $sql->bindValue(":dataNascimento", $funcionario->getDataNascimento());
             
             $sql->execute();
         }
@@ -106,6 +108,20 @@
             return $lista;
         }
         
+        public function getFuncionarioByCargo($cargo) {
+            $sql = $this->con->prepare("SELECT * FROM funcionario where cargo = :cargo ORDER BY funcAtivo DESC, cracha ASC ");
+            $sql->bindValue(':cargo', $cargo);
+            $sql->execute();
+            $lista = array();
+        
+            $funcionario = new Funcionario();
+            
+            while ($funcionario = $sql->fetch(PDO::FETCH_OBJ)) {
+                $lista[] = $funcionario;
+            }
+            return $lista;
+        }
+        
         public function getFuncionarioByID($idFuncionario) {
             $sql = $this->con->prepare("SELECT * FROM funcionario where idFuncionario = :idFuncionario");
             $sql->bindValue(':idFuncionario', $idFuncionario);
@@ -117,7 +133,7 @@
         }
         
         public function editarFuncionario($funcionario){
-            $sql = $this->con->prepare("UPDATE funcionario SET nome = :nome, cracha = :cracha, cargo = :cargo, situacao = :situacao, funcAtivo = :funcAtivo, dataInativacao = :dataInativacao, dataAdmissao = :dataAdmissao, idSecao = :idSecao, cargaHoraria = :cargaHoraria WHERE idFuncionario = :idFuncionario");
+            $sql = $this->con->prepare("UPDATE funcionario SET nome = :nome, cracha = :cracha, cargo = :cargo, situacao = :situacao, funcAtivo = :funcAtivo, dataInativacao = :dataInativacao, dataAdmissao = :dataAdmissao, idSecao = :idSecao, cargaHoraria = :cargaHoraria, sexo = :sexo, dataNascimento = :dataNascimento WHERE idFuncionario = :idFuncionario");
             $sql->bindValue(":nome",$funcionario->getNome());
             $sql->bindValue(":cracha",$funcionario->getCracha());
             $sql->bindValue(":cargo",$funcionario->getCargo());
@@ -128,6 +144,8 @@
             $sql->bindValue(":idSecao",$funcionario->getIdSecao());
             $sql->bindValue(":idFuncionario",$funcionario->getIdFuncionario());
             $sql->bindValue(":cargaHoraria",$funcionario->getCargaHoraria());
+            $sql->bindValue(":sexo", $funcionario->getSexo());
+            $sql->bindValue(":dataNascimento", $funcionario->getDataNascimento());
                        
             
             $sql->execute();
