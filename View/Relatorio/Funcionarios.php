@@ -25,6 +25,10 @@
                     from funcionario
                     group by dataNascimento;";
     
+    $queryCargo = "SELECT cargo, COUNT(*) FROM funcionario GROUP BY cargo;";
+    
+    $querySituacao = "SELECT situacao, COUNT(*) FROM funcionario GROUP BY situacao;";
+    
     $querySecao = "select s.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao GROUP BY f.idSecao;";
     
     $queryDivisao = "select d.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao inner join divisao as d ON d.idDivisao = s.idDivisao GROUP BY d.idDivisao;";
@@ -32,6 +36,10 @@
     $queryGerencia = "select g.descricao, COUNT(*) as qtdFuncionario from funcionario as f inner join secao as s on f.idSecao = s.idSecao inner join divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia AS g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia;";
     
     $graficoSexo = $link->query($querySexo);
+    
+    $graficoCargo = $link->query($queryCargo);
+    
+    $graficoSituacao = $link->query($querySituacao);
     
     $graficoFaixaEtaria = $link->query($queryFaixaEtaria);
     
@@ -60,6 +68,58 @@
     <!-- Custom styles for this template -->
     <link href="../../estilos/css/pricing.css" rel="stylesheet">
     <script type="text/javascript" src="../../scripts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart(){
+            var data = new google.visualization.DataTable();
+            var data = google.visualization.arrayToDataTable([
+                ['Situação','Quantidade'],
+                <?php
+                    while ($array = mysqli_fetch_array($graficoSituacao)){
+                        echo "['".$array[0]."', ".$array[1]."],";
+                    }
+                ?>
+               ]);
+
+            
+        var options = {
+          title: 'Funcionários por situação'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('grafSituacao'));
+        chart.draw(data, options);
+
+        }
+
+    </script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart(){
+            var data = new google.visualization.DataTable();
+            var data = google.visualization.arrayToDataTable([
+                ['Cargo','Quantidade'],
+                <?php
+                    while ($array = mysqli_fetch_array($graficoCargo)){
+                        echo "['".$array[0]."', ".$array[1]."],";
+                    }
+                ?>
+               ]);
+
+            
+        var options = {
+          title: 'Funcionários por cargo'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('grafCargo'));
+        chart.draw(data, options);
+
+        }
+
+    </script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
 
@@ -225,6 +285,16 @@
         <div class="card-deck mb-2 text-center">
             <div class="card mb-3 box-shadow">                
                 <div id="grafSexo" style="width: 900px; height: 400px"></div>
+            </div>
+        </div>
+        <div class="card-deck mb-2 text-center">
+            <div class="card mb-3 box-shadow">                
+                <div id="grafCargo" style="width: 900px; height: 400px"></div>
+            </div>
+        </div>
+        <div class="card-deck mb-2 text-center">
+            <div class="card mb-3 box-shadow">                
+                <div id="grafSituacao" style="width: 900px; height: 400px"></div>
             </div>
         </div>
         <div class="card-deck mb-2 text-center">
