@@ -9,21 +9,21 @@
     
     $querySexo = "SELECT sexo, COUNT(*) as quantidade FROM funcionario GROUP BY sexo";
     
-    $queryFaixaEtaria = "select 
-                            case when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 18 AND 30 then   
-                                            'Entre 18 e 30'  
-                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 30 AND 40 then    
-                                            'Entre 30 e 40'  
-                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 40 AND 50 then    
-                                            'Entre 40 e 50'
-                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 50 AND 60 then    
-                                            'Entre 50 e 60'
-                                     when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) > 60 then    
-                                            'Acima de 60'
-                             end as faixaEtaria  
-                    , count(*) as quantidade  
-                    from funcionario
-                    group by dataNascimento;";
+    $queryFaixaEtaria = "SELECT faixaEtaria, COUNT(*) FROM (select 
+                                case when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 18 AND 30 then   
+                                                                'Entre 18 e 30'  
+                                                 when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 30 AND 40 then    
+                                                                'Entre 30 e 40'  
+                                                 when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 40 AND 50 then    
+                                                                'Entre 40 e 50'
+                                                 when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) BETWEEN 50 AND 60 then    
+                                                                'Entre 50 e 60'
+                                                 when TIMESTAMPDIFF(YEAR, dataNascimento, CURDATE()) > 60 then    
+                                                                'Acima de 60'
+                                 end as faixaEtaria  
+                            , count(*) as quantidade  
+                                from funcionario where dataNascimento <> '0000-00-00'
+                                group by dataNascimento) AS FaixaEtariaGlobal GROUP BY faixaEtaria";
     
     $queryCargo = "SELECT cargo, COUNT(*) FROM funcionario GROUP BY cargo;";
     
