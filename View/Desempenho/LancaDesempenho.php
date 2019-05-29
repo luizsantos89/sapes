@@ -1,10 +1,14 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
-    require('../../Model/Absenteismo.php');
-    require('../../Model/Funcionario.php');
-    require('../../Model/Usuario.php');
-    $funcionarios = $_SESSION['funcionarios'];
+    require('../../Model/AbsenteismoDAO.php');
+    require('../../Model/FuncionarioDAO.php');
+    require('../../Model/UsuarioDAO.php');
+    
+    $funcionarioDAO = new FuncionarioDAO();
+    $funcionarios = $funcionarioDAO->getFuncionarios();
+    $_SESSION['funcionarios'] = $funcionarios;
+    
     
     if($usuario->idTipoUsuario == 3) {
         header("Location: index.php");

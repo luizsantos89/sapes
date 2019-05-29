@@ -1,13 +1,20 @@
 <?php
     session_start();
     include("../../includes/verificaSessao.php");
+    include("../../Model/FuncionarioDAO.php");
+    include("../../Model/TipoSancaoDAO.php");
     
     if($usuario->idTipoUsuario == 3) {
         Header('Location: ListaSancoes.php');
     }
     
-    $funcionarios = $_SESSION['funcionarios'];
-    $tiposSancao = $_SESSION['tipoSancoes'];
+    $funcionarioDAO = new FuncionarioDAO();
+    $funcionarios = $funcionarioDAO->getFuncionarios();
+    $_SESSION['funcionarios'] = $funcionarios;
+    
+    $tipoSancaoDAO = new TipoSancaoDAO();
+    $tiposSancao = $tipoSancaoDAO->getTipoSancoes();
+    $_SESSION['tipoSancoes'] = $tiposSancao;
 ?>
 
 <!doctype html>

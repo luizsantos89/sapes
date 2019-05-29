@@ -82,20 +82,12 @@
                 <tr>
                     <th>Data de Nascimento:</th>
                     <td>
-                        <?php
-                            if($funcionario->dataNascimento != " ") {
-                                date('d/m/Y',strtotime($funcionario->dataNascimento));
-                            }
-                        ?>
+                        <?=date('d/m/Y',strtotime($funcionario->dataNascimento));?>
                     </td>
                 </tr>
                 <tr>
                     <th>Data de Admissão:</th>
                     <td><?=date('d/m/Y',strtotime($funcionario->dataAdmissao));?></td>
-                </tr>
-                <tr>
-                    <th>Crachá:</th>
-                    <td><?=str_pad($funcionario->cracha,3,0, STR_PAD_LEFT)?></td>
                 </tr>
                 <tr>
                     <th>Crachá:</th>
