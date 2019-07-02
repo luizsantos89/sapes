@@ -14,8 +14,8 @@
     $c = new Conexao();
     $conexao= $c->getConexao();
     
-    if (isset($_REQUEST["login"])){ 
-        $login = $_REQUEST["login"];
+    if (isset($_REQUEST["usuario"])){ 
+        $login = $_REQUEST["usuario"];
         $senha = md5($_REQUEST["senha"]);
         if($login!=null || $senha!=null) {        
             $sql = $conexao->prepare("SELECT * FROM usuario where login = :login AND senha = :senha");

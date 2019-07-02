@@ -4,48 +4,113 @@
         Header("Location: View/index.php");
     }
 ?>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/imagens/imbel.ico">
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        
+        <!-- meta Data -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- title -->
+        <title>DVRH - Sistema de Aproveitamento Funcional</title>
+        
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="estilos/css/fontawesome-all.min.css" />
+        <link rel="stylesheet" href="estilos/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="estilos/css/main.css" />
+        <link rel="stylesheet" href="estilos/css/responsive.css" />
+        <link rel="stylesheet" href="estilos/css/light_template.css" />
+        <link rel="stylesheet" href="estilos/css/colors/default-color.css" />
+        <link rel="icon" href="imagens/favicon.ico">
+        
+        
+        <style type="text/css">
+            .image-right-sub {
+                position: fixed;
 
-    <title>Avaliação de Desempenho</title>
+                top: 92%;
+                right: 0;
 
-    <!-- Bootstrap core CSS -->
-    <link href="estilos/css/bootstrap.min.css" rel="stylesheet">
+                height: 100px;
 
-    <!-- Custom styles for this template -->
-    <link href="estilos/css/signin.css" rel="stylesheet">
-  </head>
-
-  <body class="text-center container">
-        <form class="form-signin container-login" action="Controler/controlerLogin.php" method="post">
+                margin-top: -50px;
+            }
+        </style>
+        
+        <!-- Plugins -->
+        <link rel="stylesheet" href="estilos/css/magnific-popup.css" />
+        
+        <!-- google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script|Poppins:300i,400,600" />
+    </head>
+    <body>
+        <img class="image-right-sub" src="imagens/logo1.jpg" height="90px" />
+        <section id="home-cont" class="home2 home">
+            <div class="skewed">
+                <div class="overlay"></div>
+                <div class="my-bg bg-image"></div>
+            </div>
+            <div class="title">
+                <h1 class="text-uppercase"><strong>Aproveitamento<br> Funcional</strong></h1>
+                <p class="type"></p>  <!-- Texto no arquivo custom.js -->
+                <div class="btn-home">
+                    
+                </div>
+                
             
-            <img class="mb-4" src="imagens/logo1.png" alt="" height="106">
-            <h1 class="h3 mb-3 font-weight-normal">Acessar</h1>
-            <label class="sr-only">Login</label>
-            <input type="text" name="login" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
-            <label for="inputPassword" class="sr-only">Senha</label>
-            <input type="password" name="senha" id="inputPassword" class="form-control" placeholder="Password" required>
-            
-            <?php
-                if(isset($_GET['erro'])) {
-                    echo '<div class="erro">Usuário e/ou senha incorretos</div><br />';
-                }            
-            ?>
-            
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                <?php
+                    if(isset($_GET['erro'])) {
+                        echo '<div class="erro">Usuário e/ou senha incorretos</div><br />';
+                    }            
+                ?>
+                
+                <div class="login-form">    
+                    <form action="Controler/controlerLogin.php" method="post">
+                        <h4 class="modal-title"></h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="usuario" placeholder="Entre com seu usuário" required="required">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="senha" placeholder="Entre com sua senha" required="required">
+                        </div>
+                        <div class="form-group small clearfix">
+                            
+                            <a href="http://192.168.131.30" target="_blank" class="forgot-link">Esqueceu sua senha?</a>
+                        </div> 
+                        <input type="submit" class="btn btn-primary btn-block btn-lg" value="Acessar">              
+                    </form>			
+                </div>
+            </div>
+        </section>
+        
+        <!-- End Header -->
+        <!-- Start Loading -->
+        
+        <div class="loading">
+            <div class="blob-grid">
+                <div class="blob blob-0"></div>
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+                <div class="blob blob-3"></div>
+                <div class="blob blob-4"></div>
+                <div class="blob blob-5"></div>
+            </div>
+        </div>
+        
+        <!-- End Loading -->
+        
+        
+        <script src="estilos/js/jquery-3.1.1.min.js"></script>
+        <script src="estilos/js/jquery.magnific-popup.min.js"></script>
+        <script src="estilos/js/typed.js"></script>
+        <script src="estilos/js/popper.min.js"></script>
+        <script src="estilos/js/bootstrap.min.js"></script>
+        <script src="estilos/js/custom.js"></script>
+    </body>
+</noscript>
+<div style="text-align: center;"><div style="position:relative; top:0; margin-right:auto;margin-left:auto; z-index:99999">
 
-            <p class="mt-5 mb-3 text-muted">
-                Seção de Administração de Pessoal<br />
-                Divisão de Recursos Humanos <br /> 
-                Fábrica Juiz de Fora<br />
-                IMBEL&reg;<br />
-            </p> 
-        </form>
-  </body>
+</div></div>
 </html>
