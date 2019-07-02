@@ -185,13 +185,13 @@
         
         if($semestre == 1) {
             $dataInicial = $ano."-01-01 00:00:00";
-            $dataFinal =  $ano."-03-30 23:59:59";
+            $dataFinal =  $ano."-06-30 23:59:59";
         } else {
             $dataInicial = $ano."-07-01 00:00:00";
             $dataFinal =  $ano."-12-31 23:59:59";
         }
         
-        echo 'semestre: '.$semestre.'<br>ano: '.$ano;
+        echo 'semestre: '.$semestre.'<br>ano: '.$ano.'Data inicial: '.$dataInicial.' - Data Final: '.$dataFinal;
         
         $listaSancoes = $sancaoDAO->sancaoPorSemestre($dataInicial, $dataFinal);
                 
