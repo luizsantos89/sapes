@@ -86,7 +86,7 @@
                 
                 if($sancoes != null) {
             ?>
-                <table border='1' class="table table-striped">
+                <table border='1' class="table table-striped small">
                     <tr class="thead-dark text-center">
                         <?php
                             if($usuario->idTipoUsuario != 3) {

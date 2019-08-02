@@ -49,7 +49,10 @@
                         <?php
                             if(isset($_REQUEST['erro']) && ($_REQUEST['erro'] == 2)){
                                 echo '<p class="alert alert-danger" role="alert">Senha atual incorreta</p>';
-                            }                    
+                            }  
+                            if(isset($_REQUEST['erro']) && ($_REQUEST['erro'] == 3)){
+                                echo '<p class="alert alert-danger" role="alert">Nova senha não pode ser igual à atual</p>';
+                            }                     
                         ?>
                     </div>
                 </div>

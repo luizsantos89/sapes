@@ -153,7 +153,7 @@
                         
                         <!--CRACHÁ -->
                         <td align="center">
-                            <?=$funcionario->cracha; ?>  
+                            <?=str_pad($funcionario->cracha,3,0, STR_PAD_LEFT)?> 
                         </td>
                         
                         <!--NOME -->
@@ -162,7 +162,11 @@
                         </td>
                         
                         <td>
-                            <?= date('d/m/Y',strtotime($funcionario->dataNascimento)); ?> 
+                            <?php
+                            if($funcionario->dataNascimento != "0000-00-00" ) {
+                                echo date('d/m/Y',strtotime($funcionario->dataNascimento));
+                            }
+                            ?> 
                         </td>
                         
                         <td style="text-transform: capitalize;">

@@ -90,10 +90,10 @@
             $funcionario->setDataInativacao("0000-00-00 00:00:00");
         }
         
+        echo $funcionario->getDataNascimento();
+        
         $funcionarioDAO = new FuncionarioDAO();
         $funcionarioDAO->editarFuncionario($funcionario);
-        
-        
         
         header("Location:controlerFuncionario.php?opcao=6&pagina=1");
     }

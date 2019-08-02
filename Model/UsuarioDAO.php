@@ -49,6 +49,13 @@
             $sql->bindValue(":login",$usuario->getLogin());
             $sql->bindValue(":idUsuario",$usuario->getIdUsuario());
             $sql->execute();
+        }         
+        
+        public function alteraSenhaUsuario($usuario){
+            $sql = $this->con->prepare("UPDATE usuario SET senha = :senha WHERE idUsuario = :idUsuario");
+            $sql->bindValue(":senha", $usuario->senha);
+            $sql->bindValue(":idUsuario",$usuario->idUsuario);
+            $sql->execute();
         }
         
         public function novoUsuario($usuario) {

@@ -29,15 +29,26 @@
         $senhaNova = md5($_REQUEST['novaSenha']);
         $confirmacaoSenha = md5($_REQUEST['confirmacaoSenha']);
         
+        echo "Senha atual: ".md5($senhaAtual)."<br >";
+        echo "Senha do banco de dados: ".$usuario->senha.'<br>';
+        echo "Senha nova: ".md5($senhaNova)."<br >";
+        echo "Senha confirmação: ".md5($confirmacaoSenha)."<br >";
+        
         if($usuario->senha == $senhaAtual) { 
             if($senhaNova == $confirmacaoSenha) {
-                $usuario->senha = $senhaNova;
-                $usuarioDAO->editarUsuario($usuario);
-                echo 'edita';
-                header("Location: ../View/Cadastro/MinhaConta.php?senha='sucesso'");
+                if($senhaAtual != $senhaNova) {
+                    $usuario->senha = $senhaNova;
+                    
+                    echo "Nova senha: ".$usuario->senha;
+                    $usuarioDAO->alteraSenhaUsuario($usuario);
+                    echo 'edita';
+                    header("Location: ../View/Cadastro/MinhaConta.php?senha='sucesso'");
+                } else {
+                    header("Location: ../View/Cadastro/AlterarSenha.php?erro=3");
+                }
             } else {
                 'echo senhas não conferem';
-                 header("Location: ../View/Cadastro/AlterarSenha.php?erro=1");
+                header("Location: ../View/Cadastro/AlterarSenha.php?erro=1");
             }           
         } else {
             echo 'senha atual errada';

@@ -15,6 +15,9 @@
     $funcionarios = $_SESSION['funcionarios'];
     $usuarios = $_SESSION['usuarios'];
     $listaAproveitamento = $_SESSION['aproveitamento'];
+    $secoes = $_SESSION['secoes'];
+    $divisoes = $_SESSION['divisoes'];
+    $gerencias = $_SESSION['gerencias'];
     if(isset($_SESSION['semestre'])){
         $semestre = $_SESSION['semestre'];
         $ano = $_SESSION['ano'];
@@ -139,8 +142,25 @@
                                 foreach($funcionarios as $funcionario) {
                                     if($funcionario->idFuncionario == $aproveitamento->idFuncionario) {
                                         echo $funcionario->cracha.' - '.$funcionario->nome;
+                                        foreach ($secoes as $secao) {
+                                            if($secao->idSecao == $funcionario->idSecao) {
+                                                echo ' ('.$secao->descricao.' / ';
+                                                foreach($divisoes as $divisao) {
+                                                    if($divisao->idDivisao == $secao->idDivisao) {
+                                                        echo $divisao->descricao.' / ';
+                                                        foreach ($gerencias as $gerencia) {
+                                                            if($gerencia->idGerencia == $divisao->idGerencia) {
+                                                                echo $gerencia->descricao.') ';
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
-                                }                            
+                                }     
+                                
+                                
                             ?> 
                         </td>    
                         

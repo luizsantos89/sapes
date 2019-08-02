@@ -61,9 +61,9 @@
                 
             
                 <?php
-                    if(isset($_GET['erro'])) {
-                        echo '<div class="erro">Usuário e/ou senha incorretos</div><br />';
-                    }            
+                        if(isset($_REQUEST['erro']) && ($_REQUEST['erro'] == 1)){
+                            echo '<p class="alert alert-danger" role="alert"">Usuário e/ou senha incorretos</p>';
+                        }             
                 ?>
                 
                 <div class="login-form">    

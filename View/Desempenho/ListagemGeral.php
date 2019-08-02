@@ -69,12 +69,12 @@
         ?>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
             <div>
             <?php
                 if($notasDesempenho != null) {
             ?>
-                <table class="table table-striped">
+                <table class="table table-striped small">
                     <thead class='thead-dark text-center'>
                         <tr>
                             <?php
@@ -114,7 +114,7 @@
                                 <?php                            
                                     foreach($funcionarios as $funcionario) {
                                         if($funcionario->idFuncionario == $nota->idFuncionario) {
-                                            echo $funcionario->cracha.' - '.$funcionario->nome;
+                                            echo str_pad($funcionario->cracha,3,0, STR_PAD_LEFT).' - '.$funcionario->nome;
                                         }
                                     }                            
                                 ?> 
@@ -125,7 +125,7 @@
                             </td>
 
                             <td align="center"> 
-                                <?=$nota->semestre;?>/<?=$nota->ano;?>
+                                <?=str_pad($nota->semestre,2,0, STR_PAD_LEFT)?>/<?=$nota->ano;?>
                             </td>
 
                             <!--CARGO-->

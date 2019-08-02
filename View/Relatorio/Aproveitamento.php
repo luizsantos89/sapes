@@ -16,11 +16,11 @@
     
     $queryFuncionarioMais = "SELECT f.nome, f.cracha, a.indiceAproveitamento FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario WHERE semestre = $semestre AND ano = $ano ORDER BY a.indiceAproveitamento DESC LIMIT 30;";
 
-    $querySecao = "SELECT s.descricao as secao, ROUND(AVG(a.indiceAproveitamento),2) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao WHERE semestre = $semestre AND ano = $ano GROUP BY s.idSecao ORDER BY AVG(a.indiceAproveitamento) DESC;";
+    $querySecao = "SELECT s.descricao as secao, ROUND(AVG(a.indiceAproveitamento),5) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao WHERE semestre = $semestre AND ano = $ano GROUP BY s.idSecao ORDER BY AVG(a.indiceAproveitamento) DESC;";
 
-    $queryDivisao = "SELECT d.descricao as divisao, ROUND(AVG(a.indiceAproveitamento),2) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao WHERE semestre = $semestre AND ano = $ano GROUP BY d.idDivisao ORDER BY AVG(a.indiceAproveitamento) DESC;";
+    $queryDivisao = "SELECT d.descricao as divisao, ROUND(AVG(a.indiceAproveitamento),5) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao WHERE semestre = $semestre AND ano = $ano GROUP BY d.idDivisao ORDER BY AVG(a.indiceAproveitamento) DESC;";
 
-    $queryGerencia = "SELECT g.descricao as gerencia, ROUND(AVG(a.indiceAproveitamento),2) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON d.idGerencia = g.idGerencia WHERE semestre = $semestre AND ano = $ano GROUP BY g.idGerencia ORDER BY AVG(a.indiceAproveitamento) DESC;";    
+    $queryGerencia = "SELECT g.descricao as gerencia, ROUND(AVG(a.indiceAproveitamento),5) as media FROM aproveitamento as a INNER JOIN funcionario as f ON f.idFuncionario = a.idFuncionario INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON d.idGerencia = g.idGerencia WHERE semestre = $semestre AND ano = $ano GROUP BY g.idGerencia ORDER BY AVG(a.indiceAproveitamento) DESC;";    
         
     $graficoFuncionarioMais = $link->query($queryFuncionarioMais);
     

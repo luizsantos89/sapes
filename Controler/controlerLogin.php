@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once('../includes/conexao.inc');
+    require '../includes/conexao.inc';
     require '../Model/FuncionarioDAO.php';
     require '../Model/UsuarioDAO.php';
     require '../Model/SecaoDAO.php';

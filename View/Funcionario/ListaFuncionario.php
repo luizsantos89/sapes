@@ -113,7 +113,7 @@
             ?>
             <table class="table table-striped text-small">
                 <thead class='thead-dark text-center'>
-                    <tr class="text-small">
+                    <tr>
                         <?php
                             if($usuario->idTipoUsuario != 3) {
                         ?>
@@ -123,13 +123,13 @@
                         ?>
                         <th class="center">Crachá:</th>
                         <th>Nome:</th>
-                        <th>Data de Nascimento:</th>
+                        <th>Nascimento:</th>
                         <th>Sexo:</th>
                         <th>Cargo:</th>
                         <th>Tipo:</th>
-                        <th>Situação:</th>
                         <th>Carga Horária:</th>
-                        <th>Data de Admissão:</th>
+                        <th>Situação:</th>
+                        <th>Admissão:</th>
                         <th>Seção:</th>
                         <th>Divisão:</th>
                         <th>Gerência:</th>
@@ -156,8 +156,8 @@
                         ?>
                         
                         <!--CRACHÁ -->
-                        <td>
-                            <?=$funcionario->cracha; ?>  
+                        <td class="text-center">
+                            <?=str_pad($funcionario->cracha,3,0, STR_PAD_LEFT)?>
                         </td>
                         
                         <!--NOME -->
@@ -166,7 +166,11 @@
                         </td>
                         
                         <td>
-                            <?=date('d/m/Y',strtotime($funcionario->dataNascimento));?> 
+                            <?php
+                            if($funcionario->dataNascimento != "0000-00-00" ) {
+                                echo date('d/m/Y',strtotime($funcionario->dataNascimento));
+                            }
+                            ?> 
                         </td>
                         
                         <td style="text-transform: capitalize;">
@@ -183,6 +187,11 @@
                             <?=$funcionario->situacao; ?>  
                         </td>
                         
+                        <!--CARGA HORARIA-->
+                        <td class="text-center">
+                            <?=$funcionario->cargaHoraria; ?>  hrs
+                        </td>
+                        
                         <!--ATIVO/INATIVO-->
                         <td>
                             <?php
@@ -196,18 +205,13 @@
                             ?>
                         </td>
                         
-                        <!--CARGA HORARIA-->
-                        <td>
-                            <?=$funcionario->cargaHoraria; ?>  hrs/semana
-                        </td>
-                        
                         <!--DATA DE ADMISSAO-->
                         <td>
                             <?= date('d/m/Y',strtotime($funcionario->dataAdmissao)); ?> 
                         </td>
                         
                         <!--SEÇÃO -->
-                        <td>
+                        <td class="text-center">
                             <?php                            
                                 foreach($secoes as $secao) {
                                     if($secao->idSecao == $funcionario->idSecao) {
@@ -218,7 +222,7 @@
                         </td>    
                         
                         <!-- DIVISAO -->
-                        <td>
+                        <td class="text-center">
                             <?php
                             foreach($secoes as $secao) {
                                     if($secao->idSecao == $funcionario->idSecao) {
@@ -234,7 +238,7 @@
                         </td>
                         
                         <!-- GERENCIA -->
-                        <td>
+                        <td class="text-center">
                             <?php
                             foreach($secoes as $secao) {
                                     if($secao->idSecao == $funcionario->idSecao) {

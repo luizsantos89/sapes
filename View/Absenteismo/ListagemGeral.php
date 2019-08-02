@@ -79,7 +79,7 @@
         ?>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
 
             <?php
             $qtd = 0;
@@ -92,7 +92,7 @@
                                
             ?>
             <div>
-            <table class="table table-striped">
+            <table class="table table-striped small">
                 <thead class='thead-dark text-center'>
                     <tr>
                         <?php
@@ -132,18 +132,18 @@
                             <?php                            
                                 foreach($funcionarios as $funcionario) {
                                     if($funcionario->idFuncionario == $absenteismo->idFuncionario) {
-                                        echo $funcionario->cracha.' - '.$funcionario->nome;
+                                        echo str_pad($funcionario->cracha,3,0, STR_PAD_LEFT).' - '.$funcionario->nome;
                                     }
                                 }                            
                             ?> 
                         </td>
                         
                         <td align="center"> 
-                            <?php echo str_replace('.',',', $absenteismo->qtdHoras); ?>
+                            <?php echo str_replace('.',',', $absenteismo->qtdHoras); ?> hrs
                         </td>
                         
                         <td align="center"> 
-                            <?=$absenteismo->mes;?>/<?=$absenteismo->ano;?>
+                            <?=str_pad($absenteismo->mes,2,0, STR_PAD_LEFT)?>/<?=$absenteismo->ano;?>
                         </td>
                         
                         <!--CARGO-->
