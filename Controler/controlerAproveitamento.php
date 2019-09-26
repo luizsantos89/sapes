@@ -50,7 +50,7 @@
         header("Location:../View/Aproveitamento/ListagemGeral.php");
     }    
     
-    // GERAR O RELATÓRIO
+    // GERAR O RELATÓRIO DO SEMESTRE
     if ($opcao == 2) {       
         $semestre = (int) $_REQUEST['semestre'];
         $ano = (int) $_REQUEST['ano'];
