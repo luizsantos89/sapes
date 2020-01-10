@@ -15,37 +15,35 @@
     $link = mysqli_connect("localhost", "root", "", "sapes");
     
     if($semestre == 1) {
-        $queryFuncionarioMais = "SELECT f.cracha, f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario WHERE mes < 7  AND ano = $ano GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 30;";
+        $queryFuncionarioMais = "SELECT f.cracha, f.nome, f.cargo, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario WHERE mes < 7  AND ano = $ano GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 30;";
 
         $queryTotalSecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes < 7  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
         
-        $queryMediaSecao = "SELECT TotFuncSecao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaSecao FROM (SELECT s.idSecao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes < 7  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC) as TotHorasSecao INNER JOIN (SELECT s.idSecao, s.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao GROUP BY f.idSecao) as TotFuncSecao ON TotHorasSecao.idSecao = TotFuncSecao.idSecao;";
+        $queryMediaSecao = "SELECT TotFuncSecao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaSecao FROM (SELECT s.idSecao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes < 7  AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC) as TotHorasSecao INNER JOIN (SELECT s.idSecao, s.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao GROUP BY f.idSecao) as TotFuncSecao ON TotHorasSecao.idSecao = TotFuncSecao.idSecao ORDER BY mediaSecao;";
 
         $queryTotalDivisao = "SELECT d.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes < 7  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC;";
         
-        $queryMediaDivisao = "SELECT TotFuncDivisao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaDivisao FROM (SELECT d.idDivisao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes < 7  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC) as TotHorasDivisao INNER JOIN (SELECT d.idDivisao, d.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao GROUP BY d.idDivisao) as TotFuncDivisao ON TotHorasDivisao.idDivisao = TotFuncDivisao.idDivisao;";
+        $queryMediaDivisao = "SELECT TotFuncDivisao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaDivisao FROM (SELECT d.idDivisao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes < 7  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC) as TotHorasDivisao INNER JOIN (SELECT d.idDivisao, d.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao GROUP BY d.idDivisao) as TotFuncDivisao ON TotHorasDivisao.idDivisao = TotFuncDivisao.idDivisao ORDER BY mediaDivisao;";
 
-        $queryMediaGerencia = "SELECT TotFuncGerencia.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaGerencia FROM (SELECT g.idGerencia, g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes < 7  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC) as TotHorasGerencia INNER JOIN (SELECT g.idGerencia, g.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia) as TotFuncGerencia ON TotHorasGerencia.idGerencia = TotFuncGerencia.idGerencia;";
+        $queryMediaGerencia = "SELECT TotFuncGerencia.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaGerencia FROM (SELECT g.idGerencia, g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes < 7  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC) as TotHorasGerencia INNER JOIN (SELECT g.idGerencia, g.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia) as TotFuncGerencia ON TotHorasGerencia.idGerencia = TotFuncGerencia.idGerencia ORDER BY mediaGerencia;";
         
         $queryTotalGerencia = "SELECT g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes < 7  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC;";
         
-        $queryFuncSemAbsenteismo = "SELECT * FROM funcionario WHERE idFuncionario NOT IN (SELECT idFuncionario FROM absenteismo where mes < 7 AND ano = $ano)";
     } else {
         $queryFuncionarioMais = "SELECT f.cracha, f.nome, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario WHERE mes > 6  AND ano = $ano GROUP BY f.idFuncionario ORDER BY totalHorasFunc DESC LIMIT 30;";
 
-        $queryMediaSecao = "SELECT TotFuncSecao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaSecao FROM (SELECT s.idSecao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes > 6   AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC) as TotHorasSecao INNER JOIN (SELECT s.idSecao, s.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao GROUP BY f.idSecao) as TotFuncSecao ON TotHorasSecao.idSecao = TotFuncSecao.idSecao;";
+        $queryMediaSecao = "SELECT TotFuncSecao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaSecao FROM (SELECT s.idSecao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes > 6   AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC) as TotHorasSecao INNER JOIN (SELECT s.idSecao, s.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao GROUP BY f.idSecao) as TotFuncSecao ON TotHorasSecao.idSecao = TotFuncSecao.idSecao ORDER BY mediaSecao;";
 
         $queryTotalSecao = "SELECT s.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao WHERE mes > 6   AND ano = $ano GROUP BY s.idSecao ORDER BY totalHorasFunc DESC;";
         
-        $queryMediaDivisao = "SELECT TotFuncDivisao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaDivisao FROM (SELECT d.idDivisao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes > 6  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC) as TotHorasDivisao INNER JOIN (SELECT d.idDivisao, d.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao GROUP BY d.idDivisao) as TotFuncDivisao ON TotHorasDivisao.idDivisao = TotFuncDivisao.idDivisao;";
+        $queryMediaDivisao = "SELECT TotFuncDivisao.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaDivisao FROM (SELECT d.idDivisao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes > 6  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC) as TotHorasDivisao INNER JOIN (SELECT d.idDivisao, d.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao GROUP BY d.idDivisao) as TotFuncDivisao ON TotHorasDivisao.idDivisao = TotFuncDivisao.idDivisao ORDER BY mediaDivisao;";
 
         $queryTotalDivisao = "SELECT d.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao WHERE mes > 6  AND ano = $ano GROUP BY d.idDivisao ORDER BY totalHorasFunc DESC;";
         
-        $queryMediaGerencia = "SELECT TotFuncGerencia.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaGerencia FROM (SELECT g.idGerencia, g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes > 6  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC) as TotHorasGerencia INNER JOIN (SELECT g.idGerencia, g.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia) as TotFuncGerencia ON TotHorasGerencia.idGerencia = TotFuncGerencia.idGerencia;";
+        $queryMediaGerencia = "SELECT TotFuncGerencia.descricao, ROUND((totalHorasFunc/totFunc),2) as mediaGerencia FROM (SELECT g.idGerencia, g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes > 6  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC) as TotHorasGerencia INNER JOIN (SELECT g.idGerencia, g.descricao, COUNT(f.idFuncionario) as totFunc FROM funcionario as f INNER JOIN secao as s ON s.idSecao = f.idSecao INNER JOIN divisao as d ON s.idDivisao = d.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia GROUP BY g.idGerencia) as TotFuncGerencia ON TotHorasGerencia.idGerencia = TotFuncGerencia.idGerencia ORDER BY mediaGerencia;";
         
         $queryTotalGerencia = "SELECT g.descricao, ROUND(SUM(a.qtdHoras),2) as totalHorasFunc FROM absenteismo as a INNER JOIN funcionario as f ON a.idFuncionario = f.idFuncionario INNER JOIN secao as s ON f.idSecao = s.idSecao INNER JOIN divisao as d ON d.idDivisao = s.idDivisao INNER JOIN gerencia as g ON g.idGerencia = d.idGerencia WHERE mes > 6  AND ano = $ano GROUP BY g.idGerencia ORDER BY totalHorasFunc DESC;";
         
-        $queryFuncSemAbsenteismo = "SELECT f.cracha, f.nome FROM funcionario AS f WHERE f.idFuncionario NOT IN (SELECT idFuncionario FROM absenteismo where mes > 6 AND ano = $ano)";
     }
         
     $graficoFuncionarioMais = $link->query($queryFuncionarioMais);
@@ -62,7 +60,6 @@
     
     $graficoGerencia2 = $link->query($queryTotalGerencia);
     
-    $graficoFuncionarioZero = $link->query($queryFuncSemAbsenteismo);
     
 ?>
 
@@ -282,41 +279,26 @@
     <div class="container">
         <div>   
             <!--<div id="grafFuncMais" style="width: 1000px; height: 1200px"></div>-->
-            <table border='1' class="table">
+            <table border='1' class="table small">
                 <thead class="thead-dark">
                     <tr>
-                        <th colspan="4" class='text-center h4'>30 Funcionários com os maiores absenteísmo no período:</th>
+                        <th colspan="5" class='text-center h4'>30 Funcionários com os maiores absenteísmo no período:</th>
                     </tr>
                 </thead>
                 <tr class="text-center">
                     <th>Ordem:</th>
                     <th>Crachá:</th>
                     <th>Funcionário: </th>
+                    <th>Cargo:</th>
                     <th>Quant. Horas: </th>
                 </tr>
                 <?php
                     $cont = 1;
                     while ($array = mysqli_fetch_array($graficoFuncionarioMais)){
-                        echo "<tr><td class='text-center'>".$cont."</td><td class='text-center'>".str_pad($array[0],3,0, STR_PAD_LEFT)."</td><td>".$array[1]."</td></td><td class='text-center'>".$array[2]."</td></tr>";
-                        $cont+=1;
-                    }
-                ?>
-            </table>
-            <table border='1' class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th colspan="4" class='text-center h4'>Funcionários com absenteísmo 0 no período (por crachá):</th>
-                    </tr>
-                </thead>
-                <tr class="text-center">
-                    <th>Ordem:</th>
-                    <th>Crachá:</th>
-                    <th>Funcionário: </th>
-                </tr>
-                <?php
-                    $cont = 1;
-                    while ($array = mysqli_fetch_array($graficoFuncionarioZero)){
-                        echo "<tr><td class='text-center'>".$cont."</td><td class='text-center'>".str_pad($array[0],3,0, STR_PAD_LEFT)."</td><td>".$array[1]."</td></td></tr>";
+                        echo "<tr><td class='text-center'>".str_pad($cont, 2, 0, STR_PAD_LEFT)."</td>";
+                        echo "<td class='text-center'>".str_pad($array[0],3,0, STR_PAD_LEFT)."</td>";
+                        echo "<td>".$array[1]."</td></td><td>".$array[2]."</td>";
+                        echo "<td class='text-center'>".$array[3]."</td></tr>";
                         $cont+=1;
                     }
                 ?>

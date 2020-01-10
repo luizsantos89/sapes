@@ -14,6 +14,9 @@
     $funcionarios = $_SESSION['funcionarios'];
     $usuarios = $_SESSION['usuarios'];
     $notasDesempenho = $_SESSION['notasDesempenho'];
+    $secoes = $_SESSION['secoes'];
+    $divisoes = $_SESSION['divisoes'];
+    $gerencias = $_SESSION['gerencias'];
     
 ?>
 
@@ -39,6 +42,19 @@
             }
         }
     </script>
+    
+    <style type="text/css">        
+        @media print{
+           #noprint{
+               display:none;
+           }
+           
+           a {
+               text-decoration: none;
+               color: black;
+           }
+        }
+    </style>
 
     <!-- Bootstrap core CSS -->
     <link href="../../estilos/css/bootstrap.min.css" rel="stylesheet">
@@ -49,12 +65,12 @@
 
   <body>
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png" />
-        <nav class="my-2 my-md-0 mr-md-3">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" id="noprint">
+        <img class="my-0 mr-md-auto font-weight-normal" src="../../imagens/logo2.png"   />
+        <nav class="my-2 my-md-0 mr-md-3"  id="noprint">
             <?php include("../../includes/Menus.php"); ?>
         </nav>
-        <a class="btn btn-outline-primary" href="../../Controler/logout.php">Sair</a>
+        <a class="btn btn-outline-primary" href="../../Controler/logout.php"  id="noprint">Sair</a>
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -69,7 +85,7 @@
         ?>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
             <div>
             <?php
                 if($notasDesempenho != null) {
@@ -80,11 +96,13 @@
                             <?php
                                 if($usuario->idTipoUsuario !=3 ) {
                             ?>
-                                <th colspan="2">Ações:</th>
+                                <th colspan="2" id="noprint">Ações:</th>
                             <?php
                                 }
                             ?>
                             <th>Funcionário:</th>
+                            <th>Cargo:</th>
+                            <th>Seção - Divisão - Gerência:</th>
                             <th>Nota:</th>
                             <th>Semestre/Ano:</th>
                             <th>Lançado por:</th>
@@ -99,11 +117,11 @@
                             <?php
                                 if($usuario->idTipoUsuario !=3 ) {
                             ?>                                 
-                                <td>
+                                <td id="noprint">
                                     <a href="../../Controler/controlerDesempenho.php?opcao=2&idDesempenho=<?=$nota->idDesempenho?>">
                                         <img title="Editar Horas de Absenteísmo" src="../../imagens/edit.png" height="25px" /></a>
                                     </td>
-                                <td>
+                                <td id="noprint">
                                     <a href="../../Controler/controlerDesempenho.php?opcao=5&idDesempenho=<?=$nota->idDesempenho?>">
                                         <img title="Excluir Horas de Absenteísmo" src="../../imagens/excluir.png" height="25px" /></a>
                                 </td>   
@@ -119,6 +137,54 @@
                                     }                            
                                 ?> 
                             </td>
+                            
+                            <td>
+                                <?php                           
+                                    foreach($funcionarios as $funcionario) {
+                                        if($funcionario->idFuncionario == $nota->idFuncionario) {
+                                            echo $funcionario->cargo;
+                                        }
+                                    } 
+                                ?>
+                            </td>
+                            
+                            <!--Seção / Divisão / Gerência -->
+                            <td>
+                            <?php 
+                                foreach($funcionarios as $funcionario) {
+                                    if($nota->idFuncionario == $funcionario->idFuncionario) {
+                                        foreach($secoes as $secao) {
+                                            if($secao->idSecao == $funcionario->idSecao) {
+                                                echo $secao->descricao." - ";
+                                            }
+                                        }           
+                                        foreach($secoes as $secao) {
+                                            if($secao->idSecao == $funcionario->idSecao) {
+                                                foreach($divisoes as $divisao) {
+                                                    if($secao->idDivisao == $divisao->idDivisao) {
+                                                        echo $divisao->descricao." - ";
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        foreach($secoes as $secao) {
+                                            if($secao->idSecao == $funcionario->idSecao) {
+                                                foreach($divisoes as $divisao) {
+                                                    if($secao->idDivisao == $divisao->idDivisao) {
+                                                        foreach($gerencias as $gerencia) {
+                                                            if($gerencia->idGerencia == $divisao->idGerencia) {
+                                                                echo $gerencia->descricao;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } 
+                                    }
+                                }
+                            ?>  
+                        </td>
 
                             <td align="center"> 
                                 <?php echo str_replace('.',',', $nota->nota); ?>
@@ -159,7 +225,7 @@
         </div>
     </div>
       <div class="container">
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top" id="noprint">
             <?php
                 unset($_SESSION['notasDesempenho']);
                 include('../../includes/Rodape.php');

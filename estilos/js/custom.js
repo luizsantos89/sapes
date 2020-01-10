@@ -29,7 +29,7 @@ $(function () {
         dl   = $('.color-option .dl li'),
         // Typed Plugin
         typed = new Typed('.type', {
-            strings: ["SAPES - Seção de Administração de Pessoal", "DVRH - Divisão de Recursos Humanos", "GEAF - Gerência Administrativo-Financeira"], /* Here Type Your Title */
+            strings: ["Avaliação de Desempenho","Aproveitamento Funcional", "Controle de Absenteísmo", "Controle de Sanções Disciplinares"], /* Here Type Your Title */
             typeSpeed: 100,
             loop: true,
             backDelay: 1200,

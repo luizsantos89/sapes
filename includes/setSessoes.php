@@ -1,14 +1,12 @@
 <?php
-    require '../../Model/FuncionarioDAO.php';
-    require '../../Model/UsuarioDAO.php';
-    require '../../Model/SecaoDAO.php';
-    require '../../Model/DivisaoDAO.php';
-    require '../../Model/GerenciaDAO.php';
-    require '../../Model/TipoSancaoDAO.php';
-    require '../../Model/SancaoDAO.php';
-    require '../../Model/DesempenhoDAO.php';
-    require '../../Model/AbsenteismoDAO.php';
-    
+    require '../Model/FuncionarioDAO.php';
+    require '../Model/SecaoDAO.php';
+    require '../Model/DivisaoDAO.php';
+    require '../Model/GerenciaDAO.php';
+    require '../Model/TipoSancaoDAO.php';
+    require '../Model/SancaoDAO.php';
+    require '../Model/DesempenhoDAO.php';
+    require '../Model/AbsenteismoDAO.php';    
     
     $secaoDAO = new SecaoDAO();
     $_SESSION['secoes'] = $secaoDAO->getSecoes();

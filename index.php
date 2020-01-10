@@ -53,7 +53,7 @@
                 <div class="my-bg bg-image"></div>
             </div>
             <div class="title">
-                <h1 class="text-uppercase"><strong>Aproveitamento<br> Funcional</strong></h1>
+                <h1 class="text-uppercase"><strong>Divisão de<br>Recursos Humanos</strong></h1>
                 <p class="type"></p>  <!-- Texto no arquivo custom.js -->
                 <div class="btn-home">
                     

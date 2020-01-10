@@ -1,15 +1,7 @@
 <?php
     session_start();
     require '../includes/conexao.inc';
-    require '../Model/FuncionarioDAO.php';
     require '../Model/UsuarioDAO.php';
-    require '../Model/SecaoDAO.php';
-    require '../Model/DivisaoDAO.php';
-    require '../Model/GerenciaDAO.php';
-    require '../Model/TipoSancaoDAO.php';
-    require '../Model/SancaoDAO.php';
-    require '../Model/DesempenhoDAO.php';
-    require '../Model/AbsenteismoDAO.php';
     
     $c = new Conexao();
     $conexao= $c->getConexao();
@@ -28,6 +20,7 @@
             if ($usuario->nome != "") {
                 $_SESSION["usuario"] = $usuario;
                 echo $usuario->nome;
+                include '../includes/setSessoes.php';
                 Header("Location: ../View/index.php");
             } else {
                 Header("Location: ../index.php?erro=1");
