@@ -224,6 +224,16 @@
                     $date = date('d/m/Y H:i:s');
                     echo $date;               
                 ?>
+				
+				<br>
+				
+				<form action="GerarNovamente.php">
+					<input type="hidden" class="form-control" name="semestre" value="<?=$semestre?>" value="" required>
+					<input type="hidden" class="form-control" name="ano" value="<?=$ano?>" value="" required>
+					<input type="submit" class="btn btn-danger" value="Gerar novamente" />
+				<form>
+				
+            </form>
             </div>
     </div>
       <div class="container">

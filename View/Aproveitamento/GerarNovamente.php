@@ -3,7 +3,7 @@
     include("../../includes/verificaSessao.php");
     $usuario = $_SESSION['usuario'];
     if(isset($_REQUEST['semestre']) && isset($_REQUEST['ano'])) {
-        
+		
     } else {
         header('Location: ConsultaAproveitamento.php');
     }
